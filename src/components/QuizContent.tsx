@@ -279,7 +279,6 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
       const cached = getFromCache(cacheKey);
       
       if (cached) {
-        console.log('✅ Using cached AI explanation');
         setAiExplanation(cached.aiExplanation);
         setIsLoadingResults(false);
         sessionStorage.setItem('quizCompleted', 'true');
@@ -289,13 +288,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
       // Generate AI-powered explanation
       setIsLoadingAI(true);
       setAiUnavailable(false);
-      console.log('📝 Calling AI edge function with:', { 
-        userName, 
-        answersCount: scorerAnswers.length, 
-        programsCount: finalPrograms.length, 
-        boostersCount: computedScorerResult.boosters.length 
-      });
-      
+
       // Build enriched answers with human-readable labels and values
       const enrichedAnswers = scorerAnswers.map(ans => {
         const question = scorerQuestionsConfig.find(q => q.id === ans.questionId);
@@ -336,8 +329,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         }
       }).then(({ data, error }) => {
         clearTimeout(aiTimeout);
-        console.log('🤖 AI response:', { data, error });
-        
+
         // Check if function returned error in data (even with 200 status)
         if (data?.error || data?.status === 429 || data?.status === 402) {
           console.error('❌ AI recommendation error:', data);
@@ -361,7 +353,6 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
           console.error('❌ AI function error:', error);
           setAiUnavailable(true);
         } else if (data?.aiExplanation) {
-          console.log('✅ AI explanation received, length:', data.aiExplanation.length);
           setAiExplanation(data.aiExplanation);
           // Cache the successful result
           saveToCache(cacheKey, data.aiExplanation);
