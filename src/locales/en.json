@@ -140,7 +140,10 @@
     "noProgramsFoundDesc": "No specific programs found based on your answers. Try adjusting your choices or broadening your interests.",
     "ctaButtonDetails": "Discover More",
     "loading": "Loading results...",
-    "noResults": "We could not determine a recommendation based on your answers. Please try again."
+    "noResults": "We could not determine a recommendation based on your answers. Please try again.",
+    "generatingAI": "Generating personalized insights...",
+    "aiInsights": "AI-Powered Insights",
+    "aiUnavailable": "AI insights are temporarily unavailable. You can still see your standard recommendations below."
   },
   "ui": {
     "results": {
@@ -384,7 +387,11 @@
     "rankSelectionDesc": "Please select exactly {{count}} options.",
     "shareNotReady": "Not ready to share.",
     "linkCopiedTitle": "Link Copied!",
-    "shareFailed": "Share Failed"
+    "shareFailed": "Share Failed",
+    "rateLimitTitle": "Too many requests",
+    "rateLimitDesc": "Please try again in a few moments",
+    "quotaExceededTitle": "Service quota exceeded",
+    "quotaExceededDesc": "Please contact support"
   },
   "share": {
     "title": "My Major Recommendation",
