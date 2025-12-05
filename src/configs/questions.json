@@ -1,0 +1,161 @@
+[
+  {
+    "id": "SP1",
+    "type": "rank",
+    "text_en": "Rank your top 3 favorite school subjects:",
+    "text_ar": "رتب أفضل ٣ مواد دراسية تفضلها:",
+    "options_en": [
+      { "id": "math", "text": "Mathematics" },
+      { "id": "physics", "text": "Physics" },
+      { "id": "chemistry", "text": "Chemistry" },
+      { "id": "biology", "text": "Biology" },
+      { "id": "history", "text": "History" },
+      { "id": "art", "text": "Art & Design" },
+      { "id": "it", "text": "IT/Computer Studies" }
+    ],
+    "options_ar": [
+      { "id": "math", "text": "الرياضيات" },
+      { "id": "physics", "text": "الفيزياء" },
+      { "id": "chemistry", "text": "الكيمياء" },
+      { "id": "biology", "text": "الأحياء" },
+      { "id": "history", "text": "التاريخ" },
+      { "id": "art", "text": "الفنون والتصميم" },
+      { "id": "it", "text": "الحاسوب وتكنولوجيا المعلومات" }
+    ],
+    "rationale": "School-centric, non-career phrasing",
+    "weight_mapping": {
+      "math": { "computer": 3, "engineering": 2, "business": 0.5 },
+      "physics": { "engineering": 1.5, "science": 1 },
+      "chemistry": { "medicine": 1, "science": 1, "pharmacy": 1 },
+      "biology": { "medicine": 1.5, "science": 1, "dentistry": 1 },
+      "history": { "law": 1, "arts": 0.5, "education": 0.5, "social_sciences": 1 },
+      "art": { "design": 1, "media": 1, "architecture": 0.5 },
+      "it": { "computer": 3, "engineering": 2 }
+    },
+    "reason_template_en": "You ranked {option} {rank}.",
+    "reason_template_ar": "لقد اخترت {option} في المرتبة {rank}."
+  },
+  {
+    "id": "TS1",
+    "type": "single",
+    "text_en": "How do you prefer to solve problems?",
+    "text_ar": "كيف تفضل حل المشكلات؟",
+    "options_en": [
+      { "id": "logical", "text": "Breaking them into logical pieces", "weights": { "computer": 2, "engineering": 1.5, "law": 1 } },
+      { "id": "creative", "text": "Brainstorming creative solutions", "weights": { "design": 1, "marketing": 1, "arts": 1, "media": 1 } },
+      { "id": "hands_on", "text": "Getting hands-on and experimenting", "weights": { "engineering": 1, "dentistry": 1, "pharmacy": 0.5} },
+      { "id": "helping_others", "text": "By understanding and helping others involved", "weights": { "medicine": 1, "education": 1.5, "psychology": 1 } }
+    ],
+    "options_ar": [
+      { "id": "logical", "text": "بتقسيمها إلى أجزاء منطقية", "weights": { "computer": 2, "engineering": 1.5, "law": 1 } },
+      { "id": "creative", "text": "بطرح حلول إبداعية", "weights": { "design": 1, "marketing": 1, "arts": 1, "media": 1 } },
+      { "id": "hands_on", "text": "بالتجربة العملية والمباشرة", "weights": { "engineering": 1, "dentistry": 1, "pharmacy": 0.5} },
+      { "id": "helping_others", "text": "بفهم ومساعدة الآخرين المعنيين", "weights": { "medicine": 1, "education": 1.5, "psychology": 1 } }
+    ],
+    "rationale": "Thinking style",
+    "reason_template_en": "You prefer {option} when solving problems.",
+    "reason_template_ar": "تفضل {option} عند حل المشكلات."
+  },
+  {
+    "id": "WK1",
+    "type": "single",
+    "text_en": "What's your ideal weekend activity?",
+    "text_ar": "ما هو نشاطك المثالي في عطلة نهاية الأسبوع؟",
+    "options_en": [
+      { "id": "coding", "text": "Working on a coding project or learning a new tech skill", "weights": { "computer": 2, "engineering": 1 } },
+      { "id": "building", "text": "Building or fixing something (like a gadget or furniture)", "weights": { "engineering": 2, "architecture": 1 } },
+      { "id": "designing", "text": "Designing something visually appealing (digital art, a room layout)", "weights": { "design": 1, "media": 1, "architecture": 0.5, "marketing": 0.5 } },
+      { "id": "volunteering", "text": "Volunteering or helping out in your community", "weights": { "medicine": 1, "education": 1, "social_work": 1.5 } },
+      { "id": "reading", "text": "Reading a book or watching documentaries", "weights": { "arts": 1, "law": 0.5, "science": 0.5, "media": 0.5 } }
+    ],
+    "options_ar": [
+      { "id": "coding", "text": "العمل على مشروع برمجي أو تعلم مهارة تقنية جديدة", "weights": { "computer": 2, "engineering": 1 } },
+      { "id": "building", "text": "بناء أو إصلاح شيء ما (مثل جهاز أو قطعة أثاث)", "weights": { "engineering": 2, "architecture": 1 } },
+      { "id": "designing", "text": "تصميم شيء جذاب بصريًا (فن رقمي، تصميم غرفة)", "weights": { "design": 1, "media": 1, "architecture": 0.5, "marketing": 0.5 } },
+      { "id": "volunteering", "text": "التطوع أو المساعدة في مجتمعك", "weights": { "medicine": 1, "education": 1, "social_work": 1.5 } },
+      { "id": "reading", "text": "قراءة كتاب أو مشاهدة أفلام وثائقية", "weights": { "arts": 1, "law": 0.5, "science": 0.5, "media": 0.5 } }
+    ],
+    "rationale": "Weekend activity",
+    "reason_template_en": "Your ideal weekend involves {option}.",
+    "reason_template_ar": "نشاطك المثالي في عطلة نهاية الأسبوع هو {option}."
+  },
+  {
+    "id": "AP1",
+    "type": "single",
+    "text_en": "Which of these comes most naturally to you?",
+    "text_ar": "أي من هذه الأمور تجده طبيعياً أكثر بالنسبة لك؟",
+    "options_en": [
+      { "id": "systems", "text": "Understanding how complex systems work", "weights": { "engineering": 1.5, "computer": 1, "business": 0.5 } },
+      { "id": "empathy", "text": "Understanding people's feelings and motivations", "weights": { "psychology": 2, "medicine": 1, "education": 1, "hr": 1 } },
+      { "id": "details", "text": "Paying close attention to details and accuracy", "weights": { "law": 1, "accounting": 1.5, "pharmacy": 1, "dentistry": 1 } },
+      { "id": "creativity_ap", "text": "Coming up with new ideas or artistic expressions", "weights": { "design": 1, "arts": 1, "marketing": 1, "media": 1 } }
+    ],
+    "options_ar": [
+      { "id": "systems", "text": "فهم كيفية عمل الأنظمة المعقدة", "weights": { "engineering": 1.5, "computer": 1, "business": 0.5 } },
+      { "id": "empathy", "text": "فهم مشاعر ودوافع الناس", "weights": { "psychology": 2, "medicine": 1, "education": 1, "hr": 1 } },
+      { "id": "details", "text": "الاهتمام الشديد بالتفاصيل والدقة", "weights": { "law": 1, "accounting": 1.5, "pharmacy": 1, "dentistry": 1 } },
+      { "id": "creativity_ap", "text": "ابتكار أفكار جديدة أو تعبيرات فنية", "weights": { "design": 1, "arts": 1, "marketing": 1, "media": 1 } }
+    ],
+    "rationale": "Aptitude cue",
+    "reason_template_en": "You find it natural to {option}.",
+    "reason_template_ar": "تجد أنه من الطبيعي {option}."
+  },
+  {
+    "id": "RS1",
+    "type": "multi",
+    "text_en": "I enjoy activities that involve (choose up to 2):",
+    "text_ar": "أستمتع بالأنشطة التي تتضمن (اختر ما يصل إلى ٢):",
+    "options_en": [
+      { "id": "realistic", "text": "Working with tools, machines, or animals; often outdoors.", "weights": { "engineering": 2, "architecture": 1, "agriculture": 1.5 } },
+      { "id": "investigative", "text": "Solving complex problems, research, using math/science.", "weights": { "science": 2, "computer": 1.5, "medicine": 1, "research": 1.5 } },
+      { "id": "artistic", "text": "Creative self-expression, design, music, writing.", "weights": { "design": 1, "arts": 1, "marketing": 1, "media": 1 } },
+      { "id": "social", "text": "Helping, teaching, or providing service to others.", "weights": { "education": 2, "medicine": 1.5, "social_work": 1.5, "psychology": 1} },
+      { "id": "enterprising", "text": "Leading projects, persuading others, business.", "weights": { "business": 2, "marketing": 1.5, "law": 1, "management": 1.5 } },
+      { "id": "conventional", "text": "Organized work, data, following clear procedures.", "weights": { "accounting": 2, "finance": 1.5, "admin": 1, "pharmacy": 0.5 } }
+    ],
+    "options_ar": [
+      { "id": "realistic", "text": "العمل بالأدوات أو الآلات أو مع الحيوانات؛ غالبًا في الهواء الطلق.", "weights": { "engineering": 2, "architecture": 1, "agriculture": 1.5 } },
+      { "id": "investigative", "text": "حل المشكلات المعقدة، البحث، استخدام الرياضيات/العلوم.", "weights": { "science": 2, "computer": 1.5, "medicine": 1, "research": 1.5 } },
+      { "id": "artistic", "text": "التعبير الإبداعي عن الذات، التصميم، الموسيقى، الكتابة.", "weights": { "design": 1, "arts": 1, "marketing": 1, "media": 1 } },
+      { "id": "social", "text": "مساعدة الآخرين أو تعليمهم أو تقديم الخدمة لهم.", "weights": { "education": 2, "medicine": 1.5, "social_work": 1.5, "psychology": 1} },
+      { "id": "enterprising", "text": "قيادة المشاريع، إقناع الآخرين، الأعمال التجارية.", "weights": { "business": 2, "marketing": 1.5, "law": 1, "management": 1.5 } },
+      { "id": "conventional", "text": "العمل المنظم، البيانات، اتباع إجراءات واضحة.", "weights": { "accounting": 2, "finance": 1.5, "admin": 1, "pharmacy": 0.5 } }
+    ],
+    "rationale": "Mini-RIASEC",
+    "reason_template_en": "You enjoy activities that are {option}.",
+    "reason_template_ar": "تستمتع بالأنشطة التي تكون {option}."
+  },
+  {
+    "id": "GRADE",
+    "type": "single",
+    "text_en": "What's your approximate high school average grade?",
+    "text_ar": "ما هو متوسط درجاتك التقريبي في الثانوية العامة؟",
+    "options_en": [
+      { "id": "lt70", "text": "Below 70%", "value": 0 },
+      { "id": "70_85", "text": "70% - 85%", "value": 1 },
+      { "id": "gt85", "text": "Above 85%", "value": 2 }
+    ],
+    "options_ar": [
+      { "id": "lt70", "text": "أقل من ٧٠٪", "value": 0 },
+      { "id": "70_85", "text": "٧٠٪ - ٨٥٪", "value": 1 },
+      { "id": "gt85", "text": "أكثر من ٨٥٪", "value": 2 }
+    ],
+    "rationale": "User-requested grade band",
+    "reason_template_en": "Your grade band is {option}.",
+    "reason_template_ar": "معدل درجاتك هو {option}."
+
+  },
+  {
+    "id": "TUITION",
+    "type": "slider",
+    "text_en": "What's your maximum annual tuition budget (USD)?",
+    "text_ar": "ما هي أقصى ميزانية سنوية للرسوم الدراسية (بالدولار الأمريكي)؟",
+    "min": 1000,
+    "max": 25000,
+    "step": 500,
+    "defaultValue": 8000,
+    "rationale": "Budget realism",
+    "reason_template_en": "Regarding tuition, you indicated it is {option}.",
+    "reason_template_ar": "فيما يتعلق بالرسوم الدراسية، أشرت إلى أنها {option}."
+  }
+]

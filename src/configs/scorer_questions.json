@@ -1,0 +1,215 @@
+[
+  {
+    "id": "SP1",
+    "type": "rank",
+    "prompt_en": "Rank your three favourite school subjects",
+    "prompt_ar": "رتب ثلاث مواد تحبها أكثر",
+    "options": ["math","physics","biology","computer","literature","art","economics","social","none"],
+    "weight_mapping": {
+      "math":       {"cs_ai":3,"soft_eng":2,"elec":1},
+      "physics":    {"mech":3,"civil":2,"elec":1},
+      "biology":    {"medicine":3,"biosci":2},
+      "computer":   {"cs_ai":3,"soft_eng":2},
+      "literature": {"graphic":2,"media":1,"edu_lang":1},
+      "art":        {"graphic":2,"arch":1},
+      "economics":  {"econ":3,"acc_fin":2,"bus_mgmt":1},
+      "social":     {"psych":2,"law_intl":1}
+    }
+  },
+
+  {
+    "id": "PRJ",
+    "type": "single",
+    "prompt_en": "Best school project you did",
+    "prompt_ar": "أفضل مشروع مدرسي قمت به",
+    "options_en": {
+      "robot":"Built a robot",
+      "financeSim":"Finance simulation",
+      "artExpo":"Art exhibition",
+      "documentary":"Short documentary",
+      "bioFair":"Bio science fair",
+      "modelPlane":"Model airplane",
+      "none": "None of the above"
+    },
+    "weights": {
+      "robot":       {"mechatro":3,"mech":2},
+      "financeSim":  {"acc_fin":3,"bus_mgmt":2},
+      "artExpo":     {"graphic":3},
+      "documentary": {"media":3,"graphic":1},
+      "bioFair":     {"biosci":3,"medicine":1},
+      "modelPlane":  {"aviation":3,"mech":1}
+    }
+  },
+
+  {
+    "id":"STYLE",
+    "type":"single",
+    "prompt_en":"Your problem-solving style",
+    "options_en":{
+      "logical":"Logical & analytical",
+      "visual":"Visual & sketch-oriented",
+      "empathic":"Empathic & people-focused",
+      "debate":"Persuasive & debate-oriented",
+      "venture":"Entrepreneurial & risk-taker",
+      "none": "None of the above"
+    },
+    "weights":{
+      "logical": {"cs_ai":2,"soft_eng":1},
+      "visual":  {"graphic":2,"arch":1},
+      "empathic":{"psych":2,"nursing":1},
+      "debate":  {"law_intl":2,"media":1},
+      "venture": {"bus_mgmt":2,"marketing":1}
+    }
+  },
+
+  {
+    "id":"TEAM",
+    "type":"single",
+    "prompt_en":"In a team you are usually the ...",
+    "options_en":{
+      "coder":"Coder",
+      "planner":"Planner/Coordinator",
+      "presenter":"Presenter",
+      "caregiver":"Care-giver",
+      "researcher":"Researcher",
+      "none": "None of the above"
+    },
+    "weights":{
+      "coder":     {"soft_eng":2,"cs_ai":1},
+      "planner":   {"bus_mgmt":2,"acc_fin":1},
+      "presenter": {"media":2,"marketing":1},
+      "caregiver": {"nursing":2,"psych":1},
+      "researcher":{"biosci":2,"civil":1}
+    }
+  },
+
+  {
+    "id":"MATH",
+    "type":"scale",
+    "prompt_en":"Comfort with advanced math",
+    "scale_weight":1.5,
+    "targets":["cs_ai","elec","mech","acc_fin"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2
+  },
+
+  {
+    "id":"CODE",
+    "type":"scale",
+    "prompt_en":"Interest in coding/software",
+    "scale_weight":1.5,
+    "targets":["cs_ai","soft_eng","cyber","data"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2
+  },
+
+  {
+    "id":"DRAW",
+    "type":"scale",
+    "prompt_en":"Interest in drawing/design tools",
+    "scale_weight":1.5,
+    "targets":["graphic","arch"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2
+  },
+
+  {
+    "id": "EMPATHY",
+    "type": "single",
+    "prompt_en": "I easily sense other people's feelings",
+    "options_en": {
+      "yes": "Yes",
+      "no": "No",
+      "none": "None of the above"
+    },
+    "weights": {
+      "yes": { "nursing": 2, "psych": 2 }
+    }
+  },
+
+  { "id":"LEAD","type":"single","prompt_en":"I like to lead large groups",
+    "options":["agree","neutral","disagree","none"],
+    "weights":{"agree":{"bus_mgmt":2,"law_intl":2}} },
+
+  {
+    "id":"DEBATE",
+    "type":"scale",
+    "prompt_en":"Debating excites me",
+    "scale_weight":1,
+    "targets":["law_intl","media"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2
+  },
+
+  { "id":"RESEARCH","type":"single","prompt_en":"I prefer research over performing on stage",
+    "options":["yes","no","none"],
+    "weights":{"yes":{"biosci":2,"data":2},"no":{"media":2,"marketing":2}} },
+
+  { "id":"RISK","type":"single","prompt_en":"I’m comfortable with physical risk",
+    "options":["yes","no","none"],"yes_weight":2,
+    "targets":["aviation","civil","mech"] },
+
+  { "id":"SALARY","type":"single","prompt_en":"High salary is my top priority",
+    "options":["yes","no","none"],"yes_weight":2,
+    "targets":["medicine","acc_fin","cs_ai"] },
+
+  { "id":"STABILITY","type":"single","prompt_en":"I prefer job stability",
+    "options":["yes","no","none"],
+    "weights":{"yes":{"edu_lang":2,"nursing":2,"acc_fin":2},"no":{"tourism":2,"aviation":2}} },
+
+  { "id":"TRAVEL","type":"single","prompt_en":"I enjoy travelling for work",
+    "options":["yes","no","none"],"yes_weight":2,
+    "targets":["tourism","marketing","aviation"] },
+
+  { "id":"HEALTHCARE","type":"single","prompt_en":"Attraction to health-care work",
+    "options":["love","ok","no","none"],
+    "weights":{"love":{"medicine":3,"nursing":2},"ok":{"nursing":1}} },
+
+  { "id":"MEDIA_INT","type":"single","prompt_en":"Attraction to media/filmmaking",
+    "options":["love","ok","no","none"],
+    "weights":{"love":{"media":3,"graphic":1},"ok":{"media":1}} },
+
+  { "id":"LEGAL_INT","type":"single","prompt_en":"Attraction to legal/advocacy work",
+    "options":["love","ok","no","none"],
+    "weights":{"love":{"law_intl":3},"ok":{"law_intl":1}} },
+
+  { "id":"BUSINESS_INT","type":"single","prompt_en":"Attraction to business ownership",
+    "options":["love","ok","no","none"],
+    "weights":{"love":{"bus_mgmt":3,"marketing":2},"ok":{"bus_mgmt":1}} },
+
+  { "id":"LAB_WORK","type":"single","prompt_en":"I prefer lab work",
+    "options":["yes","no","none"],"yes_weight":2,"targets":["biosci","pharmacy"] },
+
+  { "id":"OUTDOOR","type":"single","prompt_en":"I prefer outdoor/site work",
+    "options":["yes","no","none"],"yes_weight":2,"targets":["civil","mech"] },
+
+  { "id":"SPORTS_INT","type":"single","prompt_en":"I enjoy physical activity/sports science",
+    "options":["yes","no","none"],"yes_weight":2,"targets":["sports"] },
+
+  { "id":"ENVIRON","type":"single","prompt_en":"I care about environmental sustainability",
+    "options":["yes","no","none"],"yes_weight":2,"targets":["civil","biosci","arch"] },
+
+  { "id":"GRADE","type":"single","prompt_en":"Your high-school average",
+    "options":["lt70","70_85","gt85","none"] },
+
+  {
+    "id":"highest_tuition",
+    "type":"scale",
+    "prompt_en":"Maximum tuition (USD per year)",
+    "prompt_ar":"أعلى قسط سنوي (بالدولار)",
+    "scale_weight":1,
+    "targets":[],
+    "min": 1500,
+    "max": 44500,
+    "step": 500,
+    "defaultValue": 1500
+  }
+]

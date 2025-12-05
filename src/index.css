@@ -1,0 +1,383 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './styles/page-content.css';
+
+@layer base {
+  :root {
+    /* Light Mode Palette from PRD */
+    --background: 220 13% 97%; /* #F5F7F9 */
+    --foreground: 224 64% 13%; /* #0C1439 */
+
+    --card: 220 13% 97%;
+    --card-foreground: 224 64% 13%;
+
+    --popover: 220 13% 97%;
+    --popover-foreground: 224 64% 13%;
+
+    /* primary, secondary, accent are defined in tailwind.config.ts */
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* Soft grey text */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark Mode Palette from PRD */
+    --background: 240 6% 6%; /* #0F0F0F */
+    --foreground: 210 40% 98%;
+
+    --card: 240 6% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 6% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%; /* Soft grey text */
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-muted-foreground;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground font-display;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html[dir="rtl"] body {
+    font-family: 'arabic', 'Inter', sans-serif;
+    text-align: right;
+  }
+}
+
+@layer utilities {
+  /* Glass Panel Component Style */
+  .glass-panel {
+    @apply bg-black/30 backdrop-blur-xl rounded-glass border border-white/25 shadow-lg;
+  }
+
+  .dark .glass-panel {
+    @apply bg-black/20 border-white/10;
+  }
+
+  /* Enhanced Hero Glass Panel */
+  .hero-glass-panel {
+    background: rgba(233, 244, 244, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+                0 0 1px rgba(255, 255, 255, 0.3) inset;
+    animation: fadeInScale 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Reduce blur on mobile for performance */
+  @media (max-width: 640px) {
+    .hero-glass-panel {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+
+  /* Section Spacing */
+  .section-spacing {
+    @apply py-10 md:py-20;
+  }
+
+  /* Enhanced Roadmap Animations */
+  .roadmap-item {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .roadmap-item.in-view {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1);
+  }
+
+  .roadmap-item.active {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Desktop: Animated SVG line */
+  @media (min-width: 768px) {
+    .roadmap-progress-line-desktop {
+      animation: drawLineDesktop 2.5s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+    
+    .roadmap-progress-line-desktop-rtl {
+      animation: drawLineDesktopRTL 2.5s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+    
+    @keyframes drawLineDesktop {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    @keyframes drawLineDesktopRTL {
+      from { stroke-dashoffset: 1000; }
+      to { stroke-dashoffset: -1000; }
+    }
+    
+    /* Traveling dot animation */
+    .roadmap-traveling-dot {
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, #009DB0, #00ABAB);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0, 157, 176, 0.8);
+      animation: travelDot 3s ease-in-out infinite;
+      animation-delay: 0.5s;
+    }
+    
+    .roadmap-traveling-dot.rtl {
+      left: auto;
+      right: 0;
+      animation: travelDotRTL 3s ease-in-out infinite;
+      animation-delay: 0.5s;
+    }
+    
+    @keyframes travelDot {
+      0%, 100% { left: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      50% { left: 50%; opacity: 1; }
+      90% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    
+    @keyframes travelDotRTL {
+      0%, 100% { right: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      50% { right: 50%; opacity: 1; }
+      90% { opacity: 1; }
+      100% { right: 100%; opacity: 0; }
+    }
+  }
+
+  /* Mobile: Curved SVG path animation */
+  @media (max-width: 767px) {
+    .roadmap-progress-line-mobile {
+      animation: drawLineMobile 2.5s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+    
+    @keyframes drawLineMobile {
+      to { stroke-dashoffset: 0; }
+    }
+  }
+
+  /* Hero Staggered Entrance Animations */
+
+  .hero-title-fade {
+    animation: fadeInUp 0.6s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .hero-subtitle-fade {
+    animation: fadeInUp 0.6s ease-out forwards;
+    animation-delay: 0.35s;
+    opacity: 0;
+  }
+
+  .hero-ctas-fade {
+    animation: fadeInUp 0.6s ease-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  .hero-promo-fade {
+    animation: fadeInUp 0.6s ease-out forwards;
+    animation-delay: 0.65s;
+    opacity: 0;
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Support for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glass-panel,
+    .hero-title-fade,
+    .hero-subtitle-fade,
+    .hero-ctas-fade,
+    .hero-promo-fade,
+    .roadmap-item,
+    .roadmap-progress-line {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+.roadmap-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.roadmap-item.in-view {
+  opacity: 1 !important;
+  transform: translateY(0);
+}
+
+.roadmap-item.active {
+  transform: scale(1.05) translateY(0);
+}
+
+@media (max-width: 767px) {
+  .roadmap-progress-line {
+    left: 2rem;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, #00A7B0, #00B8B0);
+    opacity: 0.9;
+  }
+}
+
+.scroll-hint {
+  z-index: 5;
+}
+
+/* Quiz card enhancements */
+  .quiz-card {
+    @apply bg-card border border-border shadow-xl rounded-2xl;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .quiz-card:hover {
+    @apply shadow-2xl;
+    transform: translateY(-2px);
+  }
+
+  /* Hero CTA Button Styles */
+  .hero-cta-primary {
+    @apply font-bold py-3 px-8 rounded-xl text-white;
+    background-color: #009DB0;
+    box-shadow: 0 4px 20px rgba(0, 157, 176, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-cta-primary:hover {
+    background-color: #00ABAB;
+    box-shadow: 0 6px 30px rgba(0, 157, 176, 0.5);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .hero-cta-secondary {
+    @apply font-bold py-3 px-8 rounded-xl text-white;
+    background-color: #0C1439;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-cta-secondary:hover {
+    background-color: rgba(12, 20, 57, 0.9);
+    box-shadow: 0 4px 20px rgba(12, 20, 57, 0.4);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  /* Button enhancements (legacy) */
+  .btn-primary-glow {
+    @apply bg-primary hover:bg-primary/90;
+    box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.39);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary-glow:hover {
+    box-shadow: 0 6px 20px 0 hsl(var(--primary) / 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Scroll hint fade */
+  .scroll-hint {
+    animation: bounce 2s infinite;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .scroll-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Custom Scrollbar Styles */
+  /* For Webkit browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+}

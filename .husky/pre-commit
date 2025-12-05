@@ -1,0 +1,4 @@
+#!/bin/sh
+# The following two lines were removed due to deprecation:
+# . "$(dirname -- "$0")/_/husky.sh" 
+npm run lint

@@ -1,0 +1,13 @@
+{
+  "//": "FE-3: i18n support for Arabic names. Keyed by program_id or university_name.",
+  "//": "TODO: Populate this with actual data.",
+
+  "by_university_name": {
+    "Istanbul University": "جامعة اسطنبول",
+    "Bahcesehir University": "جامعة بهتشة شهير"
+  },
+  "by_program_id": {
+    "prog_istanbul_cs_123": "بكالوريوس علوم الحاسوب (جامعة اسطنبول)",
+    "prog_bahcesehir_eng_456": "هندسة البرمجيات (جامعة بهتشة شهير)"
+  }
+}

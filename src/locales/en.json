@@ -1,0 +1,554 @@
+{
+  "nav": {
+    "home": "Home",
+    "major": "Choose Major",
+    "faq": "FAQ",
+    "steps": "Admission Steps",
+    "contact": "Talk to us before deciding",
+    "logoAlt": "Qobouli Logo",
+    "whatsappMessage": "I contacted you through the website and I would like to register and win the free 3-day trip",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "universities": "Private Universities",
+    "studyInTurkey": "Study in Turkey",
+    "lang": "en"
+  },
+  "hero": {
+    "title": "Your comprehensive guide to studying in Turkey - from the first step until becoming a university student!",
+    "subtitle": "All the information you won't find anywhere else... We've gathered it here for free, in a simple and practical style.",
+    "button": {
+      "recommend": "Help me choose my major",
+      "contact": "Talk to us before deciding"
+    },
+    "promoText": "Because registering with us through the website allows you to win a free trip outside Istanbul upon completing the registration process."
+  },
+  "roadmap": {
+    "title": "How do we help you?",
+    "step1": "Contact us",
+    "step2": "We'll help you choose your major",
+    "step3": "Select the best university",
+    "step4": "Prepare documents",
+    "step5": "Final admission"
+  },
+  "resources": {
+    "title": "Free tools and resources",
+    "contactHelp": "For more free resources and exclusive information, contact us directly",
+    "contactButton": "Contact us via WhatsApp",
+    "viewDoc": "View document",
+    "readMore": "Read more"
+  },
+  "footer": {
+    "programSearch": "Program Search",
+    "trackApplication": "Track Application",
+    "instagram": "Instagram",
+    "whatsapp": "WhatsApp",
+    "rights": "This website is a free student guide provided by Qobouli. All rights reserved.",
+    "logoAlt": "Qobouli Logo",
+    "trackApplicationTitle": "Track your application using your application number",
+    "programSearchTitle": "Find the perfect university program for your students"
+  },
+  "faq": {
+    "title": "University admission secrets in Turkey - You won't find them elsewhere!",
+    "items": [
+      {
+        "q": "Why do students think universities must contact them directly, but are shocked when they don't respond?",
+        "a": [
+          "Private Turkish universities never communicate directly with students unless you apply through an authorized office. If you send an email or ask on the official website, usually no one will respond.",
+          "Why? Because universities have agents responsible for applications and coordination.",
+          "Because of this, many students miss opportunities simply because they're waiting for a response that will never come."
+        ]
+      },
+      {
+        "q": "What's the real difference between preliminary and final acceptance? And what's the risk if you register with an office that doesn't explain it?",
+        "a": [
+          "Preliminary acceptance is just a paper saying \"initially, we accept you,\" but you don't have an actual seat at the university yet. Final acceptance comes after you send your documents and pay the fees, but even that doesn't mean you're guaranteed a spot in the current semester.",
+          "Priority is always given to students who confirm their enrollment after final acceptance.",
+          "This means if you're late, your seat might be postponed to the next semester even if you have final acceptance. Your right isn't lost, but timing is critical at this stage.",
+          "At Qobouli, we don't consider a student registered until they reach the actual confirmation point."
+        ]
+      },
+      {
+        "q": "Do all universities really accept any student as long as they pay?",
+        "a": [
+          "Not at all. Some universities have special conditions depending on the major, country, or even the application method.",
+          "There are universities that reject students if there are minor errors in their documents, or if the student sent them at the wrong time.",
+          "Payment alone is not enough. Your documents must be in order, timing appropriate, and someone must know how to communicate correctly with the university."
+        ]
+      },
+      {
+        "q": "Why are some universities more expensive? Does it really make a difference?",
+        "a": [
+          "Price isn't always a measure of quality, but at some higher-priced universities you get benefits such as:",
+          "Central location in Istanbul",
+          "Partnerships with hospitals or major companies for practical training",
+          "Study in a foreign language + updated curricula",
+          "The real secret? It's not the price, but whether you're paying for a real future opportunity."
+        ]
+      },
+      {
+        "q": "How do I know if the university is recognized in my country?",
+        "a": [
+          "University recognition is a sensitive topic and differs from country to country. You can ask your country's Ministry of Education or your embassy in Turkey, but we provide a ready-made list for each Arab country. Contact us, send your country's name, and we'll give you the details."
+        ]
+      },
+      {
+        "q": "What is the most dangerous mistake students make during application?",
+        "a": [
+          "The biggest mistake? Sending your papers by yourself to an office you don't know or trying to register by yourself without knowledge of admission requirements. They might make you miss scholarship opportunities, or give you a preliminary acceptance that doesn't guarantee anything. Contact us before taking any step... and make sure the registration is guaranteed."
+        ]
+      },
+      {
+        "q": "What happens if you apply for a scholarship or discount... and then change your major?",
+        "a": [
+          "The discount or scholarship is directly linked to the major you initially registered for. If you change your major later, even before starting your studies, you might lose the discount or have to pay a price difference.",
+          "Worst-case scenario? You don't pay attention and have to pay an additional amount or lose the offer entirely.",
+          "The right approach is to choose your major from the beginning after understanding the market and options, and at Qobouli, we can help you secure a flexible discount that won't be easily affected if you change your mind later."
+        ]
+      },
+      {
+        "q": "How do some students pay lower fees for the same university and major than others?",
+        "a": [
+          "Discounts aren't just based on relationships. Many factors affect the final price, such as:",
+          "Your nationality (some universities have special discounts for certain nationalities)",
+          "The country where you obtained your high school diploma",
+          "Your GPA (the higher it is, the better your discount chances)",
+          "Having a language certificate (TOEFL, SAT, etc.)",
+          "Application timing (some offers expire or change monthly)",
+          "When we say we know how to secure the best offer for you, it comes from our understanding of all these details, not just a discount from the office."
+        ]
+      }
+    ]
+  },
+  "quiz": {
+    "nextButton": "Next",
+    "previousButton": "Back",
+    "questionProgress": "Question {{current}} of {{total}}",
+    "enterValue": "Enter value",
+    "showResultsButton": "Show Results",
+    "selectValue": "Select a value (0-4)",
+    "dragReorderHint": "(Drag to reorder - Top 3 matter)",
+    "unsupportedQuestionType": "Unsupported question type: {{type}}",
+    "simplifiedDragDropNote": "(Note: This is a simplified drag & drop. Full version would use a library like dnd-kit for better UX and accessibility.)"
+  },
+  "results": {
+    "title": "Your Recommended Majors",
+    "recommendedProgramsTitle": "Recommended Programs",
+    "explanationTitle": "Why these recommendations?",
+    "resetButton": "Restart Quiz",
+    "shareButton": "Share Results",
+    "contactButton": "Contact Us",
+    "noProgramsFoundDesc": "No specific programs found based on your answers. Try adjusting your choices or broadening your interests.",
+    "ctaButtonDetails": "Discover More",
+    "loading": "Loading results...",
+    "noResults": "We could not determine a recommendation based on your answers. Please try again."
+  },
+  "ui": {
+    "results": {
+      "title": "Your Recommended Majors",
+      "subtitle": "Based on your answers, these majors are the best fit for your personality and interests:",
+      "confidenceWarning": "The differences between the results are small; we recommend speaking with a counselor."
+    },
+    "cta": {
+      "whatsapp": "Chat via WhatsApp",
+      "share": "Share",
+      "restart": "Restart Quiz"
+    },
+    "dialog": {
+      "close": "Close"
+    },
+    "carousel": {
+      "previousSlide": "Previous slide",
+      "nextSlide": "Next slide",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "sidebar": {
+      "toggle": "Toggle Sidebar"
+    },
+    "breadcrumb": {
+      "ariaLabel": "Breadcrumb",
+      "more": "More"
+    },
+    "pagination": {
+      "ariaLabel": "Pagination",
+      "previousPage": "Go to previous page",
+      "nextPage": "Go to next page",
+      "morePages": "More pages"
+    },
+    "announcement": {
+      "title": "Important Announcements",
+      "noAnnouncements": "No announcements at the moment.",
+      "readMore": "Read more...",
+      "previous": "Previous",
+      "next": "Next",
+      "shortContext": "Details about the announcement."
+    },
+    "language": {
+      "ar": "العربية",
+      "en": "English",
+      "fa": "فارسی",
+      "arAbbr": "AR",
+      "enAbbr": "EN",
+      "faAbbr": "FA"
+    }
+  },
+  "badge": {
+    "cs_ai": "Tech Explorer",
+    "cyber": "Cybersecurity Guardian",
+    "data": "Data Analyst",
+    "soft_eng": "Software Developer",
+    "elec": "Circuit Expert",
+    "mech": "Mechanical Engineer",
+    "civil": "Infrastructure Engineer",
+    "mechatro": "Robotics Engineer",
+    "arch": "Creative Architect",
+    "graphic": "Visual Designer",
+    "media": "Media Expert",
+    "bus_mgmt": "Business Leader",
+    "acc_fin": "Finance Specialist",
+    "econ": "Economic Analyst",
+    "marketing": "Marketing Expert",
+    "law_intl": "International Lawyer",
+    "medicine": "Doctor",
+    "dentistry": "Dentist",
+    "pharmacy": "Pharmacist",
+    "nursing": "Care Nurse",
+    "biosci": "Bioscience Researcher",
+    "psych": "Psychological Counselor",
+    "edu_lang": "Educator & Language Expert",
+    "tourism": "Hospitality & Tourism Expert",
+    "aviation": "Aviation Leader"
+  },
+  "question": {
+    "SP1": {
+      "prompt": "Rank your top three favorite subjects",
+      "options": {
+        "math": "Mathematics",
+        "physics": "Physics",
+        "biology": "Biology",
+        "computer": "Computer Science",
+        "literature": "Literature",
+        "art": "Art",
+        "economics": "Economics",
+        "social": "Social Studies"
+      }
+    },
+    "PRJ": {
+      "prompt": "Your best school project was",
+      "options": {
+        "robot": "Building a robot",
+        "financeSim": "Financial simulation",
+        "artExpo": "Art exhibition",
+        "documentary": "Short documentary film",
+        "bioFair": "Bioscience fair",
+        "modelPlane": "Model airplane"
+      }
+    },
+    "STYLE": {
+      "prompt": "Your problem-solving style is",
+      "options": {
+        "logical": "Logical and analytical",
+        "visual": "Visual and drawing-oriented",
+        "empathic": "Empathetic and people-oriented",
+        "debate": "Persuasive and debate-oriented",
+        "venture": "Entrepreneurial and adventurous"
+      }
+    },
+    "TEAM": {
+      "prompt": "Your usual role in a team is",
+      "options": {
+        "coder": "Programmer",
+        "planner": "Coordinator/Planner",
+        "presenter": "Presenter",
+        "caregiver": "Caregiver for others",
+        "researcher": "Researcher"
+      }
+    },
+    "MATH": { "prompt": "How comfortable are you with advanced mathematics?" },
+    "CODE": { "prompt": "How interested are you in programming?" },
+    "DRAW": { "prompt": "How interested are you in drawing and design tools?" },
+    "EMPATHY": {
+      "prompt": "I can easily perceive others' feelings.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "LEAD": {
+      "prompt": "I like leading large groups.",
+      "options": {
+        "agree": "Agree",
+        "neutral": "Neutral",
+        "disagree": "Disagree"
+      }
+    },
+    "DEBATE": { "prompt": "Debate excites me." },
+    "RESEARCH": {
+      "prompt": "I prefer quiet research over public speaking.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "RISK": {
+      "prompt": "I am comfortable with physical risks.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "SALARY": {
+      "prompt": "High salary is my top priority.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "STABILITY": {
+      "prompt": "I prefer job stability.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "TRAVEL": {
+      "prompt": "I enjoy traveling for work.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "HEALTHCARE": {
+      "prompt": "How drawn are you to healthcare work?",
+      "options": {
+        "love": "Love it",
+        "ok": "It's OK",
+        "no": "Not for me"
+      }
+    },
+    "MEDIA_INT": {
+      "prompt": "How drawn are you to media/film industry?",
+      "options": { "love": "Love it", "ok": "It's OK", "no": "Not for me" }
+    },
+    "LEGAL_INT": {
+      "prompt": "How drawn are you to legal work/advocacy?",
+      "options": { "love": "Love it", "ok": "It's OK", "no": "Not for me" }
+    },
+    "BUSINESS_INT": {
+      "prompt": "How drawn are you to owning a private business?",
+      "options": { "love": "Love it", "ok": "It's OK", "no": "Not for me" }
+    },
+    "LAB_WORK": {
+      "prompt": "I prefer working inside a laboratory.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "OUTDOOR": {
+      "prompt": "I prefer working in outdoor locations.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "SPORTS_INT": {
+      "prompt": "I enjoy physical activities and sports science.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "ENVIRON": {
+      "prompt": "I care about environmental sustainability.",
+      "options": { "yes": "Yes", "no": "No" }
+    },
+    "GRADE": {
+      "prompt": "Your overall high school grade average:",
+      "options": {
+        "lt70": "Less than 70%",
+        "70_85": "70% - 85%",
+        "gt85": "More than 85%"
+      }
+    },
+    "BUDGET": { "prompt": "Highest annual tuition (USD)" }
+  },
+  "phrases": {
+    "math": "You have a clear talent for mathematics.",
+    "physics": "You enjoy analytical physical challenges.",
+    "biology": "You have a great curiosity for life sciences.",
+    "computer": "You love technology and programming.",
+    "literature": "You lean towards literary creativity and written expression.",
+    "art": "Your artistic side is prominent.",
+    "economics": "You are interested in markets and economic issues.",
+    "social": "You have an interest in societal behavior.",
+    "robot": "You love building robots and practical technology.",
+    "financeSim": "You are interested in financial simulation and number analysis.",
+    "artExpo": "You excelled in organizing a creative art exhibition.",
+    "documentary": "You enjoyed producing media content.",
+    "bioFair": "You have a passion for biological experiments in the lab.",
+    "modelPlane": "You are interested in aviation and mechanical models.",
+    "logical": "Your thinking is analytical and logical.",
+    "visual": "Your thinking is visual and tends towards planning by drawing.",
+    "empathic": "You care about others' feelings and empathy.",
+    "debate": "You enjoy debate and defending ideas.",
+    "venture": "You have an entrepreneurial spirit and are not afraid of risk.",
+    "coder": "You are proficient in writing code.",
+    "planner": "You excel in planning and organization.",
+    "presenter": "You love standing before an audience and presenting ideas.",
+    "caregiver": "You care about looking after others and helping them.",
+    "researcher": "You enjoy research and delving into details.",
+    "gradeBand0": "Your current average may limit some competitive majors.",
+    "gradeBand1": "Your average is good and opens up wide options.",
+    "gradeBand2": "Your high average qualifies you for the most selective programs.",
+    "ENVIRON": "You care about environmental sustainability and developing green projects."
+  },
+  "errors": {
+    "sessionLoadFailed": "Session Load Failed",
+    "supabaseSaveError": "Database Save Error",
+    "maxSelectionDesc": "Please select up to {{count}} options.",
+    "answerRequiredTitle": "Answer Required",
+    "rankSelectionDesc": "Please select exactly {{count}} options.",
+    "shareNotReady": "Not ready to share.",
+    "linkCopiedTitle": "Link Copied!",
+    "shareFailed": "Share Failed"
+  },
+  "share": {
+    "title": "My Major Recommendation",
+    "text": "Check out my results!"
+  },
+  "userForm": {
+    "title": "Start Your Educational Journey",
+    "subtitle": "Share some information with us to guide you towards the optimal major.",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter your full name",
+    "phoneLabel": "Phone Number (Optional)",
+    "phonePlaceholder": "e.g., 9665xxxxxxx",
+    "submitButton": "Start Quiz",
+    "submittingButton": "Submitting...",
+    "fieldRequired": "This field is required",
+    "invalidPhoneError": "Please enter a valid phone number without a leading zero",
+    "phoneInvalid": "Phone number must be at least 10 digits.",
+    "correctErrorsToast": "Please correct the errors",
+    "introParagraph": "We've created an AI-powered tool to help you discover which university major suits your personality and interests best, through carefully designed questions by education experts."
+  },
+  "options": {
+      "yes": "Yes",
+      "no": "No",
+      "agree": "Agree",
+      "neutral": "Neutral",
+      "disagree": "Disagree",
+      "love": "Love it",
+      "ok": "It's OK",
+      "not_for_me": "Not for me",
+      "lt70": "< 70%",
+      "70_85": "70-85%",
+      "gt85": "> 85%",
+      "none": "None of the above (This question will not be counted in the algorithm)"
+  },
+  "questionsConfig": {
+    "SP1": {
+        "options": {
+            "math": "Mathematics",
+            "physics": "Physics",
+            "biology": "Biology",
+            "computer": "Computer Science",
+            "literature": "Literature",
+            "art": "Art",
+            "economics": "Economics",
+            "social": "Social Studies"
+        }
+    },
+    "PRJ": {
+        "options": {
+            "robot": "Building a robot",
+            "financeSim": "Financial simulation",
+            "artExpo": "Art exhibition",
+            "documentary": "Short documentary film",
+            "bioFair": "Bioscience fair",
+            "modelPlane": "Model airplane"
+        }
+    },
+    "STYLE": {
+        "options": {
+            "logical": "Logical and analytical",
+            "visual": "Visual and drawing-oriented",
+            "empathic": "Empathetic and people-oriented",
+            "debate": "Persuasive and debate-oriented",
+            "venture": "Entrepreneurial and adventurous"
+        }
+    },
+    "TEAM": {
+        "options": {
+            "coder": "Programmer",
+            "planner": "Coordinator/Planner",
+            "presenter": "Presenter",
+            "caregiver": "Caregiver for others",
+            "researcher": "Researcher"
+        }
+    }
+  },
+  "index": {
+    "scrollHint": "Scroll for more",
+    "logoAlt": "Qobouli Education"
+  },
+  "notFound": {
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
+  },
+  "loading": {
+    "session": "Loading session..."
+  },
+  "whatsapp": {
+    "hover": "Would you like us to help you? Contact us",
+    "ariaLabel": "Contact via WhatsApp",
+    "fallback": {
+      "title": "Could not open WhatsApp",
+      "description": "Please add {{phone}} to your contacts and message us."
+    }
+  },
+  "common": {
+    "edit": "Edit",
+    "copy": "Copy"
+  },
+  "reviewAnswers": {
+    "reviewAnswersTitle": "Review Your Answers",
+    "yourAnswer": "Your Answer:",
+    "doneEditing": "Done Editing",
+    "backToLastQuestion": "Back to Last Question",
+    "confirmAndSeeResults": "Confirm & See Results",
+    "cancelEdit": "Cancel Edit"
+  },
+  "userInfoForm": {
+    "submitting": "Submitting..."
+  },
+  "ai": {
+    "title": "Help me choose my major",
+    "next": "Next Question",
+    "previous": "Previous Question",
+    "showResults": "Show Results",
+    "results": {
+      "title": "Majors suitable for you",
+      "subtitle": "Based on your answers, these are the most suitable majors for your personality and interests:",
+      "helpText": "Want to know the best university and its price? Contact us directly",
+      "contactButton": "Contact us via WhatsApp",
+      "resetButton": "Try again",
+      "saving": "Saving Results..."
+    },
+    "userForm": {
+      "title": "Enter your information to start",
+      "name": "Full Name",
+      "phone": "Phone Number (with country code)",
+      "namePlaceholder": "Enter your full name",
+      "phonePlaceholder": "Example: +90555555555",
+      "startButton": "Start the Quiz",
+      "privacy": "Your information will remain secure and will only be used to contact you regarding suitable study programs",
+      "submitSuccessTitle": "Submission Successful",
+      "submitSuccessDesc": "Thank you, we will contact you soon.",
+      "submitErrorTitle": "Submission Error",
+      "submitErrorDesc": "An error occurred while submitting your information. Please try again.",
+      "networkErrorTitle": "Network Error",
+      "networkErrorDesc": "Could not connect to the server. Please check your internet connection and try again."
+    },
+    "answerRequiredTitle": "Answer Required",
+    "answerRequiredDesc": "Please select an answer to continue."
+  },
+  "supabase": {
+    "saveErrorTitle": "Error Saving Session"
+  },
+  "meta": {
+    "title": "Qobouli - Your Guide to Studying in Turkey",
+    "description": "Your comprehensive guide to studying in Turkey - from the first step until you become a university student!"
+  },
+  "pages": {
+    "studyInTurkey": {
+      "title": "Study in Turkey | Qobouli",
+      "h1": "Study in Turkey",
+      "p1": "Page content goes here"
+    },
+    "turkishPrivateUniversities": {
+      "title": "Turkish Private Universities | Qobouli",
+      "h1": "Turkish Private Universities",
+      "p1": "Page content goes here"
+    },
+    "universityFeesTurkey2025": {
+      "title": "University Fees in Turkey 2025",
+      "h1": "University Fees in Turkey 2025",
+      "p1": "This page is dedicated to the university fees in Turkey for 2025. Content will be added soon.",
+      "p2": "(This is placeholder text. It will be replaced with 1,000-2,000 words of unique content, including tables, videos, FAQs, and internal links.)"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+export interface BadgeDetail {
+  emoji: string;
+  label_en: string;
+  label_ar: string;
+}
+
+export interface BadgeMap {
+  [major_slug: string]: BadgeDetail;
+}
+
+const badgeMap: BadgeMap = {
+  computer: {
+    emoji: '💻',
+    label_en: 'Tech Explorer',
+    label_ar: 'مستكشف التكنولوجيا',
+  },
+  engineering: {
+    emoji: '⚙️',
+    label_en: 'Engineering Innovator',
+    label_ar: 'مبتكر الهندسة',
+  },
+  medicine: {
+    emoji: '🩺',
+    label_en: 'Healing Hero',
+    label_ar: 'بطل الشفاء',
+  },
+  design: {
+    emoji: '🎨',
+    label_en: 'Design Visionary',
+    label_ar: 'صاحب رؤية في التصميم',
+  },
+  business: {
+    emoji: '📈',
+    label_en: 'Business Strategist',
+    label_ar: 'استراتيجي الأعمال',
+  },
+  law: {
+    emoji: '⚖️',
+    label_en: 'Justice Advocate',
+    label_ar: 'ناصر العدالة',
+  },
+  science: {
+    emoji: '🔬',
+    label_en: 'Science Pathfinder',
+    label_ar: 'رائد العلوم',
+  },
+  arts: {
+    emoji: '🎭',
+    label_en: 'Creative Spirit',
+    label_ar: 'روح إبداعية',
+  },
+  education: {
+    emoji: '🧑‍🏫',
+    label_en: 'Knowledge Shaper',
+    label_ar: 'صانع المعرفة',
+  },
+  architecture: {
+    emoji: '🏗️',
+    label_en: 'Structure Shaper',
+    label_ar: 'مصمم هياكل',
+  },
+  pharmacy: {
+    emoji: '💊',
+    label_en: 'Wellness Expert',
+    label_ar: 'خبير العافية',
+  },
+  dentistry: {
+    emoji: '🦷',
+    label_en: 'Smile Guardian',
+    label_ar: 'حارس الابتسامة',
+  },
+  media: {
+    emoji: '🎥',
+    label_en: 'Media Maven',
+    label_ar: 'خبير الإعلام'
+  },
+  nursing: {
+    emoji: '👩‍⚕️',
+    label_en: 'Care Giver',
+    label_ar: 'مقدّم الرعاية'
+  },
+  sports: {
+    emoji: '🏃',
+    label_en: 'Sports Pro',
+    label_ar: 'محترف رياضي'
+  },
+  language: {
+    emoji: '🈶',
+    label_en: 'Linguist',
+    label_ar: 'خبير لغات'
+  },
+  social_sciences: {
+    emoji: '🌍',
+    label_en: 'Social Analyst',
+    label_ar: 'محلل اجتماعي'
+  },
+  tourism: {
+    emoji: '🏨',
+    label_en: 'Hospitality Star',
+    label_ar: 'نجم الضيافة'
+  },
+  health: {
+    emoji: '🏥',
+    label_en: 'Health Hero',
+    label_ar: 'بطل الصحة'
+  },
+  // Default or fallback badge
+  default: {
+    emoji: '🌟',
+    label_en: 'Future Shaper',
+    label_ar: 'صانع المستقبل',
+  }
+};
+
+export const getBadgeForMajor = (majorSlug: string | null): BadgeDetail => {
+  if (majorSlug && badgeMap[majorSlug]) {
+    return badgeMap[majorSlug];
+  }
+  return badgeMap.default;
+};
+
+export default badgeMap;
