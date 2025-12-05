@@ -8,17 +8,49 @@ import { Slider } from "@/components/ui/slider";
 import { useLanguage, Locale } from '@/contexts/LanguageContext';
 import { useSession } from '@/contexts/SessionContext';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 
 // Type assertion helper for Supabase queries
 const supabaseAny = supabase as any;
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from '@tanstack/react-query';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import useMajorScorer, { Answer as ScorerAnswer } from '@/hooks/useMajorScorer';
 import { Program as CatalogProgram, pickPrograms } from '@/lib/programCatalog';
 import { buildExplanation } from '@/utils/explanationPhrases';
 import { getBadgeForMajor } from '@/configs/BadgeMap';
 import html2canvas from 'html2canvas';
+
+// Cache key generator for AI recommendations
+const generateCacheKey = (answers: ScorerAnswer[]): string => {
+  const sortedAnswers = [...answers].sort((a, b) => a.questionId.localeCompare(b.questionId));
+  return `ai_rec_${btoa(JSON.stringify(sortedAnswers)).slice(0, 32)}`;
+};
+
+// Cache helpers
+const getFromCache = (key: string): { aiExplanation: string; timestamp: number } | null => {
+  try {
+    const cached = localStorage.getItem(key);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      // Cache valid for 24 hours
+      if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Cache read error:', e);
+  }
+  return null;
+};
+
+const saveToCache = (key: string, aiExplanation: string): void => {
+  try {
+    localStorage.setItem(key, JSON.stringify({ aiExplanation, timestamp: Date.now() }));
+  } catch (e) {
+    console.warn('Cache write error:', e);
+  }
+};
 
 import questionsConfigJson from '@/configs/scorer_questions.json';
 
@@ -86,6 +118,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
   const [explanationPhrases, setExplanationPhrases] = useState<string[]>([]);
   const [aiExplanation, setAiExplanation] = useState<string>('');
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
+  const [aiUnavailable, setAiUnavailable] = useState<boolean>(false);
   const [isLoadingResults, setIsLoadingResults] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean>(false);
 
@@ -241,8 +274,21 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
       const explanations = buildExplanation(computedScorerResult.boosters, language as Locale);
       setExplanationPhrases(explanations);
       
+      // Check cache first
+      const cacheKey = generateCacheKey(scorerAnswers);
+      const cached = getFromCache(cacheKey);
+      
+      if (cached) {
+        console.log('✅ Using cached AI explanation');
+        setAiExplanation(cached.aiExplanation);
+        setIsLoadingResults(false);
+        sessionStorage.setItem('quizCompleted', 'true');
+        return;
+      }
+      
       // Generate AI-powered explanation
       setIsLoadingAI(true);
+      setAiUnavailable(false);
       console.log('📝 Calling AI edge function with:', { 
         userName, 
         answersCount: scorerAnswers.length, 
@@ -250,7 +296,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         boostersCount: computedScorerResult.boosters.length 
       });
       
-      // Build enriched answers with human-readable labels  and values
+      // Build enriched answers with human-readable labels and values
       const enrichedAnswers = scorerAnswers.map(ans => {
         const question = scorerQuestionsConfig.find(q => q.id === ans.questionId);
         if (!question) return { questionId: ans.questionId, questionLabel: ans.questionId, displayValue: String(ans.value) };
@@ -275,15 +321,11 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         return { questionId: ans.questionId, questionLabel, displayValue };
       });
 
-      // Set timeout for AI generation (60 seconds for better reliability)
+      // Reduced timeout (15 seconds for better UX)
       const aiTimeout = setTimeout(() => {
         setIsLoadingAI(false);
-        toast({ 
-          title: t('errors.aiTimeout', 'AI generation timed out'), 
-          description: t('errors.aiTimeoutDesc', 'Using standard recommendations instead.'),
-          variant: 'default' 
-        });
-      }, 60000);
+        setAiUnavailable(true);
+      }, 15000);
 
       supabase.functions.invoke('generate-ai-recommendation', {
         body: {
@@ -299,50 +341,40 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         // Check if function returned error in data (even with 200 status)
         if (data?.error || data?.status === 429 || data?.status === 402) {
           console.error('❌ AI recommendation error:', data);
+          setAiUnavailable(true);
           
-          // Handle specific error codes
+          // Show toast only for specific errors
           if (data?.status === 429 || data?.error?.includes('429')) {
             toast({ 
-              title: t('errors.rateLimitTitle', 'Too many requests'), 
-              description: t('errors.rateLimitDesc', 'Please try again in a few moments.'),
+              title: t('errors.rateLimitTitle', 'طلبات كثيرة'), 
+              description: t('errors.rateLimitDesc', 'يرجى المحاولة مرة أخرى بعد قليل'),
               variant: 'default' 
             });
           } else if (data?.status === 402 || data?.error?.includes('402')) {
             toast({ 
-              title: t('errors.quotaExceededTitle', 'Service quota exceeded'), 
-              description: t('errors.quotaExceededDesc', 'Please contact support.'),
-              variant: 'default' 
-            });
-          } else {
-            toast({ 
-              title: t('errors.aiGenerationFailed', 'Could not generate AI insights'), 
-              description: data?.error || t('errors.aiGenerationFailedDesc', 'Using standard recommendations instead.'),
+              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'), 
+              description: t('errors.quotaExceededDesc', 'يرجى التواصل مع الدعم'),
               variant: 'default' 
             });
           }
         } else if (error) {
           console.error('❌ AI function error:', error);
-          toast({ 
-            title: t('errors.aiGenerationFailed', 'Could not generate AI insights'), 
-            description: error.message || t('errors.aiGenerationFailedDesc', 'Using standard recommendations instead.'),
-            variant: 'default' 
-          });
+          setAiUnavailable(true);
         } else if (data?.aiExplanation) {
           console.log('✅ AI explanation received, length:', data.aiExplanation.length);
           setAiExplanation(data.aiExplanation);
+          // Cache the successful result
+          saveToCache(cacheKey, data.aiExplanation);
         } else {
           console.warn('⚠️ No AI explanation in response');
+          setAiUnavailable(true);
         }
         setIsLoadingAI(false);
       }).catch(err => {
         clearTimeout(aiTimeout);
         console.error('❌ Unexpected error calling AI function:', err);
         setIsLoadingAI(false);
-        toast({ 
-          title: t('errors.aiGenerationFailed', 'Could not generate AI insights'), 
-          description: err.message,
-          variant: 'destructive' 
-        });
+        setAiUnavailable(true);
       });
       
       setIsLoadingResults(false);
@@ -491,17 +523,24 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
                 {isLoadingAI ? (
                   <div className="flex items-center justify-center gap-3 p-6 bg-muted/30 rounded-xl">
                     <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                    <p className="text-sm text-muted-foreground">{t('results.generatingAI', 'Generating personalized insights...')}</p>
+                    <p className="text-sm text-muted-foreground">{t('results.generatingAI', 'جاري إنشاء التوصيات الشخصية...')}</p>
                   </div>
                 ) : aiExplanation ? (
                   <div className="p-6 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/20 space-y-3 animate-fade-in">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
                       <h4 className="text-lg font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        {t('results.aiInsights', 'AI-Powered Insights')}
+                        {t('results.aiInsights', 'توصيات ذكية')}
                       </h4>
                     </div>
                     <p className="text-foreground leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
+                  </div>
+                ) : aiUnavailable ? (
+                  <div className="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                    <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0" />
+                    <p className="text-sm text-amber-700 dark:text-amber-300">
+                      {t('results.aiUnavailable', 'التوصيات الذكية غير متاحة حالياً. يمكنك الاطلاع على التوصيات العادية أدناه.')}
+                    </p>
                   </div>
                 ) : null}
 
@@ -584,18 +623,20 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         <Card className="quiz-card shadow-xl">
           <CardHeader>
             <div className="mb-4">
-              <div className={`flex justify-between items-center mb-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="flex justify-between items-center mb-2 text-sm text-muted-foreground">
                 <span className="font-medium">{t('quiz.questionProgress', `Question ${currentStep + 1} of ${uiQuestions.length}`, { current: currentStep + 1, total: uiQuestions.length })}</span>
                 <span className="font-bold text-primary">{Math.round(((currentStep + 1) / uiQuestions.length) * 100)}%</span>
               </div>
-              <div className="w-full bg-muted rounded-full h-2 overflow-hidden" dir="ltr">
+              <div 
+                className="w-full bg-muted rounded-full h-2 overflow-hidden"
+                style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+              >
                 <div 
-                  className="bg-gradient-to-r from-primary to-secondary h-2 rounded-full transition-all duration-500 ease-out" 
-                  style={{ 
-                    width: `${((currentStep + 1) / uiQuestions.length) * 100}%`,
-                    marginLeft: isRTL ? 'auto' : '0',
-                    marginRight: isRTL ? '0' : 'auto'
-                  }}
+                  className={cn(
+                    "h-2 rounded-full transition-all duration-500 ease-out",
+                    isRTL ? "bg-gradient-to-l from-primary to-secondary" : "bg-gradient-to-r from-primary to-secondary"
+                  )}
+                  style={{ width: `${((currentStep + 1) / uiQuestions.length) * 100}%` }}
                 />
               </div>
             </div>
@@ -603,26 +644,47 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
           </CardHeader>
           <CardContent id={`question-${currentUiQuestion.id}`} className="space-y-4">
           {currentUiQuestion.type === 'single' && currentUiQuestion.options && (
-            <RadioGroup value={rawAnswers[currentUiQuestion.id] as string || ""} onValueChange={val => handleAnswerChange(currentUiQuestion.id, val)} className="space-y-2">
-              {currentUiQuestion.options.map(opt => <Label key={opt.id} htmlFor={`${currentUiQuestion.id}-${opt.id}`} className={`flex items-center p-3 border rounded-md hover:border-blue-500 cursor-pointer has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 transition-all ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <RadioGroupItem value={opt.id} id={`${currentUiQuestion.id}-${opt.id}`} className={isRTL ? 'ml-2' : 'mr-2'}/> {opt.label}</Label>)}
+            <RadioGroup value={rawAnswers[currentUiQuestion.id] as string || ""} onValueChange={val => handleAnswerChange(currentUiQuestion.id, val)} className="space-y-2" dir={isRTL ? 'rtl' : 'ltr'}>
+              {currentUiQuestion.options.map(opt => (
+                <Label 
+                  key={opt.id} 
+                  htmlFor={`${currentUiQuestion.id}-${opt.id}`} 
+                  className="flex items-center p-3 border rounded-md hover:border-blue-500 cursor-pointer has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 transition-all gap-3"
+                >
+                  <RadioGroupItem value={opt.id} id={`${currentUiQuestion.id}-${opt.id}`} className="shrink-0" />
+                  <span className="flex-1">{opt.label}</span>
+                </Label>
+              ))}
             </RadioGroup>
           )}
           {currentUiQuestion.type === 'rank' && currentUiQuestion.options && (
-            <div className="space-y-2">
-              <p className={`text-sm text-muted-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>{t('quiz.select3Rank', 'Select exactly 3 and click Next')}</p>
-              {currentUiQuestion.options.map(opt => <Label key={opt.id} htmlFor={`${currentUiQuestion.id}-${opt.id}`} className={`flex items-center p-3 border rounded-md hover:border-blue-500 cursor-pointer has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 transition-all ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <Checkbox id={`${currentUiQuestion.id}-${opt.id}`} checked={(rawAnswers[currentUiQuestion.id] as string[] || []).includes(opt.id)} onCheckedChange={c => handleCheckboxChange(currentUiQuestion.id, opt.id, !!c, currentUiQuestion.maxSelections)} className={isRTL ? 'ml-2' : 'mr-2'}/> {opt.label}</Label>)}
+            <div className="space-y-2" dir={isRTL ? 'rtl' : 'ltr'}>
+              <p className="text-sm text-muted-foreground mb-2">{t('quiz.select3Rank', 'Select exactly 3 and click Next')}</p>
+              {currentUiQuestion.options.map(opt => (
+                <Label 
+                  key={opt.id} 
+                  htmlFor={`${currentUiQuestion.id}-${opt.id}`} 
+                  className="flex items-center p-3 border rounded-md hover:border-blue-500 cursor-pointer has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 transition-all gap-3"
+                >
+                  <Checkbox 
+                    id={`${currentUiQuestion.id}-${opt.id}`} 
+                    checked={(rawAnswers[currentUiQuestion.id] as string[] || []).includes(opt.id)} 
+                    onCheckedChange={c => handleCheckboxChange(currentUiQuestion.id, opt.id, !!c, currentUiQuestion.maxSelections)} 
+                    className="shrink-0"
+                  />
+                  <span className="flex-1">{opt.label}</span>
+                </Label>
+              ))}
             </div>
           )}
           {currentUiQuestion.type === 'scale' && (
             <div className="py-4">
-              <div className={`flex justify-between mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <span>{currentUiQuestion.min}</span>
+              <div className="flex justify-between mb-2" dir={isRTL ? 'rtl' : 'ltr'}>
+                <span>{isRTL ? currentUiQuestion.max : currentUiQuestion.min}</span>
                 <span className="text-lg font-semibold text-blue-600">
                   {rawAnswers[currentUiQuestion.id] !== undefined ? rawAnswers[currentUiQuestion.id] : currentUiQuestion.defaultValue}
                 </span>
-                <span>{currentUiQuestion.max}</span>
+                <span>{isRTL ? currentUiQuestion.min : currentUiQuestion.max}</span>
               </div>
               <Slider
                 id={currentUiQuestion.id}
