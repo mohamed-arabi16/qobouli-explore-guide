@@ -704,12 +704,12 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
           )}
           {currentUiQuestion.type === 'scale' && (
             <div className="py-4">
-              <div className="flex justify-between mb-2" dir={isRTL ? 'rtl' : 'ltr'}>
-                <span>{isRTL ? currentUiQuestion.max : currentUiQuestion.min}</span>
+              <div className="flex justify-between mb-2">
+                <span>{currentUiQuestion.min}</span>
                 <span className="text-lg font-semibold text-blue-600">
                   {rawAnswers[currentUiQuestion.id] !== undefined ? rawAnswers[currentUiQuestion.id] : currentUiQuestion.defaultValue}
                 </span>
-                <span>{isRTL ? currentUiQuestion.min : currentUiQuestion.max}</span>
+                <span>{currentUiQuestion.max}</span>
               </div>
               <Slider
                 id={currentUiQuestion.id}
@@ -718,7 +718,6 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
                 step={currentUiQuestion.step ?? 1}
                 defaultValue={[currentUiQuestion.defaultValue ?? 2]}
                 value={rawAnswers[currentUiQuestion.id] !== undefined ? [rawAnswers[currentUiQuestion.id] as number] : [currentUiQuestion.defaultValue ?? 2]}
-                dir={isRTL ? 'rtl' : 'ltr'}
                 onValueChange={valueArray => handleAnswerChange(currentUiQuestion.id, valueArray[0])}
                 className="w-full"
               />
