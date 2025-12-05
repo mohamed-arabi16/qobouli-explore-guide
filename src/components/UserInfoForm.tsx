@@ -19,22 +19,22 @@ interface UserInfoFormProps {
   isSubmitting?: boolean;
 }
 
-// Country codes for the dropdown
-const countryCodes = [
-  { code: '+90', country: 'Turkey / تركيا' },
-  { code: '+962', country: 'Jordan / الأردن' },
-  { code: '+966', country: 'Saudi Arabia / السعودية' },
-  { code: '+971', country: 'UAE / الإمارات' },
-  { code: '+20', country: 'Egypt / مصر' },
-  { code: '+963', country: 'Syria / سوريا' },
-  { code: '+964', country: 'Iraq / العراق' },
-  { code: '+961', country: 'Lebanon / لبنان' },
-  { code: '+970', country: 'Palestine / فلسطين' },
-  { code: '+218', country: 'Libya / ليبيا' },
-  { code: '+216', country: 'Tunisia / تونس' },
-  { code: '+213', country: 'Algeria / الجزائر' },
-  { code: '+212', country: 'Morocco / المغرب' },
-  { code: '+98', country: 'Iran / إيران' },
+// Country codes for the dropdown (keys match translation keys in countries.*)
+const countryCodesData = [
+  { code: '+90', key: 'turkey' },
+  { code: '+962', key: 'jordan' },
+  { code: '+966', key: 'saudiArabia' },
+  { code: '+971', key: 'uae' },
+  { code: '+20', key: 'egypt' },
+  { code: '+963', key: 'syria' },
+  { code: '+964', key: 'iraq' },
+  { code: '+961', key: 'lebanon' },
+  { code: '+970', key: 'palestine' },
+  { code: '+218', key: 'libya' },
+  { code: '+216', key: 'tunisia' },
+  { code: '+213', key: 'algeria' },
+  { code: '+212', key: 'morocco' },
+  { code: '+98', key: 'iran' },
 ];
 
 const UserInfoForm: React.FC<UserInfoFormProps> = ({ onSubmit, isSubmitting }) => {
@@ -110,9 +110,9 @@ const UserInfoForm: React.FC<UserInfoFormProps> = ({ onSubmit, isSubmitting }) =
                 <SelectValue placeholder={countryCode} />
               </SelectTrigger>
               <SelectContent>
-                {countryCodes.map((country) => (
+                {countryCodesData.map((country) => (
                   <SelectItem key={country.code} value={country.code}>
-                    {country.code} {country.country}
+                    {country.code} {t(`countries.${country.key}`, country.key)}
                   </SelectItem>
                 ))}
               </SelectContent>

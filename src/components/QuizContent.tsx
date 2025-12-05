@@ -52,6 +52,41 @@ const saveToCache = (key: string, aiExplanation: string): void => {
   }
 };
 
+// Retry helper with exponential backoff for AI calls
+const callAIWithRetry = async (
+  payload: any,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<{ data: any; error: any }> => {
+  let lastError: any = null;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const result = await supabase.functions.invoke('generate-ai-recommendation', {
+        body: payload
+      });
+
+      // Check if it's a rate limit error (429) that should be retried
+      if (result.data?.status === 429 && attempt < maxRetries - 1) {
+        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff: 1s, 2s, 4s
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+
+      return result;
+    } catch (err) {
+      lastError = err;
+      // Only retry on network errors
+      if (attempt < maxRetries - 1) {
+        const delay = baseDelay * Math.pow(2, attempt);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  return { data: null, error: lastError || new Error('Max retries exceeded') };
+};
+
 import questionsConfigJson from '@/configs/scorer_questions.json';
 
 // Types from scorer_questions.json for better clarity
@@ -279,7 +314,6 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
       const cached = getFromCache(cacheKey);
       
       if (cached) {
-        console.log('✅ Using cached AI explanation');
         setAiExplanation(cached.aiExplanation);
         setIsLoadingResults(false);
         sessionStorage.setItem('quizCompleted', 'true');
@@ -289,13 +323,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
       // Generate AI-powered explanation
       setIsLoadingAI(true);
       setAiUnavailable(false);
-      console.log('📝 Calling AI edge function with:', { 
-        userName, 
-        answersCount: scorerAnswers.length, 
-        programsCount: finalPrograms.length, 
-        boostersCount: computedScorerResult.boosters.length 
-      });
-      
+
       // Build enriched answers with human-readable labels and values
       const enrichedAnswers = scorerAnswers.map(ans => {
         const question = scorerQuestionsConfig.find(q => q.id === ans.questionId);
@@ -321,47 +349,44 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         return { questionId: ans.questionId, questionLabel, displayValue };
       });
 
-      // Reduced timeout (15 seconds for better UX)
+      // Extended timeout (25 seconds to account for retries)
       const aiTimeout = setTimeout(() => {
         setIsLoadingAI(false);
         setAiUnavailable(true);
-      }, 15000);
+      }, 25000);
 
-      supabase.functions.invoke('generate-ai-recommendation', {
-        body: {
-          userName,
-          answers: enrichedAnswers,
-          topPrograms: finalPrograms,
-          boosters: computedScorerResult.boosters
-        }
+      // Use retry helper with exponential backoff
+      callAIWithRetry({
+        userName,
+        answers: enrichedAnswers,
+        topPrograms: finalPrograms,
+        boosters: computedScorerResult.boosters
       }).then(({ data, error }) => {
         clearTimeout(aiTimeout);
-        console.log('🤖 AI response:', { data, error });
-        
+
         // Check if function returned error in data (even with 200 status)
         if (data?.error || data?.status === 429 || data?.status === 402) {
           console.error('❌ AI recommendation error:', data);
           setAiUnavailable(true);
-          
-          // Show toast only for specific errors
+
+          // Show toast only for specific errors (after all retries exhausted)
           if (data?.status === 429 || data?.error?.includes('429')) {
-            toast({ 
-              title: t('errors.rateLimitTitle', 'طلبات كثيرة'), 
+            toast({
+              title: t('errors.rateLimitTitle', 'طلبات كثيرة'),
               description: t('errors.rateLimitDesc', 'يرجى المحاولة مرة أخرى بعد قليل'),
-              variant: 'default' 
+              variant: 'default'
             });
           } else if (data?.status === 402 || data?.error?.includes('402')) {
-            toast({ 
-              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'), 
+            toast({
+              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'),
               description: t('errors.quotaExceededDesc', 'يرجى التواصل مع الدعم'),
-              variant: 'default' 
+              variant: 'default'
             });
           }
         } else if (error) {
           console.error('❌ AI function error:', error);
           setAiUnavailable(true);
         } else if (data?.aiExplanation) {
-          console.log('✅ AI explanation received, length:', data.aiExplanation.length);
           setAiExplanation(data.aiExplanation);
           // Cache the successful result
           saveToCache(cacheKey, data.aiExplanation);
