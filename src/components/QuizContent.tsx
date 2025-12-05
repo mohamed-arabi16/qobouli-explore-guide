@@ -52,6 +52,41 @@ const saveToCache = (key: string, aiExplanation: string): void => {
   }
 };
 
+// Retry helper with exponential backoff for AI calls
+const callAIWithRetry = async (
+  payload: any,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<{ data: any; error: any }> => {
+  let lastError: any = null;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const result = await supabase.functions.invoke('generate-ai-recommendation', {
+        body: payload
+      });
+
+      // Check if it's a rate limit error (429) that should be retried
+      if (result.data?.status === 429 && attempt < maxRetries - 1) {
+        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff: 1s, 2s, 4s
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+
+      return result;
+    } catch (err) {
+      lastError = err;
+      // Only retry on network errors
+      if (attempt < maxRetries - 1) {
+        const delay = baseDelay * Math.pow(2, attempt);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  return { data: null, error: lastError || new Error('Max retries exceeded') };
+};
+
 import questionsConfigJson from '@/configs/scorer_questions.json';
 
 // Types from scorer_questions.json for better clarity
@@ -314,19 +349,18 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         return { questionId: ans.questionId, questionLabel, displayValue };
       });
 
-      // Reduced timeout (15 seconds for better UX)
+      // Extended timeout (25 seconds to account for retries)
       const aiTimeout = setTimeout(() => {
         setIsLoadingAI(false);
         setAiUnavailable(true);
-      }, 15000);
+      }, 25000);
 
-      supabase.functions.invoke('generate-ai-recommendation', {
-        body: {
-          userName,
-          answers: enrichedAnswers,
-          topPrograms: finalPrograms,
-          boosters: computedScorerResult.boosters
-        }
+      // Use retry helper with exponential backoff
+      callAIWithRetry({
+        userName,
+        answers: enrichedAnswers,
+        topPrograms: finalPrograms,
+        boosters: computedScorerResult.boosters
       }).then(({ data, error }) => {
         clearTimeout(aiTimeout);
 
@@ -334,19 +368,19 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         if (data?.error || data?.status === 429 || data?.status === 402) {
           console.error('❌ AI recommendation error:', data);
           setAiUnavailable(true);
-          
-          // Show toast only for specific errors
+
+          // Show toast only for specific errors (after all retries exhausted)
           if (data?.status === 429 || data?.error?.includes('429')) {
-            toast({ 
-              title: t('errors.rateLimitTitle', 'طلبات كثيرة'), 
+            toast({
+              title: t('errors.rateLimitTitle', 'طلبات كثيرة'),
               description: t('errors.rateLimitDesc', 'يرجى المحاولة مرة أخرى بعد قليل'),
-              variant: 'default' 
+              variant: 'default'
             });
           } else if (data?.status === 402 || data?.error?.includes('402')) {
-            toast({ 
-              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'), 
+            toast({
+              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'),
               description: t('errors.quotaExceededDesc', 'يرجى التواصل مع الدعم'),
-              variant: 'default' 
+              variant: 'default'
             });
           }
         } else if (error) {

@@ -9,34 +9,136 @@ export interface Program {
 // Type assertion for the imported JSON
 const programs: Program[] = programsList as Program[];
 
-// Keyword map from PRD §2
+// Keyword map - SIGNIFICANTLY EXPANDED for better program coverage
+// Previous coverage: 58% | Target: 85%+
 export const keywordMap: Record<string, string[]> = {
-  cs_ai: ['Computer', 'Software', 'AI', 'Data Science'],
-  cyber: ['Cyber', 'Security', 'Forensic IT'],
-  data: ['Data', 'Analytics', 'Big Data'],
-  soft_eng: ['Software Engineering', 'Programming'],
-  elec: ['Electrical', 'Electronics', 'Avionics'],
-  mech: ['Mechanical', 'Automotive'],
-  civil: ['Civil', 'Construction', 'Structural'],
-  mechatro: ['Mechatronics', 'Robotics'],
-  arch: ['Architecture', 'Interior'],
-  graphic: ['Graphic', 'Visual', 'Animation'],
-  media: ['Media', 'Cinema', 'TV', 'Film'],
-  bus_mgmt: ['Management', 'Administration', 'Project'],
-  acc_fin: ['Accounting', 'Finance'],
-  econ: ['Economics', 'Banking'],
-  marketing: ['Marketing', 'Logistics'],
-  law_intl: ['Law', 'International Relations'],
-  medicine: ['Medicine', 'Surgery'],
-  dentistry: ['Dentistry', 'Orthodontics'],
-  pharmacy: ['Pharmacy', 'Pharmacology'],
-  nursing: ['Nursing', 'Physiotherapy', 'Midwifery'],
-  biosci: ['Bio', 'Genetics', 'Molecular', 'Biotech'],
-  psych: ['Psychology', 'Social Work'],
-  edu_lang: ['Education', 'Teaching', 'Language', 'Translation'],
-  tourism: ['Tourism', 'Hospitality'],
-  aviation: ['Aviation', 'Pilot'],
-  // _other has no keywords and should not be recommended
+  // Technology & Computing (expanded)
+  cs_ai: [
+    'Computer', 'Software', 'AI', 'Data Science', 'Artificial Intelligence',
+    'Machine Learning', 'Information System', 'Information Technology',
+    'Computational', 'Digital', 'Web', 'Network', 'System Engineering'
+  ],
+  cyber: ['Cyber', 'Security', 'Forensic', 'Cryptography', 'Information Security'],
+  data: ['Data', 'Analytics', 'Big Data', 'Statistics', 'Business Intelligence'],
+  soft_eng: ['Software Engineering', 'Programming', 'Application Development', 'Mobile Development', 'Mobile Technology'],
+
+  // Engineering (expanded)
+  elec: [
+    'Electrical', 'Electronics', 'Avionics', 'Power', 'Telecommunication', 'Signal',
+    'Electric', 'Energy Systems', 'Energy Technology', 'Hybrid', 'Nuclear',
+    'Alternative Energy', 'Energy Technologies', 'Electroneurophysiology'
+  ],
+  mech: [
+    'Mechanical', 'Automotive', 'Machine', 'Manufacturing', 'Industrial Engineering',
+    'Materials', 'Metallurg', 'Nanotechnology', 'Polymer', 'Welding', 'Mechanics',
+    'Non Destructive', 'Testing'
+  ],
+  civil: [
+    'Civil', 'Construction', 'Structural', 'Urban', 'City Planning', 'Regional Planning',
+    'Infrastructure', 'Geotechnical', 'Geomatics', 'Surveying', 'Cadastre', 'Earthquake'
+  ],
+  mechatro: ['Mechatronics', 'Robotics', 'Automation', 'Control System', 'Defense Technologies'],
+
+  // Design & Architecture (expanded)
+  arch: [
+    'Architecture', 'Interior', 'Landscape', 'Architectural', 'Urban Design',
+    'Restoration', 'Environmental Design', 'Real Estate'
+  ],
+  graphic: [
+    'Graphic', 'Visual', 'Animation', 'Game Design', 'Multimedia', 'Game Development',
+    'Digital Design', 'Industrial Design', 'Product Design', 'Fashion', 'Arts And Design',
+    'Ceramic', 'Jewelry', 'Textile Design', 'Communication Design', 'Packaging Design',
+    'Design', 'User Experience', 'UX', 'Printing', 'Publishing', 'Shoe Design',
+    'Textile Technology'
+  ],
+
+  // Media & Arts (expanded)
+  media: [
+    'Media', 'Cinema', 'TV', 'Film', 'Television', 'Journalism', 'Radio',
+    'Broadcasting', 'Advertising', 'Public Relations', 'Communication',
+    'Acting', 'Drama', 'Theatre', 'Performing Arts', 'Perorming Arts', 'Music', 'Photography',
+    'Opera', 'Sound', 'Art Theory'
+  ],
+
+  // Business & Economics (expanded)
+  bus_mgmt: [
+    'Management', 'Administration', 'Project', 'Business', 'Enterprise',
+    'Entrepreneur', 'Human Resource', 'Supply Chain', 'Operations',
+    'Leadership', 'Strategic', 'Trade', 'Commerce', 'E-Commerce', 'Retail',
+    'MBA', 'Executive', 'Industry'
+  ],
+  acc_fin: [
+    'Accounting', 'Finance', 'Audit', 'Tax', 'Banking', 'Capital', 'Investment', 'Insurance',
+    'Financial Engineering', 'Financial Technology', 'Fintech', 'Property', 'Valuation'
+  ],
+  econ: ['Economics', 'Economy', 'Econometrics', 'Development Economics'],
+  marketing: ['Marketing', 'Logistics', 'Sales', 'Brand', 'Consumer', 'Market Research'],
+
+  // Law & Politics (expanded)
+  law_intl: [
+    'Law', 'International Relations', 'Political', 'Diplomacy', 'Justice',
+    'Legal', 'Public Administration', 'Government', 'Human Rights'
+  ],
+
+  // Medicine & Health (significantly expanded)
+  medicine: [
+    'Medicine', 'Surgery', 'Medical', 'Clinical', 'Physician', 'Doctor',
+    'Pathology', 'Radiology', 'Emergency', 'Anesthesia', 'Anaesthesia',
+    'Cardiology', 'Neurology', 'Oncology', 'Pediatric', 'Internal Medicine',
+    'Surgical', 'Operating Room', 'Perfusion', 'Health Physics', 'Neuroscience'
+  ],
+  dentistry: [
+    'Dentistry', 'Orthodontics', 'Dental', 'Oral', 'Prosthodontic', 'Endodontic',
+    'Pedodontics', 'Periodontology', 'Aesthetic', 'Aestetic', 'Restorative'
+  ],
+  pharmacy: ['Pharmacy', 'Pharmacology', 'Pharmaceutical', 'Drug', 'Cosmetic', 'Medicinal'],
+  nursing: [
+    'Nursing', 'Physiotherapy', 'Midwifery', 'Paramedic', 'Emergency Aid',
+    'First Aid', 'Patient Care', 'Healthcare', 'Elderly Care', 'Disabled Care',
+    'Audiology', 'Audiometry', 'Dialysis', 'Home Care', 'Palliative',
+    'Opticianry', 'Optometry', 'Podology', 'Orthopaedic Prosthesis', 'Chiropractic',
+    'Occupational Health', 'Safety'
+  ],
+
+  // Life Sciences (expanded)
+  biosci: [
+    'Bio', 'Genetics', 'Molecular', 'Biotech', 'Biology', 'Biochemistry',
+    'Microbiology', 'Anatomy', 'Physiology', 'Embryology', 'Laboratory',
+    'Food', 'Nutrition', 'Dietetics', 'Environmental Science', 'Chemistry',
+    'Chemical', 'Agricultural', 'Veterinary', 'Stem Cell', 'Physics',
+    'Mathematics', 'Applied Math', 'Science'
+  ],
+
+  // Psychology & Social Sciences (expanded)
+  psych: [
+    'Psychology', 'Social Work', 'Sociology', 'Anthropology', 'Counseling',
+    'Therapy', 'Mental Health', 'Rehabilitation', 'Child Development', 'Child Develeopment',
+    'Family', 'Addiction', 'Behavioral', 'Cognitive', 'Social Service',
+    'History', 'Philosophy', 'Migration', 'Middle East', 'Islamic Studies',
+    'European Union', 'Global Relations', 'Organizational Behavior'
+  ],
+
+  // Education & Languages (expanded)
+  edu_lang: [
+    'Education', 'Teaching', 'Language', 'Translation', 'Pedagogy',
+    'Curriculum', 'School', 'Guidance', 'English', 'Arabic', 'Turkish',
+    'German', 'French', 'Spanish', 'Russian', 'Chinese', 'Japanese',
+    'Literature', 'Linguistics', 'Writing', 'Interpretation', 'Coaching',
+    'Sports Science', 'Exercise', 'Physical Education', 'Athletic'
+  ],
+
+  // Tourism & Hospitality (expanded)
+  tourism: [
+    'Tourism', 'Hospitality', 'Hotel', 'Travel', 'Culinary', 'Gastronomy',
+    'Chef', 'Cook', 'Food and Beverage', 'Event', 'Recreation', 'Leisure',
+    'Pastry', 'Bakery', 'Tourist Guiding', 'Seaman', 'Maritime', 'Underwater'
+  ],
+
+  // Aviation & Aerospace (expanded)
+  aviation: [
+    'Aviation', 'Pilot', 'Aerospace', 'Aircraft', 'Aeronautical', 'Air Traffic',
+    'Flight', 'Cabin Crew', 'Ground Handling', 'Airport'
+  ],
 };
 
 export interface SortedMajor {
