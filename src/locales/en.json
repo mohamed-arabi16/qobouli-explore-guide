@@ -543,20 +543,452 @@
   },
   "pages": {
     "studyInTurkey": {
-      "title": "Study in Turkey | Qobouli",
-      "h1": "Study in Turkey",
-      "p1": "Page content goes here"
+      "meta": {
+        "title": "Study in Turkey 2025: The Complete Guide for International Students",
+        "description": "Everything about studying in Turkey for international students in 2025. Learn about the best student cities, living costs, admission requirements, and application steps with Qobouli.",
+        "canonical": "https://qobouli.com/en/study-in-turkey",
+        "ogTitle": "Study in Turkey 2025: The Complete Guide for International Students",
+        "ogDescription": "Everything about studying in Turkey for international students in 2025. Learn about the best student cities, living costs, admission requirements, and application steps with Qobouli.",
+        "ogUrl": "https://qobouli.com/en/study-in-turkey"
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "current": "Study in Turkey"
+      },
+      "languageSwitch": "← اقرأ باللغة العربية",
+      "header": {
+        "title": "Study in Turkey 2025",
+        "subtitle": "A comprehensive overview of the student experience in Turkey: from choosing a city and major to living costs and university admissions."
+      },
+      "intro": {
+        "title": "Why Study in Turkey?",
+        "content": "Turkey is more than a tourist destination; it has become an attractive educational hub for students worldwide, especially from the GCC, Levant, and North Africa. The familiar culture, affordable cost of living, and strong universities make it an ideal choice. This page is designed for international students and expats in Turkey aiming to start their academic journey here."
+      },
+      "cities": {
+        "title": "Best Student Cities",
+        "istanbul": {
+          "title": "Istanbul: The Vibrant Heart of Turkey",
+          "content": "A city that blends history with modernity, Istanbul hosts the largest number of private and public universities. It offers unparalleled internship and career opportunities, though living costs are relatively higher."
+        },
+        "ankara": {
+          "title": "Ankara: The Academic Capital",
+          "content": "Known for prestigious universities like Middle East Technical University and Hacettepe University. It's a quieter city, ideal for studying, with lower living costs than Istanbul."
+        },
+        "other": {
+          "title": "Other Promising Cities",
+          "izmir": "Izmir: A beautiful coastal city with a European feel and strong universities.",
+          "sakarya": "Sakarya: Close to Istanbul with lower costs, making it an economical choice.",
+          "kayseri": "Kayseri: An industrial city in central Anatolia, offering opportunities for engineering students and affordable living."
+        }
+      },
+      "livingCosts": {
+        "title": "Monthly Living Cost Estimates",
+        "tableCaption": "Table: Estimated Monthly Living Costs in Turkey (USD)",
+        "headers": ["Item", "Monthly Estimate (USD)"],
+        "rows": [
+          ["Housing (Shared or Dorm)", "150 – 250"],
+          ["Food", "100 – 150"],
+          ["Transport (Student Card)", "20 – 40"],
+          ["Internet/Phone", "10 – 20"],
+          ["Miscellaneous", "50 – 100"],
+          ["Total", "330 – 560"]
+        ],
+        "note": "Note: These figures are estimates and can vary significantly based on the city and student's lifestyle."
+      },
+      "studyTracks": {
+        "title": "Study Tracks & Picking a Major",
+        "content": "One of the most critical decisions is choosing your language of instruction. Turkish-taught programs are often less expensive but require a preparatory year. English-taught programs open up broader opportunities in the global job market.",
+        "cta": {
+          "question": "Confused about which major to choose?",
+          "link": "Try Qobouli's recommender tool to find your best fit!"
+        }
+      },
+      "requirements": {
+        "title": "Admission Requirements (Quick Table)",
+        "tableCaption": "Table: Key Admission Documents Required",
+        "headers": ["Degree", "Key Documents Required"],
+        "rows": [
+          ["Bachelor's", "High school diploma, transcript, passport."],
+          ["Master's", "Bachelor's diploma, transcript, CV, statement of purpose."],
+          ["PhD", "Master's diploma, research proposal (sometimes)."]
+        ],
+        "detailsLink": "See detailed requirements for private universities"
+      },
+      "howToStart": {
+        "title": "How to Start with Qobouli",
+        "steps": [
+          {
+            "title": "Free Consultation:",
+            "content": "Contact us to assess your academic qualifications and preferences."
+          },
+          {
+            "title": "Selection & Guidance:",
+            "content": "We help you choose the most suitable city, university, and program."
+          },
+          {
+            "title": "Document Preparation:",
+            "content": "We guide you in preparing your application file, including translation and notarization if needed."
+          },
+          {
+            "title": "Application & Follow-up:",
+            "content": "We submit your application and follow up until you receive the final acceptance letter."
+          },
+          {
+            "title": "Pre-arrival Prep:",
+            "content": "We offer post-admission support for housing, residence permit, and health insurance."
+          }
+        ]
+      },
+      "faqSection": {
+        "title": "FAQs",
+        "items": [
+          {
+            "question": "What is the best city for engineering/medicine students?",
+            "answer": "Istanbul and Ankara are top choices for engineering and medicine due to their strong technical and medical universities, university hospitals, and ample internship opportunities."
+          },
+          {
+            "question": "Are there part-time work opportunities for students?",
+            "answer": "Turkish law permits international students to work part-time after completing their first year of study, but it requires a work permit. Job opportunities are more plentiful in major cities like Istanbul."
+          },
+          {
+            "question": "How can I ensure my degree is recognized in my home country?",
+            "answer": "Before applying, you must check your home country's Ministry of Higher Education website to ensure your chosen Turkish university is on their list of recommended institutions. You can also contact your country's cultural attaché in Turkey."
+          },
+          {
+            "question": "What is the difference between preliminary and final acceptance?",
+            "answer": "A preliminary acceptance is an initial offer from the university based on your documents. A final acceptance letter confirms your enrollment after you pay the first tuition installment. This is the document you will use for your student visa and residence permit applications."
+          },
+          {
+            "question": "What is the best time to apply?",
+            "answer": "The best time to apply is from February to June. Applying early gives you a better chance of securing a spot in high-demand programs and benefiting from early-bird discounts."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Talk to us before you decide",
+        "subtitle": "Let us help you every step of the way, from choosing a university to arriving in Turkey."
+      },
+      "discoverMore": {
+        "title": "Discover More",
+        "privateUniversities": "Turkish Private Universities",
+        "tuitionFees": "Tuition Fees & Costs"
+      }
     },
     "turkishPrivateUniversities": {
-      "title": "Turkish Private Universities | Qobouli",
-      "h1": "Turkish Private Universities",
-      "p1": "Page content goes here"
+      "meta": {
+        "title": "Turkish Private Universities 2025: Fees, Admissions & Discounts",
+        "description": "Your complete guide to Turkish Private Universities for 2025. Discover tuition fees after discounts, admission requirements, application steps, and key tips for international students.",
+        "canonical": "https://qobouli.com/en/turkish-private-universities",
+        "ogTitle": "Turkish Private Universities 2025: Fees, Admissions & Discounts",
+        "ogDescription": "Your complete guide to Turkish Private Universities for 2025. Discover tuition fees after discounts, admission requirements, application steps, and key tips for international students.",
+        "ogUrl": "https://qobouli.com/en/turkish-private-universities"
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "studyInTurkey": "Study in Turkey",
+        "current": "Turkish Private Universities"
+      },
+      "languageSwitch": "← اقرأ باللغة العربية",
+      "header": {
+        "title": "Turkish Private Universities 2025",
+        "subtitle": "Welcome to your comprehensive guide to private universities in Turkey. Whether you're looking for English-taught programs, flexible admissions, or exclusive tuition discounts, this is your starting point."
+      },
+      "introduction": {
+        "title": "Introduction",
+        "paragraph1": "Turkish private universities have become a top choice for international students, thanks to a unique blend of quality education, diverse programs, and straightforward admissions. Unlike public universities that require competitive exams, private universities open their doors based on high school diplomas.",
+        "value": "Value:",
+        "valueContent": "Modern campuses, a wide array of English-taught programs, and partner discounts through Qobouli make for a high-value educational experience.",
+        "promise": "Promise:",
+        "promiseContent": "Here, you'll find everything you need to make an informed decision: tuition fees (pre- and post-discount), academic requirements, step-by-step application guidance, and common pitfalls to avoid."
+      },
+      "whyPrivate": {
+        "title": "Why Choose a Turkish Private University?",
+        "quality": {
+          "title": "Academic Quality & Facilities",
+          "content": "Private universities invest heavily in modern labs and educational facilities. They foster strong partnerships with industry leaders to provide students with practical internship opportunities. Many hold local and international accreditations, ensuring high educational standards."
+        },
+        "english": {
+          "title": "English-Taught Programs",
+          "content": "Thousands of programs are available in English, especially in popular fields like Engineering, Business Administration, and Health Sciences, removing the language barrier for international students."
+        },
+        "flexibility": {
+          "title": "Faster Admissions & Discounts",
+          "content": "The admission process is faster and more streamlined. By applying through Qobouli, you can access significant partner-based scholarships and discounts, making tuition fees highly competitive."
+        }
+      },
+      "keyFacts": {
+        "title": "Key Facts",
+        "tableCaption": "Table: Fast Facts About Private Universities in Turkey",
+        "headers": ["Item", "Details"],
+        "rows": [
+          ["Number of private universities", "70+ licensed institutions"],
+          ["Languages of instruction", "Turkish / English"],
+          ["Fees after discount (annually)", "2,500–8,000 USD (varies by program and university)"],
+          ["Application window", "February – September (can extend longer)"],
+          ["Essential documents", "Passport, high school diploma, transcript, personal photo"]
+        ]
+      },
+      "requirements": {
+        "title": "Entry Requirements",
+        "bachelor": {
+          "title": "Bachelor's Degree Requirements",
+          "tableCaption": "Admission requirements for Bachelor's programs",
+          "headers": ["Document", "Notes"],
+          "rows": [
+            ["High School Diploma", "Translated into English or Turkish and notarized."],
+            ["Transcript of Records", "Translated and notarized."],
+            ["Valid Passport", "Clear copy of the first page."],
+            ["Personal Photo", "White background."],
+            ["Language Proficiency (if available)", "TOEFL or IELTS for English programs, TOMER for Turkish."]
+          ]
+        },
+        "master": {
+          "title": "Master's Degree Requirements",
+          "tableCaption": "Admission requirements for Master's programs",
+          "headers": ["Document", "Notes"],
+          "rows": [
+            ["Bachelor's Diploma", "Translated and notarized."],
+            ["Bachelor's Transcript", "Translated and notarized."],
+            ["Curriculum Vitae (CV)", "Detailing your academic and professional experience."],
+            ["Statement of Purpose", "Explaining your goals for pursuing a Master's degree."],
+            ["Recommendation Letters (if required)", "From university professors or employers."],
+            ["Language Proficiency", "TOEFL/IELTS or university's own exam."]
+          ]
+        },
+        "phd": {
+          "title": "PhD Requirements",
+          "tableCaption": "Admission requirements for PhD programs",
+          "headers": ["Document", "Notes"],
+          "rows": [
+            ["Master's Diploma", "Translated and notarized."],
+            ["Research Proposal (if required)", "A proposal for your doctoral dissertation topic."],
+            ["Research experience or publications", "Increases your chances of admission."],
+            ["Language Proficiency", "Advanced level in English or Turkish."]
+          ]
+        }
+      },
+      "fees": {
+        "title": "Tuition Fees (Pre- & Post-Discount)",
+        "intro": "The fees listed are for guidance and may change. Contact the Qobouli team for the latest fees and discounts for 2025.",
+        "tableCaption": "Examples of annual tuition fees",
+        "headers": ["University", "Program", "Language", "Before Discount (USD)", "After Qobouli Discount (USD)"],
+        "rows": [
+          ["Istinye University", "Medicine", "English", "23,650", "21,500"],
+          ["Bahcesehir University", "Computer Engineering", "English", "8,900", "6,230"],
+          ["Medipol University", "Business Administration", "English", "5,000", "3,800"],
+          ["Altinbas University", "Pharmacy", "English", "13,000", "7,500"],
+          ["Gelisim University", "Physiotherapy", "Turkish", "4,000", "3,500"]
+        ],
+        "learnMoreLink": "Learn more about tuition fees in Turkey"
+      },
+      "registrationSteps": {
+        "title": "Step-by-Step with Qobouli",
+        "steps": [
+          {
+            "title": "Free Consultation & Program Selection:",
+            "content": "We offer a free consultation to help you choose the right university and program."
+          },
+          {
+            "title": "Document Preparation:",
+            "content": "Prepare clear scans or PDF files of your academic documents."
+          },
+          {
+            "title": "University Application:",
+            "content": "We handle your application to selected universities and follow up. We also cover application fees for you (if any)."
+          },
+          {
+            "title": "Receive Acceptance:",
+            "content": "We secure your preliminary acceptance letter and then assist you in getting the final one."
+          },
+          {
+            "title": "Enrollment & Deposit:",
+            "content": "You pay the first installment directly to the university's bank account to secure your spot."
+          },
+          {
+            "title": "Residence & Housing Support (Optional):",
+            "content": "We provide additional support to help you arrange for student housing and your residence permit."
+          }
+        ]
+      },
+      "scholarships": {
+        "title": "Scholarships & Discounts",
+        "intro": "The discounts we offer are partial scholarships provided directly by universities to students who apply through certified partners like Qobouli.",
+        "guaranteed": "Guaranteed Discounts:",
+        "guaranteedContent": "We provide exclusive discounts on tuition fees for most private universities.",
+        "merit": "Merit Scholarships:",
+        "meritContent": "Some universities offer additional scholarships for academically outstanding students.",
+        "tips": "Tips to Maximize Discounts:",
+        "tipsContent": "Applying early (before May) and submitting a well-organized academic profile increases your chances of getting the highest possible discount."
+      },
+      "commonMistakes": {
+        "title": "Common Mistakes to Avoid",
+        "items": [
+          {
+            "title": "Waiting for direct university replies:",
+            "content": "University international offices are often very busy, leading to slow responses. Applying through a certified agent ensures faster follow-up."
+          },
+          {
+            "title": "Late submissions:",
+            "content": "Popular programs and universities fill up fast. Don't wait until the last minute."
+          },
+          {
+            "title": "Incomplete dossiers:",
+            "content": "Any missing or unclear documents will delay your admission process."
+          },
+          {
+            "title": "Language mismatch:",
+            "content": "Choose a language of instruction that matches your academic background and career goals. Don't opt for a Turkish program if you are not prepared to study the language for a year."
+          }
+        ]
+      },
+      "faqSection": {
+        "title": "FAQs",
+        "items": [
+          {
+            "question": "Are Turkish private universities recognized in my country?",
+            "answer": "Many Turkish private universities have international and regional recognition, but this can vary by country and field of study. It is crucial to check the list of recognized universities with your home country's Ministry of Higher Education before applying. Qobouli can help guide you toward universities that are recognized in your country."
+          },
+          {
+            "question": "Can I study in English without an IELTS/TOEFL score?",
+            "answer": "Yes, most private universities offer an English preparatory year if you don't have a proficiency certificate. Some universities may also allow you to take an internal exemption exam upon arrival. If you pass, you can start your major directly."
+          },
+          {
+            "question": "Are tuition fee installments available?",
+            "answer": "Yes, the majority of private universities allow students to pay tuition fees in two installments, one at the beginning of each semester. Some universities might offer more flexible payment plans, but this depends on their policy."
+          },
+          {
+            "question": "How long does admission take?",
+            "answer": "Admissions at private universities are relatively fast. Through Qobouli, a preliminary acceptance letter can often be secured within a few days to a week, provided all your documents are complete and accurate."
+          },
+          {
+            "question": "Can I transfer between universities?",
+            "answer": "Yes, transferring between Turkish universities or from a university outside Turkey is possible. However, it is subject to certain conditions, such as curriculum compatibility and the availability of open slots. A formal transfer application must be submitted to the target university."
+          },
+          {
+            "question": "What is the best time to apply?",
+            "answer": "The best time to apply is early, from February to June. Early applications increase your chances of securing higher discounts and a spot in popular programs that fill up quickly."
+          },
+          {
+            "question": "What are the most frequent document issues?",
+            "answer": "The most common documents that cause delays are untranslated or un-notarized transcripts and unclear passport copies. Ensure all your documents are ready, translated into English or Turkish, and notarized if required."
+          },
+          {
+            "question": "Is YÖK equivalency needed for some programs?",
+            "answer": "Yes, high school diplomas from certain countries may require an equivalency certificate (Denklik) from the Turkish Council of Higher Education (YÖK) before final registration. Qobouli will inform you if your diploma requires this process."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Talk to us before you decide",
+        "subtitle": "Free guidance, real discounts, and end-to-end support."
+      },
+      "discoverMore": {
+        "title": "Discover More",
+        "studyGuide": "Study in Turkey Guide",
+        "tuitionFees": "Tuition Fees & Costs"
+      }
     },
     "universityFeesTurkey2025": {
-      "title": "University Fees in Turkey 2025",
-      "h1": "University Fees in Turkey 2025",
-      "p1": "This page is dedicated to the university fees in Turkey for 2025. Content will be added soon.",
-      "p2": "(This is placeholder text. It will be replaced with 1,000-2,000 words of unique content, including tables, videos, FAQs, and internal links.)"
+      "meta": {
+        "title": "Tuition Fees in Turkey 2025: Private & Public University Costs",
+        "description": "A comprehensive guide to tuition fees in Turkey for 2025. Learn about private university costs after discounts and approximate fees for public universities.",
+        "canonical": "https://qobouli.com/en/tuition-fees-turkey-2025",
+        "ogTitle": "Tuition Fees in Turkey 2025: Private & Public University Costs",
+        "ogDescription": "A comprehensive guide to tuition fees in Turkey for 2025. Learn about private university costs after discounts and approximate fees for public universities.",
+        "ogUrl": "https://qobouli.com/en/tuition-fees-turkey-2025"
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "studyInTurkey": "Study in Turkey",
+        "current": "Tuition Fees in Turkey"
+      },
+      "languageSwitch": "← اقرأ باللغة العربية",
+      "header": {
+        "title": "Tuition Fees in Turkey 2025",
+        "subtitle": "Why do fees vary so much between universities? And how can you leverage Qobouli's exclusive discounts to significantly lower your costs?"
+      },
+      "privateFees": {
+        "title": "Private University Fees (After Discount)",
+        "intro": "The following table shows examples of annual fees at some of our partner universities. These fees are after applying the exclusive Qobouli discount.",
+        "tableCaption": "Table: Examples of Annual Private University Fees After Discount for 2025",
+        "headers": ["University", "Program", "Language", "Before Discount (USD)", "After Qobouli Discount (USD)", "Notes"],
+        "rows": [
+          ["Istanbul Atlas University", "Medicine", "English", "16,000", "14,400", "10% discount"],
+          ["Bahcesehir University", "AI Engineering", "English", "8,900", "6,230", "30% discount"],
+          ["Istinye University", "Dentistry", "English", "17,850", "15,172", "15% discount"],
+          ["Medipol University", "International Relations", "English", "5,000", "3,800", "Fixed discount"],
+          ["Uskudar University", "Psychology", "Turkish", "3,900", "3,200", "Special discount"],
+          ["Nisantasi University", "Gastronomy", "Turkish", "3,400", "2,950", "Cash payment discount"]
+        ]
+      },
+      "publicFees": {
+        "title": "Public University Fees (Approximate)",
+        "intro": "Admission to public universities is more competitive and requires exams (YÖS/SAT). Their fees are much lower but are not fixed and depend on the university council's decision each year. The following figures are approximate.",
+        "tableCaption": "Table: Approximate Annual Fees for Public Universities for 2025",
+        "headers": ["University", "Program", "Language", "Approx. Fee (USD)", "Notes"],
+        "rows": [
+          ["Istanbul University", "Law", "Turkish", "1,000 - 1,500", "Varies by program"],
+          ["Middle East Technical University", "Mechanical Engineering", "English", "600 - 1,000", "Low fees for international students"],
+          ["Hacettepe University", "Medicine", "Turkish", "3,000 - 5,000", "Top-tier medical school"],
+          ["Gazi University", "Education", "Turkish", "400 - 800", "Varies by specialization"]
+        ]
+      },
+      "budgetPlanning": {
+        "title": "Building Your Yearly Budget",
+        "intro": "When planning your budget, don't forget to add other costs besides tuition:",
+        "installments": "Installments:",
+        "installmentsContent": "Most universities divide the fees into two payments, one for each semester.",
+        "additionalCosts": "Additional Costs:",
+        "additionalCostsContent": "These include mandatory health insurance, student residence permit fees, and document translation/notarization.",
+        "livingEstimate": "Living Estimate:",
+        "livingEstimateContent": "Add the monthly cost of living ($300-$600) and multiply by 12 months. Refer to our",
+        "livingGuideLink": "Guide to Living in Turkey",
+        "livingEstimateEnd": "for more details."
+      },
+      "paymentMethods": {
+        "title": "Payment & Installments",
+        "intro": "Payment policies vary, but generally:",
+        "bankTransfer": "Bank Transfer:",
+        "bankTransferContent": "The most common method is transferring the first installment to the university's official bank account (SWIFT).",
+        "onCampus": "On-Campus Payment:",
+        "onCampusContent": "After arrival, remaining installments can be paid at the university's finance department.",
+        "deadlines": "Deadlines:",
+        "deadlinesContent": "Each university has strict deadlines for tuition payments. Late payments can result in registration freezes or penalties."
+      },
+      "faqSection": {
+        "title": "FAQs",
+        "items": [
+          {
+            "question": "Why is Medicine tuition pricier?",
+            "answer": "Medical programs like Medicine and Dentistry have higher tuition fees due to the high costs of lab equipment, university hospitals, practical training materials, and the longer duration of study."
+          },
+          {
+            "question": "Does the language of instruction affect tuition?",
+            "answer": "Yes, in most universities, programs taught in English are more expensive than the same programs taught in Turkish. This difference can range from 20% to 50%."
+          },
+          {
+            "question": "How can I secure a discount early?",
+            "answer": "The best way is to apply through a certified agent like Qobouli. We have direct agreements with universities that allow us to offer exclusive discounts not available to students who apply directly. Applying early also helps."
+          },
+          {
+            "question": "Are there merit scholarships?",
+            "answer": "Yes, some universities offer additional merit scholarships for students with high academic achievements in high school or during their university studies. These scholarships are limited and competitive."
+          },
+          {
+            "question": "What is the best timing for payment?",
+            "answer": "The best time to pay the first installment is immediately after receiving your preliminary acceptance letter to secure your spot. Do not delay payment, as you might lose your discount or your seat."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Get Your Discount Today",
+        "subtitle": "We'll propose tailored options within 24 hours."
+      },
+      "discoverMore": {
+        "title": "Discover More",
+        "privateUniversities": "Turkish Private Universities",
+        "studyGuide": "Study in Turkey Guide"
+      }
     }
   }
 }

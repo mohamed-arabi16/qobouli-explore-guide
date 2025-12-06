@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SEODataTable from '@/components/SEODataTable';
 import FAQSection from '@/components/FAQSection';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -7,46 +8,26 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export default function TuitionFees2025EN() {
-    const faqItems = [
-        {
-            question: "Why is Medicine tuition pricier?",
-            answer: "Medical programs like Medicine and Dentistry have higher tuition fees due to the high costs of lab equipment, university hospitals, practical training materials, and the longer duration of study."
-        },
-        {
-            question: "Does the language of instruction affect tuition?",
-            answer: "Yes, in most universities, programs taught in English are more expensive than the same programs taught in Turkish. This difference can range from 20% to 50%."
-        },
-        {
-            question: "How can I secure a discount early?",
-            answer: "The best way is to apply through a certified agent like Qobouli. We have direct agreements with universities that allow us to offer exclusive discounts not available to students who apply directly. Applying early also helps."
-        },
-        {
-            question: "Are there merit scholarships?",
-            answer: "Yes, some universities offer additional merit scholarships for students with high academic achievements in high school or during their university studies. These scholarships are limited and competitive."
-        },
-        {
-            question: "What is the best timing for payment?",
-            answer: "The best time to pay the first installment is immediately after receiving your preliminary acceptance letter to secure your spot. Do not delay payment, as you might lose your discount or your seat."
-        }
-    ];
+    const { t } = useTranslation();
+    const faqItems = t('pages.universityFeesTurkey2025.faqSection.items', { returnObjects: true }) as Array<{ question: string; answer: string }>;
 
   return (
     <>
       <Helmet>
         <html lang="en" dir="ltr" />
-        <title>Tuition Fees in Turkey 2025: Private & Public University Costs</title>
-        <meta name="description" content="A comprehensive guide to tuition fees in Turkey for 2025. Learn about private university costs after discounts and approximate fees for public universities." />
-        <link rel="canonical" href="https://qobouli.com/en/tuition-fees-turkey-2025" />
+        <title>{t('pages.universityFeesTurkey2025.meta.title')}</title>
+        <meta name="description" content={t('pages.universityFeesTurkey2025.meta.description')} />
+        <link rel="canonical" href={t('pages.universityFeesTurkey2025.meta.canonical')} />
         <link rel="alternate" hrefLang="ar" href="https://qobouli.com/ar/tuition-fees-turkey-2025" />
-        <meta property="og:title" content="Tuition Fees in Turkey 2025: Private & Public University Costs" />
-        <meta property="og:description" content="A comprehensive guide to tuition fees in Turkey for 2025. Learn about private university costs after discounts and approximate fees for public universities." />
-        <meta property="og:url" content="https://qobouli.com/en/tuition-fees-turkey-2025" />
+        <meta property="og:title" content={t('pages.universityFeesTurkey2025.meta.ogTitle')} />
+        <meta property="og:description" content={t('pages.universityFeesTurkey2025.meta.ogDescription')} />
+        <meta property="og:url" content={t('pages.universityFeesTurkey2025.meta.ogUrl')} />
         <script type="application/ld+json">{JSON.stringify({
           "@context":"https://schema.org",
           "@type":"WebPage",
-          "name":"Tuition Fees in Turkey 2025: Private & Public University Costs",
-          "description":"A comprehensive guide to tuition fees in Turkey for 2025. Learn about private university costs after discounts and approximate fees for public universities.",
-          "url":"https://qobouli.com/en/tuition-fees-turkey-2025",
+          "name":t('pages.universityFeesTurkey2025.meta.title'),
+          "description":t('pages.universityFeesTurkey2025.meta.description'),
+          "url":t('pages.universityFeesTurkey2025.meta.canonical'),
           "inLanguage": "en"
         })}</script>
         <script type="application/ld+json">{JSON.stringify({
@@ -69,99 +50,87 @@ export default function TuitionFees2025EN() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="ltr">
         <div className="text-sm breadcrumbs mb-4">
             <ul className="flex gap-2 text-white/70">
-                <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+                <li><Link to="/" className="hover:text-primary transition-colors">{t('pages.universityFeesTurkey2025.breadcrumbs.home')}</Link></li>
                 <li className="text-white/50">/</li>
-                <li><span className="text-white/50">Study in Turkey</span></li>
+                <li><span className="text-white/50">{t('pages.universityFeesTurkey2025.breadcrumbs.studyInTurkey')}</span></li>
                 <li className="text-white/50">/</li>
-                <li className="text-primary">Tuition Fees in Turkey</li>
+                <li className="text-primary">{t('pages.universityFeesTurkey2025.breadcrumbs.current')}</li>
             </ul>
         </div>
         <Link to="/ar/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
-          ← اقرأ باللغة العربية
+          {t('pages.universityFeesTurkey2025.languageSwitch')}
         </Link>
 
         <header className="mb-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-            Tuition Fees in Turkey 2025
+            {t('pages.universityFeesTurkey2025.header.title')}
           </h1>
           <p className="text-xl text-white/90 leading-relaxed">
-            Why do fees vary so much between universities? And how can you leverage Qobouli's exclusive discounts to significantly lower your costs?
+            {t('pages.universityFeesTurkey2025.header.subtitle')}
           </p>
         </header>
 
         <section className="mb-12" id="private-fees">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Private University Fees (After Discount)</h2>
-            <p className="mb-4 text-white/90">The following table shows examples of annual fees at some of our partner universities. These fees are after applying the exclusive Qobouli discount.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.privateFees.title')}</h2>
+            <p className="mb-4 text-white/90">{t('pages.universityFeesTurkey2025.privateFees.intro')}</p>
             <SEODataTable
-                caption="Table: Examples of Annual Private University Fees After Discount for 2025"
+                caption={t('pages.universityFeesTurkey2025.privateFees.tableCaption')}
                 descriptionId="private-fees-en"
-                headers={["University", "Program", "Language", "Before Discount (USD)", "After Qobouli Discount (USD)", "Notes"]}
-                rows={[
-                    ["Istanbul Atlas University", "Medicine", "English", "16,000", "14,400", "10% discount"],
-                    ["Bahcesehir University", "AI Engineering", "English", "8,900", "6,230", "30% discount"],
-                    ["Istinye University", "Dentistry", "English", "17,850", "15,172", "15% discount"],
-                    ["Medipol University", "International Relations", "English", "5,000", "3,800", "Fixed discount"],
-                    ["Uskudar University", "Psychology", "Turkish", "3,900", "3,200", "Special discount"],
-                    ["Nisantasi University", "Gastronomy", "Turkish", "3,400", "2,950", "Cash payment discount"]
-                ]}
+                headers={t('pages.universityFeesTurkey2025.privateFees.headers', { returnObjects: true }) as string[]}
+                rows={t('pages.universityFeesTurkey2025.privateFees.rows', { returnObjects: true }) as string[][]}
             />
         </section>
 
         <section className="mb-12" id="public-fees">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Public University Fees (Approximate)</h2>
-            <p className="mb-4 text-white/90">Admission to public universities is more competitive and requires exams (YÖS/SAT). Their fees are much lower but are not fixed and depend on the university council's decision each year. The following figures are approximate.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.publicFees.title')}</h2>
+            <p className="mb-4 text-white/90">{t('pages.universityFeesTurkey2025.publicFees.intro')}</p>
             <SEODataTable
-                caption="Table: Approximate Annual Fees for Public Universities for 2025"
+                caption={t('pages.universityFeesTurkey2025.publicFees.tableCaption')}
                 descriptionId="public-fees-en"
-                headers={["University", "Program", "Language", "Approx. Fee (USD)", "Notes"]}
-                rows={[
-                    ["Istanbul University", "Law", "Turkish", "1,000 - 1,500", "Varies by program"],
-                    ["Middle East Technical University", "Mechanical Engineering", "English", "600 - 1,000", "Low fees for international students"],
-                    ["Hacettepe University", "Medicine", "Turkish", "3,000 - 5,000", "Top-tier medical school"],
-                    ["Gazi University", "Education", "Turkish", "400 - 800", "Varies by specialization"]
-                ]}
+                headers={t('pages.universityFeesTurkey2025.publicFees.headers', { returnObjects: true }) as string[]}
+                rows={t('pages.universityFeesTurkey2025.publicFees.rows', { returnObjects: true }) as string[][]}
             />
         </section>
 
         <section className="mb-12" id="budget-planning">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Building Your Yearly Budget</h2>
-            <p className="mb-4 text-white/90">When planning your budget, don't forget to add other costs besides tuition:</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.budgetPlanning.title')}</h2>
+            <p className="mb-4 text-white/90">{t('pages.universityFeesTurkey2025.budgetPlanning.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-white/90">
-                <li><strong>Installments:</strong> Most universities divide the fees into two payments, one for each semester.</li>
-                <li><strong>Additional Costs:</strong> These include mandatory health insurance, student residence permit fees, and document translation/notarization.</li>
-                <li><strong>Living Estimate:</strong> Add the monthly cost of living ($300-$600) and multiply by 12 months. Refer to our <Link to="/en/study-in-turkey#living-costs" className="text-primary hover:underline">Guide to Living in Turkey</Link> for more details.</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.installments')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.installmentsContent')}</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.additionalCosts')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.additionalCostsContent')}</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimate')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimateContent')} <Link to="/en/study-in-turkey#living-costs" className="text-primary hover:underline">{t('pages.universityFeesTurkey2025.budgetPlanning.livingGuideLink')}</Link> {t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimateEnd')}</li>
             </ul>
         </section>
 
         <section className="mb-12" id="payment-methods">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Payment & Installments</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.paymentMethods.title')}</h2>
             <div className="space-y-4 text-white/90">
-                <p>Payment policies vary, but generally:</p>
+                <p>{t('pages.universityFeesTurkey2025.paymentMethods.intro')}</p>
                 <ul className="list-disc list-inside space-y-2">
-                    <li><strong>Bank Transfer:</strong> The most common method is transferring the first installment to the university's official bank account (SWIFT).</li>
-                    <li><strong>On-Campus Payment:</strong> After arrival, remaining installments can be paid at the university's finance department.</li>
-                    <li><strong>Deadlines:</strong> Each university has strict deadlines for tuition payments. Late payments can result in registration freezes or penalties.</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.bankTransfer')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.bankTransferContent')}</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.onCampus')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.onCampusContent')}</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.deadlines')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.deadlinesContent')}</li>
                 </ul>
             </div>
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">FAQs</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.faqSection.title')}</h2>
           <FAQSection variant="dark" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">
-            <h2 className="text-3xl font-bold mb-3">Get Your Discount Today</h2>
-            <p className="mb-6 text-lg opacity-90">We’ll propose tailored options within 24 hours.</p>
+            <h2 className="text-3xl font-bold mb-3">{t('pages.universityFeesTurkey2025.cta.title')}</h2>
+            <p className="mb-6 text-lg opacity-90">{t('pages.universityFeesTurkey2025.cta.subtitle')}</p>
             <WhatsAppButton />
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4 text-white">Discover More</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">{t('pages.universityFeesTurkey2025.discoverMore.title')}</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/en/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">Turkish Private Universities</Link>
+                <Link to="/en/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">{t('pages.universityFeesTurkey2025.discoverMore.privateUniversities')}</Link>
                 <span className="text-white/40">|</span>
-                <Link to="/en/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">Study in Turkey Guide</Link>
+                <Link to="/en/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">{t('pages.universityFeesTurkey2025.discoverMore.studyGuide')}</Link>
             </div>
         </div>
       </div>
