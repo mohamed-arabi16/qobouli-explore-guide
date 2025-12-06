@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -360,9 +360,17 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     },
   });
 
-  // Fetch AI recommendation when quiz is completed
-  const fetchAIRecommendation = useCallback(async () => {
-    if (!computedScorerResult || aiCallMadeRef.current || aiExplanation) return;
+  // Fetch AI recommendation when quiz is completed - uses ref to prevent re-renders
+  const fetchAIRecommendation = async () => {
+    if (!computedScorerResult || !computedScorerResult.sortedMajors?.length) {
+      console.log('AI: No scorer result available');
+      return;
+    }
+    
+    if (aiCallMadeRef.current) {
+      console.log('AI: Call already made, skipping');
+      return;
+    }
     
     aiCallMadeRef.current = true;
     setIsLoadingAI(true);
@@ -386,10 +394,12 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         ? [computedScorerResult.psychologicalProfile.profileSummary.en]
         : [];
       
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      // Use Promise.race for timeout since AbortController doesn't work with supabase.functions.invoke
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('AI request timed out')), 15000)
+      );
       
-      const { data, error } = await supabaseAny.functions.invoke('generate-ai-recommendation', {
+      const fetchPromise = supabaseAny.functions.invoke('generate-ai-recommendation', {
         body: {
           userName,
           answers: enrichedAnswers,
@@ -398,7 +408,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
         }
       });
       
-      clearTimeout(timeoutId);
+      const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as { data: any; error: any };
       
       if (error) {
         console.error('AI function error:', error);
@@ -424,23 +434,27 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     } finally {
       setIsLoadingAI(false);
     }
-  }, [computedScorerResult, rawAnswers, userName, aiExplanation, language, t, toast]);
+  };
 
+  // Effect to handle quiz completion - no fetchAIRecommendation in deps to prevent loop
   useEffect(() => {
-    if (completed && computedScorerResult) {
-      const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
-      setRecommendedPrograms(finalPrograms);
-      sessionStorage.setItem('quizCompleted', 'true');
-      
-      // Try to load cached AI explanation
-      const cachedAI = sessionStorage.getItem('aiExplanation');
-      if (cachedAI) {
-        setAiExplanation(cachedAI);
-      } else {
-        fetchAIRecommendation();
-      }
+    if (!completed || !computedScorerResult || !computedScorerResult.sortedMajors?.length) {
+      return;
     }
-  }, [completed, computedScorerResult, fetchAIRecommendation]);
+    
+    const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
+    setRecommendedPrograms(finalPrograms);
+    sessionStorage.setItem('quizCompleted', 'true');
+    
+    // Try to load cached AI explanation first
+    const cachedAI = sessionStorage.getItem('aiExplanation');
+    if (cachedAI) {
+      setAiExplanation(cachedAI);
+    } else if (!aiCallMadeRef.current) {
+      fetchAIRecommendation();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completed, computedScorerResult]);
 
   useEffect(() => {
     if (completed && !sessionId && computedScorerResult) {
