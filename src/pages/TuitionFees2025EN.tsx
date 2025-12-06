@@ -116,7 +116,7 @@ export default function TuitionFees2025EN() {
 
         <section className="mb-12" id="faq">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.faqSection.title')}</h2>
-          <FAQSection variant="dark" />
+          <FAQSection variant="dark" faqKey="pages.universityFeesTurkey2025.faqSection.items" titleKey="pages.universityFeesTurkey2025.faqSection.title" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">
