@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -208,6 +208,9 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
   const [recommendedPrograms, setRecommendedPrograms] = useState<CatalogProgram[]>([]);
   const [isLoadingResults, setIsLoadingResults] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean>(false);
+  const [aiExplanation, setAiExplanation] = useState<string | null>(null);
+  const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
+  const aiCallMadeRef = useRef<boolean>(false);
 
   const componentRef = useRef<HTMLDivElement>(null);
   const resultCardRef = useRef<HTMLDivElement>(null);
@@ -357,13 +360,87 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     },
   });
 
+  // Fetch AI recommendation when quiz is completed
+  const fetchAIRecommendation = useCallback(async () => {
+    if (!computedScorerResult || aiCallMadeRef.current || aiExplanation) return;
+    
+    aiCallMadeRef.current = true;
+    setIsLoadingAI(true);
+    
+    try {
+      const topPrograms = pickPrograms(computedScorerResult.sortedMajors);
+      
+      // Build enriched answers with question labels
+      const enrichedAnswers = Object.entries(rawAnswers).map(([questionId, value]) => {
+        const question = scorerQuestionsConfig.find(q => q.id === questionId);
+        return {
+          questionId,
+          value,
+          questionLabel: question?.prompt_en || questionId,
+          displayValue: Array.isArray(value) ? value.join(', ') : String(value)
+        };
+      });
+      
+      // Get boosters from psychological profile
+      const boosters = computedScorerResult.psychologicalProfile?.profileSummary 
+        ? [computedScorerResult.psychologicalProfile.profileSummary.en]
+        : [];
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      
+      const { data, error } = await supabaseAny.functions.invoke('generate-ai-recommendation', {
+        body: {
+          userName,
+          answers: enrichedAnswers,
+          topPrograms: topPrograms.map(p => ({ title: p.title })),
+          boosters
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (error) {
+        console.error('AI function error:', error);
+        toast({
+          title: t('results.aiUnavailable', language === 'ar' ? 'التوصيات الذكية غير متاحة حالياً' : 'AI insights temporarily unavailable'),
+          variant: 'default'
+        });
+      } else if (data?.error) {
+        console.error('AI response error:', data.error);
+        if (data.status === 429 || data.status === 402) {
+          toast({
+            title: t('results.aiUnavailable', language === 'ar' ? 'التوصيات الذكية غير متاحة حالياً' : 'AI insights temporarily unavailable'),
+            variant: 'default'
+          });
+        }
+      } else if (data?.aiExplanation) {
+        setAiExplanation(data.aiExplanation);
+        sessionStorage.setItem('aiExplanation', data.aiExplanation);
+      }
+    } catch (err) {
+      console.error('AI recommendation error:', err);
+      // Silently fail - algorithm recommendations are still shown
+    } finally {
+      setIsLoadingAI(false);
+    }
+  }, [computedScorerResult, rawAnswers, userName, aiExplanation, language, t, toast]);
+
   useEffect(() => {
     if (completed && computedScorerResult) {
       const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
       setRecommendedPrograms(finalPrograms);
       sessionStorage.setItem('quizCompleted', 'true');
+      
+      // Try to load cached AI explanation
+      const cachedAI = sessionStorage.getItem('aiExplanation');
+      if (cachedAI) {
+        setAiExplanation(cachedAI);
+      } else {
+        fetchAIRecommendation();
+      }
     }
-  }, [completed, computedScorerResult]);
+  }, [completed, computedScorerResult, fetchAIRecommendation]);
 
   useEffect(() => {
     if (completed && !sessionId && computedScorerResult) {
@@ -467,6 +544,9 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     if (sessionId) logCtaEvent('restart');
     sessionStorage.removeItem('quizAnswers');
     sessionStorage.removeItem('quizCompleted');
+    sessionStorage.removeItem('aiExplanation');
+    aiCallMadeRef.current = false;
+    setAiExplanation(null);
     onReset();
   };
 
@@ -529,6 +609,35 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
                     </div>
                     <p className={cn("text-foreground leading-relaxed", isRTL && "text-right")}>
                       {language === 'ar' ? psychProfile.profileSummary.ar : psychProfile.profileSummary.en}
+                    </p>
+                  </div>
+                )}
+
+                {/* AI Insights Section */}
+                {isLoadingAI && (
+                  <div className="p-6 bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/10 dark:to-teal-900/10 rounded-xl border border-green-200 dark:border-green-800 space-y-3">
+                    <div className={cn("flex items-center gap-2", isRTL && "flex-row-reverse")}>
+                      <Sparkles className="w-5 h-5 text-green-600 dark:text-green-400 animate-pulse" />
+                      <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                        {t('results.generatingAI', isRTL ? 'جاري إنشاء التوصيات الشخصية...' : 'Generating personalized insights...')}
+                      </h3>
+                    </div>
+                    <div className="flex justify-center py-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+                    </div>
+                  </div>
+                )}
+
+                {aiExplanation && !isLoadingAI && (
+                  <div className="p-6 bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/10 dark:to-teal-900/10 rounded-xl border border-green-200 dark:border-green-800 space-y-3">
+                    <div className={cn("flex items-center gap-2", isRTL && "flex-row-reverse")}>
+                      <Sparkles className="w-5 h-5 text-green-600 dark:text-green-400" />
+                      <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                        {t('results.aiInsights', isRTL ? 'توصيات ذكية' : 'AI Insights')}
+                      </h3>
+                    </div>
+                    <p className={cn("text-foreground leading-relaxed whitespace-pre-line", isRTL && "text-right")}>
+                      {aiExplanation}
                     </p>
                   </div>
                 )}

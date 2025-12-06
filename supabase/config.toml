@@ -1,1 +1,7 @@
 project_id = "gatkuxqmmasixahuhdky"
+
+[functions.generate-ai-recommendation]
+verify_jwt = false
+
+[functions.import-programs]
+verify_jwt = false
