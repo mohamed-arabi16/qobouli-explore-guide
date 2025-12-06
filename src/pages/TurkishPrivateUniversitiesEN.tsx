@@ -89,20 +89,22 @@ export default function TurkishPrivateUniversitiesEN() {
                 <li className="text-primary">Turkish Private Universities</li>
             </ul>
         </div>
-        <Link to="/ar/turkish-private-universities" className="text-sm text-primary hover:underline my-4 block">
-          اقرأ باللغة العربية
+        <Link to="/ar/turkish-private-universities" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
+          ← اقرأ باللغة العربية
         </Link>
 
-        <header className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Turkish Private Universities 2025</h1>
-          <p className="text-lg text-white/90">
+        <header className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            Turkish Private Universities 2025
+          </h1>
+          <p className="text-xl text-white/90 leading-relaxed">
             Welcome to your comprehensive guide to private universities in Turkey. Whether you're looking for English-taught programs, flexible admissions, or exclusive tuition discounts, this is your starting point.
           </p>
         </header>
 
         <section className="mb-12" id="introduction">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Introduction</h2>
-          <div className="space-y-4 text-white/90">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Introduction</h2>
+          <div className="glass-panel p-6 md:p-8 rounded-2xl space-y-4 text-white/90">
             <p>Turkish private universities have become a top choice for international students, thanks to a unique blend of quality education, diverse programs, and straightforward admissions. Unlike public universities that require competitive exams, private universities open their doors based on high school diplomas.</p>
             <ul className="list-disc list-inside space-y-2">
               <li><strong>Value:</strong> Modern campuses, a wide array of English-taught programs, and partner discounts through Qobouli make for a high-value educational experience.</li>
@@ -112,25 +114,25 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="why-private">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Why Choose a Turkish Private University?</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-lg bg-gray-50">
-              <h3 className="text-xl font-semibold mb-2">Academic Quality & Facilities</h3>
-              <p>Private universities invest heavily in modern labs and educational facilities. They foster strong partnerships with industry leaders to provide students with practical internship opportunities. Many hold local and international accreditations, ensuring high educational standards.</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Why Choose a Turkish Private University?</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-8 rounded-2xl glass-panel border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+              <h3 className="text-2xl font-bold mb-3 text-primary">Academic Quality & Facilities</h3>
+              <p className="text-white/90 leading-relaxed">Private universities invest heavily in modern labs and educational facilities. They foster strong partnerships with industry leaders to provide students with practical internship opportunities. Many hold local and international accreditations, ensuring high educational standards.</p>
             </div>
-            <div className="p-6 rounded-lg bg-gray-50">
-              <h3 className="text-xl font-semibold mb-2">English-Taught Programs</h3>
-              <p>Thousands of programs are available in English, especially in popular fields like Engineering, Business Administration, and Health Sciences, removing the language barrier for international students.</p>
+            <div className="p-8 rounded-2xl glass-panel border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+              <h3 className="text-2xl font-bold mb-3 text-primary">English-Taught Programs</h3>
+              <p className="text-white/90 leading-relaxed">Thousands of programs are available in English, especially in popular fields like Engineering, Business Administration, and Health Sciences, removing the language barrier for international students.</p>
             </div>
-            <div className="p-6 rounded-lg bg-gray-50">
-              <h3 className="text-xl font-semibold mb-2">Faster Admissions & Discounts</h3>
-              <p>The admission process is faster and more streamlined. By applying through Qobouli, you can access significant partner-based scholarships and discounts, making tuition fees highly competitive.</p>
+            <div className="p-8 rounded-2xl glass-panel border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 md:col-span-2">
+              <h3 className="text-2xl font-bold mb-3 text-primary">Faster Admissions & Discounts</h3>
+              <p className="text-white/90 leading-relaxed">The admission process is faster and more streamlined. By applying through Qobouli, you can access significant partner-based scholarships and discounts, making tuition fees highly competitive.</p>
             </div>
           </div>
         </section>
 
         <section className="mb-12" id="key-facts">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Key Facts</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Key Facts</h2>
             <SEODataTable
                 caption="Table: Fast Facts About Private Universities in Turkey"
                 descriptionId="private-uni-facts-en"
@@ -146,10 +148,10 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="requirements">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Entry Requirements</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Entry Requirements</h2>
           <div className="space-y-8">
             <div>
-              <h3 className="text-xl font-semibold mb-3">Bachelor's Degree Requirements</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">Bachelor's Degree Requirements</h3>
                <SEODataTable
                 caption="Admission requirements for Bachelor's programs"
                 descriptionId="bachelor-req-en"
@@ -164,7 +166,7 @@ export default function TurkishPrivateUniversitiesEN() {
               />
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-3">Master's Degree Requirements</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">Master's Degree Requirements</h3>
                <SEODataTable
                 caption="Admission requirements for Master's programs"
                 descriptionId="master-req-en"
@@ -180,7 +182,7 @@ export default function TurkishPrivateUniversitiesEN() {
               />
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-3">PhD Requirements</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">PhD Requirements</h3>
               <SEODataTable
                 caption="Admission requirements for PhD programs"
                 descriptionId="phd-req-en"
@@ -197,7 +199,7 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="fees">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Tuition Fees (Pre- & Post-Discount)</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Tuition Fees (Pre- & Post-Discount)</h2>
             <p className="mb-4 text-white/90">The fees listed are for guidance and may change. Contact the Qobouli team for the latest fees and discounts for 2025.</p>
             <SEODataTable
                 caption="Examples of annual tuition fees"
@@ -217,7 +219,7 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="registration-steps">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Step-by-Step with Qobouli</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Step-by-Step with Qobouli</h2>
           <ol className="list-decimal list-inside space-y-4 text-white/90">
             <li><strong>Free Consultation & Program Selection:</strong> We offer a free consultation to help you choose the right university and program.</li>
             <li><strong>Document Preparation:</strong> Prepare clear scans or PDF files of your academic documents.</li>
@@ -229,7 +231,7 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="scholarships">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Scholarships & Discounts</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Scholarships & Discounts</h2>
             <div className="space-y-4 text-white/90">
                 <p>The discounts we offer are partial scholarships provided directly by universities to students who apply through certified partners like Qobouli.</p>
                 <ul className="list-disc list-inside space-y-2">
@@ -241,7 +243,7 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="common-mistakes">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Common Mistakes to Avoid</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Common Mistakes to Avoid</h2>
           <ul className="list-disc list-inside space-y-3 text-red-200 bg-red-900/30 border border-red-500/30 p-6 rounded-lg backdrop-blur-sm">
             <li><strong className="text-red-300">Waiting for direct university replies:</strong> University international offices are often very busy, leading to slow responses. Applying through a certified agent ensures faster follow-up.</li>
             <li><strong className="text-red-300">Late submissions:</strong> Popular programs and universities fill up fast. Don't wait until the last minute.</li>
@@ -251,7 +253,7 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">FAQs</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">FAQs</h2>
           <FAQSection />
         </section>
 
@@ -262,11 +264,11 @@ export default function TurkishPrivateUniversitiesEN() {
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4">Discover More</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">Discover More</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/en/study-in-turkey" className="text-primary hover:underline">Study in Turkey Guide</Link>
-                <span className="text-gray-400">|</span>
-                <Link to="/en/tuition-fees-turkey-2025" className="text-primary hover:underline">Tuition Fees & Costs</Link>
+                <Link to="/en/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">Study in Turkey Guide</Link>
+                <span className="text-white/40">|</span>
+                <Link to="/en/tuition-fees-turkey-2025" className="text-primary hover:underline hover:text-secondary transition-colors">Tuition Fees & Costs</Link>
             </div>
         </div>
       </div>

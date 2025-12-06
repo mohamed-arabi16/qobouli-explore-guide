@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { Menu, X } from 'lucide-react';
 import WhatsAppLink from './WhatsAppLink';
+import HashLink from './HashLink';
 
 const Navbar = () => {
   const { t } = useLanguage();
@@ -77,11 +78,11 @@ const Navbar = () => {
         ) : (
           <>
             <nav className="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
-              <Link to="/#roadmap" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.steps')}</Link>
-              <Link to="/#ai-tool" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.major')}</Link>
+              <HashLink to="/#roadmap" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.steps')}</HashLink>
+              <HashLink to="/#ai-tool" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.major')}</HashLink>
               <Link to={`/${t('nav.lang')}/turkish-private-universities`} className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.universities')}</Link>
               <Link to={`/${t('nav.lang')}/study-in-turkey`} className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.studyInTurkey')}</Link>
-              <Link to="/#faq" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.faq')}</Link>
+              <HashLink to="/#faq" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.faq')}</HashLink>
               <LanguageSwitch abbreviated={false} />
             </nav>
             
@@ -140,46 +141,46 @@ const Navbar = () => {
               </div>
               
               <nav className="flex flex-col space-y-3 flex-1">
-                <Link 
-                  to="/#roadmap" 
-                  onClick={closeMobileMenu} 
+                <HashLink
+                  to="/#roadmap"
+                  onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
                   style={{ animationDelay: '0.1s' }}
                 >
                   {t('nav.steps')}
-                </Link>
-                <Link 
-                  to="/#ai-tool" 
-                  onClick={closeMobileMenu} 
+                </HashLink>
+                <HashLink
+                  to="/#ai-tool"
+                  onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
                   style={{ animationDelay: '0.15s' }}
                 >
                   {t('nav.major')}
-                </Link>
-                <Link 
-                  to={`/${t('nav.lang')}/turkish-private-universities`} 
-                  onClick={closeMobileMenu} 
+                </HashLink>
+                <Link
+                  to={`/${t('nav.lang')}/turkish-private-universities`}
+                  onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
                   style={{ animationDelay: '0.2s' }}
                 >
                   {t('nav.universities')}
                 </Link>
-                <Link 
-                  to={`/${t('nav.lang')}/study-in-turkey`} 
-                  onClick={closeMobileMenu} 
+                <Link
+                  to={`/${t('nav.lang')}/study-in-turkey`}
+                  onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
                   style={{ animationDelay: '0.25s' }}
                 >
                   {t('nav.studyInTurkey')}
                 </Link>
-                <Link 
-                  to="/#faq" 
-                  onClick={closeMobileMenu} 
+                <HashLink
+                  to="/#faq"
+                  onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
                   style={{ animationDelay: '0.3s' }}
                 >
                   {t('nav.faq')}
-                </Link>
+                </HashLink>
               </nav>
               
               <div className="mt-auto space-y-4 pt-6 border-t border-primary/30 animate-fade-in" style={{ animationDelay: '0.35s' }}>

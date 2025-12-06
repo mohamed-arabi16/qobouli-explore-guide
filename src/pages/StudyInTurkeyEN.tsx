@@ -74,38 +74,42 @@ export default function StudyInTurkeyEN() {
                 <li className="text-primary">Study in Turkey</li>
             </ul>
         </div>
-        <Link to="/ar/study-in-turkey" className="text-sm text-primary hover:underline my-4 block">
-          اقرأ باللغة العربية
+        <Link to="/ar/study-in-turkey" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
+          ← اقرأ باللغة العربية
         </Link>
 
-        <header className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Study in Turkey 2025</h1>
-          <p className="text-lg text-white/90">
+        <header className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            Study in Turkey 2025
+          </h1>
+          <p className="text-xl text-white/90 leading-relaxed">
             A comprehensive overview of the student experience in Turkey: from choosing a city and major to living costs and university admissions.
           </p>
         </header>
 
         <section className="mb-12" id="intro">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Why Study in Turkey?</h2>
-            <p className="text-white/90">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Why Study in Turkey?</h2>
+            <div className="glass-panel p-6 md:p-8 rounded-2xl">
+              <p className="text-white/90 leading-relaxed">
                 Turkey is more than a tourist destination; it has become an attractive educational hub for students worldwide, especially from the GCC, Levant, and North Africa. The familiar culture, affordable cost of living, and strong universities make it an ideal choice. This page is designed for international students and expats in Turkey aiming to start their academic journey here.
-            </p>
+              </p>
+            </div>
         </section>
 
         <section className="mb-12" id="cities">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Best Student Cities</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Best Student Cities</h2>
             <div className="space-y-6">
-                <div>
-                    <h3 className="text-xl font-semibold">Istanbul: The Vibrant Heart of Turkey</h3>
-                    <p>A city that blends history with modernity, Istanbul hosts the largest number of private and public universities. It offers unparalleled internship and career opportunities, though living costs are relatively higher.</p>
+                <div className="glass-panel p-6 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                    <h3 className="text-xl font-semibold text-white mb-2">Istanbul: The Vibrant Heart of Turkey</h3>
+                    <p className="text-white/90 leading-relaxed">A city that blends history with modernity, Istanbul hosts the largest number of private and public universities. It offers unparalleled internship and career opportunities, though living costs are relatively higher.</p>
                 </div>
-                <div>
-                    <h3 className="text-xl font-semibold">Ankara: The Academic Capital</h3>
-                    <p>Known for prestigious universities like Middle East Technical University and Hacettepe University. It's a quieter city, ideal for studying, with lower living costs than Istanbul.</p>
+                <div className="glass-panel p-6 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                    <h3 className="text-xl font-semibold text-white mb-2">Ankara: The Academic Capital</h3>
+                    <p className="text-white/90 leading-relaxed">Known for prestigious universities like Middle East Technical University and Hacettepe University. It's a quieter city, ideal for studying, with lower living costs than Istanbul.</p>
                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold">Other Promising Cities</h3>
-                    <ul className="list-disc list-inside space-y-2 mt-2">
+                 <div className="glass-panel p-6 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                    <h3 className="text-xl font-semibold text-white mb-2">Other Promising Cities</h3>
+                    <ul className="list-disc list-inside space-y-2 mt-2 text-white/90">
                         <li><strong>Izmir:</strong> A beautiful coastal city with a European feel and strong universities.</li>
                         <li><strong>Sakarya:</strong> Close to Istanbul with lower costs, making it an economical choice.</li>
                         <li><strong>Kayseri:</strong> An industrial city in central Anatolia, offering opportunities for engineering students and affordable living.</li>
@@ -115,7 +119,7 @@ export default function StudyInTurkeyEN() {
         </section>
 
         <section className="mb-12" id="living-costs">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Monthly Living Cost Estimates</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Monthly Living Cost Estimates</h2>
             <SEODataTable
                 caption="Table: Estimated Monthly Living Costs in Turkey (USD)"
                 descriptionId="living-costs-en"
@@ -133,16 +137,16 @@ export default function StudyInTurkeyEN() {
         </section>
 
         <section className="mb-12" id="study-tracks">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Study Tracks & Picking a Major</h2>
-            <p className="mb-4">One of the most critical decisions is choosing your language of instruction. Turkish-taught programs are often less expensive but require a preparatory year. English-taught programs open up broader opportunities in the global job market.</p>
-            <div className="text-center p-6 bg-blue-50 rounded-lg">
-                <p className="font-semibold">Confused about which major to choose?</p>
-                <a href="https://qobouli.com/en/ai-major-recommender" className="text-primary hover:underline">Try Qobouli's recommender tool to find your best fit!</a>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Study Tracks & Picking a Major</h2>
+            <p className="mb-4 text-white/90">One of the most critical decisions is choosing your language of instruction. Turkish-taught programs are often less expensive but require a preparatory year. English-taught programs open up broader opportunities in the global job market.</p>
+            <div className="text-center p-6 glass-panel rounded-2xl border border-primary/20">
+                <p className="font-semibold text-white">Confused about which major to choose?</p>
+                <a href="https://qobouli.com/en/ai-major-recommender" className="text-primary hover:underline hover:text-secondary transition-colors">Try Qobouli's recommender tool to find your best fit!</a>
             </div>
         </section>
 
         <section className="mb-12" id="requirements-quick">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Admission Requirements (Quick Table)</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Admission Requirements (Quick Table)</h2>
              <SEODataTable
                 caption="Table: Key Admission Documents Required"
                 descriptionId="admission-req-en"
@@ -159,7 +163,7 @@ export default function StudyInTurkeyEN() {
         </section>
 
         <section className="mb-12" id="how-to-start">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">How to Start with Qobouli</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">How to Start with Qobouli</h2>
           <ol className="list-decimal list-inside space-y-4 text-white/90">
             <li><strong>Free Consultation:</strong> Contact us to assess your academic qualifications and preferences.</li>
             <li><strong>Selection & Guidance:</strong> We help you choose the most suitable city, university, and program.</li>
@@ -170,7 +174,7 @@ export default function StudyInTurkeyEN() {
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">FAQs</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">FAQs</h2>
           <FAQSection />
         </section>
 
@@ -181,11 +185,11 @@ export default function StudyInTurkeyEN() {
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4">Discover More</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">Discover More</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/en/turkish-private-universities" className="text-primary hover:underline">Turkish Private Universities</Link>
-                <span className="text-gray-400">|</span>
-                <Link to="/en/tuition-fees-turkey-2025" className="text-primary hover:underline">Tuition Fees & Costs</Link>
+                <Link to="/en/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">Turkish Private Universities</Link>
+                <span className="text-white/40">|</span>
+                <Link to="/en/tuition-fees-turkey-2025" className="text-primary hover:underline hover:text-secondary transition-colors">Tuition Fees & Costs</Link>
             </div>
         </div>
       </div>

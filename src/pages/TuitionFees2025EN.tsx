@@ -76,19 +76,21 @@ export default function TuitionFees2025EN() {
                 <li className="text-primary">Tuition Fees in Turkey</li>
             </ul>
         </div>
-        <Link to="/ar/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline my-4 block">
-          اقرأ باللغة العربية
+        <Link to="/ar/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
+          ← اقرأ باللغة العربية
         </Link>
 
-        <header className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Tuition Fees in Turkey 2025</h1>
-          <p className="text-lg text-white/90">
+        <header className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            Tuition Fees in Turkey 2025
+          </h1>
+          <p className="text-xl text-white/90 leading-relaxed">
             Why do fees vary so much between universities? And how can you leverage Qobouli's exclusive discounts to significantly lower your costs?
           </p>
         </header>
 
         <section className="mb-12" id="private-fees">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Private University Fees (After Discount)</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Private University Fees (After Discount)</h2>
             <p className="mb-4 text-white/90">The following table shows examples of annual fees at some of our partner universities. These fees are after applying the exclusive Qobouli discount.</p>
             <SEODataTable
                 caption="Table: Examples of Annual Private University Fees After Discount for 2025"
@@ -106,7 +108,7 @@ export default function TuitionFees2025EN() {
         </section>
 
         <section className="mb-12" id="public-fees">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Public University Fees (Approximate)</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Public University Fees (Approximate)</h2>
             <p className="mb-4 text-white/90">Admission to public universities is more competitive and requires exams (YÖS/SAT). Their fees are much lower but are not fixed and depend on the university council's decision each year. The following figures are approximate.</p>
             <SEODataTable
                 caption="Table: Approximate Annual Fees for Public Universities for 2025"
@@ -122,8 +124,8 @@ export default function TuitionFees2025EN() {
         </section>
 
         <section className="mb-12" id="budget-planning">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Building Your Yearly Budget</h2>
-            <p className="mb-4">When planning your budget, don't forget to add other costs besides tuition:</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Building Your Yearly Budget</h2>
+            <p className="mb-4 text-white/90">When planning your budget, don't forget to add other costs besides tuition:</p>
             <ul className="list-disc list-inside space-y-2 text-white/90">
                 <li><strong>Installments:</strong> Most universities divide the fees into two payments, one for each semester.</li>
                 <li><strong>Additional Costs:</strong> These include mandatory health insurance, student residence permit fees, and document translation/notarization.</li>
@@ -132,7 +134,7 @@ export default function TuitionFees2025EN() {
         </section>
 
         <section className="mb-12" id="payment-methods">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Payment & Installments</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">Payment & Installments</h2>
             <div className="space-y-4 text-white/90">
                 <p>Payment policies vary, but generally:</p>
                 <ul className="list-disc list-inside space-y-2">
@@ -144,7 +146,7 @@ export default function TuitionFees2025EN() {
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">FAQs</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">FAQs</h2>
           <FAQSection />
         </section>
 
@@ -155,11 +157,11 @@ export default function TuitionFees2025EN() {
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4">Discover More</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">Discover More</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/en/turkish-private-universities" className="text-primary hover:underline">Turkish Private Universities</Link>
-                <span className="text-gray-400">|</span>
-                <Link to="/en/study-in-turkey" className="text-primary hover:underline">Study in Turkey Guide</Link>
+                <Link to="/en/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">Turkish Private Universities</Link>
+                <span className="text-white/40">|</span>
+                <Link to="/en/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">Study in Turkey Guide</Link>
             </div>
         </div>
       </div>

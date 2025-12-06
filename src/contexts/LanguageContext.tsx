@@ -23,6 +23,17 @@ const allTranslations: Record<Locale, TranslationObject> = {
   ar: arTranslations,
 };
 
+// Helper function to detect language from URL path
+const getLanguageFromPath = (): Locale | null => {
+  const path = window.location.pathname;
+  if (path.startsWith('/ar/') || path === '/ar') {
+    return 'ar';
+  }
+  if (path.startsWith('/en/') || path === '/en') {
+    return 'en';
+  }
+  return null;
+};
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
@@ -71,6 +82,19 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
 
 
   useEffect(() => {
+    // First, check if there's a language in the URL path (highest priority)
+    const urlLanguage = getLanguageFromPath();
+    if (urlLanguage) {
+      setLanguageState(urlLanguage);
+      try {
+        localStorage.setItem('language', urlLanguage);
+      } catch (e) {
+        // Storage may not be available
+      }
+      return;
+    }
+
+    // Otherwise, check localStorage
     try {
       const savedLanguage = localStorage.getItem('language') as Locale;
       if (savedLanguage && ['ar', 'en'].includes(savedLanguage)) {
@@ -80,6 +104,24 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
       // Storage may not be available in some contexts (e.g., embedded frames, privacy mode)
     }
   }, []);
+
+  // Listen for navigation changes (popstate) to update language from URL
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlLanguage = getLanguageFromPath();
+      if (urlLanguage && urlLanguage !== language) {
+        setLanguageState(urlLanguage);
+        try {
+          localStorage.setItem('language', urlLanguage);
+        } catch (e) {
+          // Storage may not be available
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [language]);
 
   useEffect(() => {
     document.documentElement.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');

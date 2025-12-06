@@ -77,8 +77,8 @@ export default function TuitionFees2025AR() {
                 <li className="text-primary">تكاليف الدراسة في تركيا</li>
             </ul>
         </div>
-        <Link to="/en/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline my-4 block">
-          Read in English
+        <Link to="/en/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
+          Read in English →
         </Link>
 
         <header className="mb-16">
@@ -125,7 +125,7 @@ export default function TuitionFees2025AR() {
         </section>
 
         <section className="mb-12" id="budget-planning">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">كيفية حساب الميزانية السنوية</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">كيفية حساب الميزانية السنوية</h2>
             <p className="mb-4">عند التخطيط لميزانيتك، لا تنس إضافة التكاليف الأخرى إلى جانب الرسوم الدراسية:</p>
             <ul className="list-disc list-inside space-y-2 text-white/90">
                 <li><strong>دفعات الأقساط:</strong> معظم الجامعات تقسم الرسوم على دفعتين، واحدة لكل فصل دراسي.</li>
@@ -135,7 +135,7 @@ export default function TuitionFees2025AR() {
         </section>
 
         <section className="mb-12" id="payment-methods">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">طرق الدفع والأقساط</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">طرق الدفع والأقساط</h2>
             <div className="space-y-4 text-white/90">
                 <p>سياسات الدفع تختلف، ولكن بشكل عام:</p>
                 <ul className="list-disc list-inside space-y-2">
@@ -147,7 +147,7 @@ export default function TuitionFees2025AR() {
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">أسئلة شائعة</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">أسئلة شائعة</h2>
           <FAQSection />
         </section>
 
@@ -158,11 +158,11 @@ export default function TuitionFees2025AR() {
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4">اكتشف المزيد</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">اكتشف المزيد</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/ar/turkish-private-universities" className="text-primary hover:underline">الجامعات التركية الخاصة</Link>
-                <span className="text-gray-400">|</span>
-                <Link to="/ar/study-in-turkey" className="text-primary hover:underline">دليل الدراسة في تركيا</Link>
+                <Link to="/ar/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">الجامعات التركية الخاصة</Link>
+                <span className="text-white/40">|</span>
+                <Link to="/ar/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">دليل الدراسة في تركيا</Link>
             </div>
         </div>
       </div>

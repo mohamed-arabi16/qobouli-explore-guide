@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { SessionProvider } from "./contexts/SessionContext";
 import ErrorBoundary from "./components/ErrorBoundary";
+import RouteLanguageSync from "./components/RouteLanguageSync";
 import TurkishPrivateUniversitiesAR from "./pages/TurkishPrivateUniversitiesAR";
 import TurkishPrivateUniversitiesEN from "./pages/TurkishPrivateUniversitiesEN";
 import StudyInTurkeyAR from "./pages/StudyInTurkeyAR";
@@ -24,17 +25,19 @@ const AppContent = () => {
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/ar/turkish-private-universities" element={<TurkishPrivateUniversitiesAR />} />
-          <Route path="/en/turkish-private-universities" element={<TurkishPrivateUniversitiesEN />} />
-          <Route path="/ar/study-in-turkey" element={<StudyInTurkeyAR />} />
-          <Route path="/en/study-in-turkey" element={<StudyInTurkeyEN />} />
-          <Route path="/ar/tuition-fees-turkey-2025" element={<TuitionFees2025AR />} />
-          <Route path="/en/tuition-fees-turkey-2025" element={<TuitionFees2025EN />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <RouteLanguageSync>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/ar/turkish-private-universities" element={<TurkishPrivateUniversitiesAR />} />
+            <Route path="/en/turkish-private-universities" element={<TurkishPrivateUniversitiesEN />} />
+            <Route path="/ar/study-in-turkey" element={<StudyInTurkeyAR />} />
+            <Route path="/en/study-in-turkey" element={<StudyInTurkeyEN />} />
+            <Route path="/ar/tuition-fees-turkey-2025" element={<TuitionFees2025AR />} />
+            <Route path="/en/tuition-fees-turkey-2025" element={<TuitionFees2025EN />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </RouteLanguageSync>
       </BrowserRouter>
     </>
   );
