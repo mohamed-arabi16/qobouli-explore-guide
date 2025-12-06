@@ -211,6 +211,8 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const aiCallMadeRef = useRef<boolean>(false);
+  const programsSetRef = useRef<boolean>(false);
+  const sessionSubmittedRef = useRef<boolean>(false);
 
   const componentRef = useRef<HTMLDivElement>(null);
   const resultCardRef = useRef<HTMLDivElement>(null);
@@ -436,16 +438,24 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     }
   };
 
-  // Effect to handle quiz completion - no fetchAIRecommendation in deps to prevent loop
+  // Effect to handle quiz completion - uses ref to prevent infinite loop
   useEffect(() => {
-    if (!completed || !computedScorerResult || !computedScorerResult.sortedMajors?.length) {
+    // Guard: only run once when completed becomes true and we have results
+    if (!completed || programsSetRef.current) {
       return;
     }
-    
+
+    if (!computedScorerResult || !computedScorerResult.sortedMajors?.length) {
+      return;
+    }
+
+    // Mark as set to prevent re-running
+    programsSetRef.current = true;
+
     const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
     setRecommendedPrograms(finalPrograms);
     sessionStorage.setItem('quizCompleted', 'true');
-    
+
     // Try to load cached AI explanation first
     const cachedAI = sessionStorage.getItem('aiExplanation');
     if (cachedAI) {
@@ -456,11 +466,22 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completed, computedScorerResult]);
 
+  // Effect to submit session - uses ref to prevent infinite loop
   useEffect(() => {
-    if (completed && !sessionId && computedScorerResult) {
-      submitSession();
+    // Guard: only submit once
+    if (sessionSubmittedRef.current) {
+      return;
     }
-  }, [completed, sessionId, computedScorerResult, submitSession]);
+
+    if (!completed || sessionId || !computedScorerResult?.sortedMajors?.length) {
+      return;
+    }
+
+    // Mark as submitted to prevent re-running
+    sessionSubmittedRef.current = true;
+    submitSession();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completed, sessionId, computedScorerResult]);
 
   const handleAnswerChange = (questionId: string, value: RawAnswerValue) => {
     setRawAnswers(prev => ({ ...prev, [questionId]: value }));
@@ -559,7 +580,10 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     sessionStorage.removeItem('quizAnswers');
     sessionStorage.removeItem('quizCompleted');
     sessionStorage.removeItem('aiExplanation');
+    // Reset all refs to allow fresh run
     aiCallMadeRef.current = false;
+    programsSetRef.current = false;
+    sessionSubmittedRef.current = false;
     setAiExplanation(null);
     onReset();
   };
