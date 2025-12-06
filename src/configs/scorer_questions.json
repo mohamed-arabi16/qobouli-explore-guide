@@ -1,215 +1,828 @@
 [
   {
-    "id": "SP1",
+    "id": "SUBJECTS",
     "type": "rank",
-    "prompt_en": "Rank your three favourite school subjects",
-    "prompt_ar": "رتب ثلاث مواد تحبها أكثر",
-    "options": ["math","physics","biology","computer","literature","art","economics","social","none"],
+    "category": "interests",
+    "prompt_en": "Rank your three favorite school subjects",
+    "prompt_ar": "رتب ثلاث مواد دراسية تفضلها",
+    "options": ["math", "physics", "biology", "chemistry", "computer", "literature", "art", "economics", "history", "psychology"],
     "weight_mapping": {
-      "math":       {"cs_ai":3,"soft_eng":2,"elec":1},
-      "physics":    {"mech":3,"civil":2,"elec":1},
-      "biology":    {"medicine":3,"biosci":2},
-      "computer":   {"cs_ai":3,"soft_eng":2},
-      "literature": {"graphic":2,"media":1,"edu_lang":1},
-      "art":        {"graphic":2,"arch":1},
-      "economics":  {"econ":3,"acc_fin":2,"bus_mgmt":1},
-      "social":     {"psych":2,"law_intl":1}
+      "math": {"cs_ai": 4, "soft_eng": 3, "elec": 3, "data": 3, "acc_fin": 2, "econ": 2},
+      "physics": {"mech": 4, "elec": 3, "civil": 3, "aviation": 2, "mechatro": 2},
+      "biology": {"medicine": 4, "biosci": 3, "pharmacy": 3, "dentistry": 2, "nursing": 2},
+      "chemistry": {"pharmacy": 4, "biosci": 3, "medicine": 2, "dentistry": 2},
+      "computer": {"cs_ai": 4, "soft_eng": 4, "cyber": 3, "data": 3},
+      "literature": {"edu_lang": 3, "media": 2, "law_intl": 2, "psych": 1},
+      "art": {"graphic": 4, "arch": 3, "media": 2},
+      "economics": {"econ": 4, "acc_fin": 3, "bus_mgmt": 3, "marketing": 2},
+      "history": {"law_intl": 3, "edu_lang": 2, "psych": 2},
+      "psychology": {"psych": 4, "nursing": 2, "edu_lang": 2, "bus_mgmt": 1}
     }
   },
 
   {
-    "id": "PRJ",
+    "id": "PROJECT_TYPE",
     "type": "single",
-    "prompt_en": "Best school project you did",
-    "prompt_ar": "أفضل مشروع مدرسي قمت به",
+    "category": "interests",
+    "prompt_en": "Which type of project excites you most?",
+    "prompt_ar": "أي نوع من المشاريع يثيرك أكثر؟",
     "options_en": {
-      "robot":"Built a robot",
-      "financeSim":"Finance simulation",
-      "artExpo":"Art exhibition",
-      "documentary":"Short documentary",
-      "bioFair":"Bio science fair",
-      "modelPlane":"Model airplane",
+      "robot": "Building a robot or electronic device",
+      "app": "Creating a mobile app or website",
+      "research": "Conducting scientific research",
+      "art_project": "Designing artwork or visual content",
+      "business_plan": "Writing a business plan",
+      "documentary": "Making a documentary or video",
+      "community": "Organizing a community service project",
       "none": "None of the above"
+    },
+    "options_ar": {
+      "robot": "بناء روبوت أو جهاز إلكتروني",
+      "app": "إنشاء تطبيق موبايل أو موقع ويب",
+      "research": "إجراء بحث علمي",
+      "art_project": "تصميم أعمال فنية أو محتوى بصري",
+      "business_plan": "كتابة خطة عمل تجارية",
+      "documentary": "إنتاج فيلم وثائقي أو فيديو",
+      "community": "تنظيم مشروع خدمة مجتمعية",
+      "none": "لا شيء مما سبق"
     },
     "weights": {
-      "robot":       {"mechatro":3,"mech":2},
-      "financeSim":  {"acc_fin":3,"bus_mgmt":2},
-      "artExpo":     {"graphic":3},
-      "documentary": {"media":3,"graphic":1},
-      "bioFair":     {"biosci":3,"medicine":1},
-      "modelPlane":  {"aviation":3,"mech":1}
+      "robot": {"mechatro": 4, "mech": 3, "elec": 3},
+      "app": {"soft_eng": 4, "cs_ai": 3, "cyber": 2},
+      "research": {"biosci": 3, "medicine": 3, "data": 2, "psych": 2},
+      "art_project": {"graphic": 4, "arch": 2, "media": 2},
+      "business_plan": {"bus_mgmt": 4, "marketing": 3, "econ": 2},
+      "documentary": {"media": 4, "graphic": 2},
+      "community": {"psych": 3, "nursing": 3, "edu_lang": 2}
     }
   },
 
   {
-    "id":"STYLE",
-    "type":"single",
-    "prompt_en":"Your problem-solving style",
-    "options_en":{
-      "logical":"Logical & analytical",
-      "visual":"Visual & sketch-oriented",
-      "empathic":"Empathic & people-focused",
-      "debate":"Persuasive & debate-oriented",
-      "venture":"Entrepreneurial & risk-taker",
-      "none": "None of the above"
-    },
-    "weights":{
-      "logical": {"cs_ai":2,"soft_eng":1},
-      "visual":  {"graphic":2,"arch":1},
-      "empathic":{"psych":2,"nursing":1},
-      "debate":  {"law_intl":2,"media":1},
-      "venture": {"bus_mgmt":2,"marketing":1}
-    }
-  },
-
-  {
-    "id":"TEAM",
-    "type":"single",
-    "prompt_en":"In a team you are usually the ...",
-    "options_en":{
-      "coder":"Coder",
-      "planner":"Planner/Coordinator",
-      "presenter":"Presenter",
-      "caregiver":"Care-giver",
-      "researcher":"Researcher",
-      "none": "None of the above"
-    },
-    "weights":{
-      "coder":     {"soft_eng":2,"cs_ai":1},
-      "planner":   {"bus_mgmt":2,"acc_fin":1},
-      "presenter": {"media":2,"marketing":1},
-      "caregiver": {"nursing":2,"psych":1},
-      "researcher":{"biosci":2,"civil":1}
-    }
-  },
-
-  {
-    "id":"MATH",
-    "type":"scale",
-    "prompt_en":"Comfort with advanced math",
-    "scale_weight":1.5,
-    "targets":["cs_ai","elec","mech","acc_fin"],
-    "min": 0,
-    "max": 4,
-    "step": 1,
-    "defaultValue": 2
-  },
-
-  {
-    "id":"CODE",
-    "type":"scale",
-    "prompt_en":"Interest in coding/software",
-    "scale_weight":1.5,
-    "targets":["cs_ai","soft_eng","cyber","data"],
-    "min": 0,
-    "max": 4,
-    "step": 1,
-    "defaultValue": 2
-  },
-
-  {
-    "id":"DRAW",
-    "type":"scale",
-    "prompt_en":"Interest in drawing/design tools",
-    "scale_weight":1.5,
-    "targets":["graphic","arch"],
-    "min": 0,
-    "max": 4,
-    "step": 1,
-    "defaultValue": 2
-  },
-
-  {
-    "id": "EMPATHY",
+    "id": "PROBLEM_STYLE",
     "type": "single",
-    "prompt_en": "I easily sense other people's feelings",
+    "category": "personality",
+    "prompt_en": "When facing a complex problem, you typically...",
+    "prompt_ar": "عند مواجهة مشكلة معقدة، عادةً ما...",
     "options_en": {
-      "yes": "Yes",
-      "no": "No",
+      "analyze": "Break it down logically and analyze each part",
+      "visualize": "Sketch or visualize the solution",
+      "discuss": "Discuss with others to find perspectives",
+      "experiment": "Try different approaches until one works",
+      "research": "Research thoroughly before taking action",
+      "intuition": "Trust your gut feeling",
       "none": "None of the above"
+    },
+    "options_ar": {
+      "analyze": "تحللها منطقياً جزءاً بجزء",
+      "visualize": "ترسم أو تتخيل الحل",
+      "discuss": "تناقش مع الآخرين لإيجاد وجهات نظر",
+      "experiment": "تجرب طرقاً مختلفة حتى تجد الحل",
+      "research": "تبحث بعمق قبل اتخاذ أي إجراء",
+      "intuition": "تثق بحدسك",
+      "none": "لا شيء مما سبق"
     },
     "weights": {
-      "yes": { "nursing": 2, "psych": 2 }
+      "analyze": {"cs_ai": 3, "data": 3, "acc_fin": 2, "elec": 2},
+      "visualize": {"graphic": 3, "arch": 3, "media": 2},
+      "discuss": {"psych": 3, "bus_mgmt": 2, "marketing": 2, "law_intl": 2},
+      "experiment": {"biosci": 3, "mech": 2, "pharmacy": 2},
+      "research": {"medicine": 3, "biosci": 2, "data": 2, "law_intl": 2},
+      "intuition": {"marketing": 2, "media": 2, "graphic": 2}
+    },
+    "archetype_mapping": {
+      "analyze": "analytical",
+      "visualize": "creative",
+      "discuss": "social",
+      "experiment": "practical",
+      "research": "investigative",
+      "intuition": "intuitive"
     }
   },
 
-  { "id":"LEAD","type":"single","prompt_en":"I like to lead large groups",
-    "options":["agree","neutral","disagree","none"],
-    "weights":{"agree":{"bus_mgmt":2,"law_intl":2}} },
+  {
+    "id": "WORK_ENVIRONMENT",
+    "type": "single",
+    "category": "work_style",
+    "prompt_en": "Your ideal work environment is...",
+    "prompt_ar": "بيئة العمل المثالية بالنسبة لك هي...",
+    "options_en": {
+      "office_tech": "Modern tech office with computers",
+      "lab": "Laboratory or research facility",
+      "hospital": "Hospital or healthcare setting",
+      "studio": "Creative studio or design space",
+      "outdoor": "Outdoor or construction sites",
+      "corporate": "Corporate business environment",
+      "school": "Educational institution",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "office_tech": "مكتب تقني حديث مع حواسيب",
+      "lab": "مختبر أو مرفق بحثي",
+      "hospital": "مستشفى أو بيئة رعاية صحية",
+      "studio": "استوديو إبداعي أو مساحة تصميم",
+      "outdoor": "مواقع خارجية أو مشاريع بناء",
+      "corporate": "بيئة أعمال مؤسسية",
+      "school": "مؤسسة تعليمية",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "office_tech": {"cs_ai": 3, "soft_eng": 3, "data": 2, "cyber": 2},
+      "lab": {"biosci": 3, "pharmacy": 3, "medicine": 2, "dentistry": 2},
+      "hospital": {"medicine": 3, "nursing": 3, "dentistry": 2, "pharmacy": 2},
+      "studio": {"graphic": 3, "arch": 3, "media": 2},
+      "outdoor": {"civil": 3, "mech": 2, "aviation": 2, "tourism": 2},
+      "corporate": {"bus_mgmt": 3, "acc_fin": 2, "marketing": 2, "econ": 2},
+      "school": {"edu_lang": 3, "psych": 2}
+    }
+  },
 
   {
-    "id":"DEBATE",
-    "type":"scale",
-    "prompt_en":"Debating excites me",
-    "scale_weight":1,
-    "targets":["law_intl","media"],
+    "id": "TEAM_ROLE",
+    "type": "single",
+    "category": "personality",
+    "prompt_en": "In a team project, you naturally become the...",
+    "prompt_ar": "في مشروع جماعي، تصبح بشكل طبيعي...",
+    "options_en": {
+      "leader": "Leader who directs the team",
+      "executor": "Executor who gets things done",
+      "creative": "Creative mind who generates ideas",
+      "analyst": "Analyst who reviews and improves",
+      "mediator": "Mediator who keeps harmony",
+      "researcher": "Researcher who gathers information",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "leader": "القائد الذي يوجه الفريق",
+      "executor": "المنفذ الذي ينجز المهام",
+      "creative": "العقل المبدع الذي يولد الأفكار",
+      "analyst": "المحلل الذي يراجع ويحسن",
+      "mediator": "الوسيط الذي يحافظ على الانسجام",
+      "researcher": "الباحث الذي يجمع المعلومات",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "leader": {"bus_mgmt": 3, "law_intl": 2, "marketing": 2},
+      "executor": {"soft_eng": 3, "mech": 2, "civil": 2},
+      "creative": {"graphic": 3, "arch": 2, "media": 2},
+      "analyst": {"data": 3, "cs_ai": 2, "acc_fin": 2},
+      "mediator": {"psych": 3, "nursing": 2, "edu_lang": 2},
+      "researcher": {"biosci": 3, "medicine": 2, "pharmacy": 2}
+    },
+    "archetype_mapping": {
+      "leader": "enterprising",
+      "executor": "practical",
+      "creative": "creative",
+      "analyst": "analytical",
+      "mediator": "social",
+      "researcher": "investigative"
+    }
+  },
+
+  {
+    "id": "MATH_COMFORT",
+    "type": "scale",
+    "category": "aptitude",
+    "prompt_en": "How comfortable are you with advanced mathematics?",
+    "prompt_ar": "ما مدى ارتياحك مع الرياضيات المتقدمة؟",
+    "scale_weight": 1.2,
+    "targets": ["cs_ai", "elec", "mech", "data", "acc_fin", "econ", "civil"],
     "min": 0,
     "max": 4,
     "step": 1,
-    "defaultValue": 2
+    "defaultValue": 2,
+    "labels_en": {"0": "Very uncomfortable", "4": "Very comfortable"},
+    "labels_ar": {"0": "غير مرتاح جداً", "4": "مرتاح جداً"}
   },
 
-  { "id":"RESEARCH","type":"single","prompt_en":"I prefer research over performing on stage",
-    "options":["yes","no","none"],
-    "weights":{"yes":{"biosci":2,"data":2},"no":{"media":2,"marketing":2}} },
-
-  { "id":"RISK","type":"single","prompt_en":"I’m comfortable with physical risk",
-    "options":["yes","no","none"],"yes_weight":2,
-    "targets":["aviation","civil","mech"] },
-
-  { "id":"SALARY","type":"single","prompt_en":"High salary is my top priority",
-    "options":["yes","no","none"],"yes_weight":2,
-    "targets":["medicine","acc_fin","cs_ai"] },
-
-  { "id":"STABILITY","type":"single","prompt_en":"I prefer job stability",
-    "options":["yes","no","none"],
-    "weights":{"yes":{"edu_lang":2,"nursing":2,"acc_fin":2},"no":{"tourism":2,"aviation":2}} },
-
-  { "id":"TRAVEL","type":"single","prompt_en":"I enjoy travelling for work",
-    "options":["yes","no","none"],"yes_weight":2,
-    "targets":["tourism","marketing","aviation"] },
-
-  { "id":"HEALTHCARE","type":"single","prompt_en":"Attraction to health-care work",
-    "options":["love","ok","no","none"],
-    "weights":{"love":{"medicine":3,"nursing":2},"ok":{"nursing":1}} },
-
-  { "id":"MEDIA_INT","type":"single","prompt_en":"Attraction to media/filmmaking",
-    "options":["love","ok","no","none"],
-    "weights":{"love":{"media":3,"graphic":1},"ok":{"media":1}} },
-
-  { "id":"LEGAL_INT","type":"single","prompt_en":"Attraction to legal/advocacy work",
-    "options":["love","ok","no","none"],
-    "weights":{"love":{"law_intl":3},"ok":{"law_intl":1}} },
-
-  { "id":"BUSINESS_INT","type":"single","prompt_en":"Attraction to business ownership",
-    "options":["love","ok","no","none"],
-    "weights":{"love":{"bus_mgmt":3,"marketing":2},"ok":{"bus_mgmt":1}} },
-
-  { "id":"LAB_WORK","type":"single","prompt_en":"I prefer lab work",
-    "options":["yes","no","none"],"yes_weight":2,"targets":["biosci","pharmacy"] },
-
-  { "id":"OUTDOOR","type":"single","prompt_en":"I prefer outdoor/site work",
-    "options":["yes","no","none"],"yes_weight":2,"targets":["civil","mech"] },
-
-  { "id":"SPORTS_INT","type":"single","prompt_en":"I enjoy physical activity/sports science",
-    "options":["yes","no","none"],"yes_weight":2,"targets":["sports"] },
-
-  { "id":"ENVIRON","type":"single","prompt_en":"I care about environmental sustainability",
-    "options":["yes","no","none"],"yes_weight":2,"targets":["civil","biosci","arch"] },
-
-  { "id":"GRADE","type":"single","prompt_en":"Your high-school average",
-    "options":["lt70","70_85","gt85","none"] },
+  {
+    "id": "CODING_INTEREST",
+    "type": "scale",
+    "category": "aptitude",
+    "prompt_en": "How interested are you in programming and coding?",
+    "prompt_ar": "ما مدى اهتمامك بالبرمجة والكود؟",
+    "scale_weight": 1.5,
+    "targets": ["cs_ai", "soft_eng", "cyber", "data", "mechatro"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not interested", "4": "Very interested"},
+    "labels_ar": {"0": "غير مهتم", "4": "مهتم جداً"}
+  },
 
   {
-    "id":"highest_tuition",
-    "type":"scale",
-    "prompt_en":"Maximum tuition (USD per year)",
-    "prompt_ar":"أعلى قسط سنوي (بالدولار)",
-    "scale_weight":1,
-    "targets":[],
+    "id": "CREATIVITY_LEVEL",
+    "type": "scale",
+    "category": "aptitude",
+    "prompt_en": "How would you rate your creative and artistic abilities?",
+    "prompt_ar": "كيف تقيم قدراتك الإبداعية والفنية؟",
+    "scale_weight": 1.3,
+    "targets": ["graphic", "arch", "media"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not creative", "4": "Very creative"},
+    "labels_ar": {"0": "غير مبدع", "4": "مبدع جداً"}
+  },
+
+  {
+    "id": "COMMUNICATION_SKILL",
+    "type": "scale",
+    "category": "aptitude",
+    "prompt_en": "How confident are you in public speaking and communication?",
+    "prompt_ar": "ما مدى ثقتك في التحدث أمام الجمهور والتواصل؟",
+    "scale_weight": 1.2,
+    "targets": ["law_intl", "media", "marketing", "edu_lang", "bus_mgmt"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not confident", "4": "Very confident"},
+    "labels_ar": {"0": "غير واثق", "4": "واثق جداً"}
+  },
+
+  {
+    "id": "EMPATHY_LEVEL",
+    "type": "scale",
+    "category": "personality",
+    "prompt_en": "How easily do you understand and feel others' emotions?",
+    "prompt_ar": "ما مدى سهولة فهمك والشعور بمشاعر الآخرين؟",
+    "scale_weight": 1.3,
+    "targets": ["psych", "nursing", "medicine", "edu_lang"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Difficult", "4": "Very easy"},
+    "labels_ar": {"0": "صعب", "4": "سهل جداً"}
+  },
+
+  {
+    "id": "DETAIL_ORIENTATION",
+    "type": "scale",
+    "category": "personality",
+    "prompt_en": "How detail-oriented are you in your work?",
+    "prompt_ar": "ما مدى اهتمامك بالتفاصيل في عملك؟",
+    "scale_weight": 1.1,
+    "targets": ["acc_fin", "pharmacy", "dentistry", "arch", "soft_eng"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Big picture focus", "4": "Very detail-oriented"},
+    "labels_ar": {"0": "أركز على الصورة الكبيرة", "4": "أهتم بالتفاصيل جداً"}
+  },
+
+  {
+    "id": "LEADERSHIP_DESIRE",
+    "type": "single",
+    "category": "values",
+    "prompt_en": "How do you feel about leading and managing others?",
+    "prompt_ar": "ما شعورك تجاه قيادة وإدارة الآخرين؟",
+    "options_en": {
+      "love_lead": "I love leading and taking charge",
+      "prefer_lead": "I prefer leading but can follow",
+      "neutral": "I'm comfortable either way",
+      "prefer_follow": "I prefer supporting over leading",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "love_lead": "أحب القيادة وتولي المسؤولية",
+      "prefer_lead": "أفضل القيادة لكن أستطيع التبعية",
+      "neutral": "أنا مرتاح في كلا الحالتين",
+      "prefer_follow": "أفضل الدعم على القيادة",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "love_lead": {"bus_mgmt": 3, "law_intl": 2, "marketing": 2, "medicine": 1},
+      "prefer_lead": {"bus_mgmt": 2, "law_intl": 1, "marketing": 1},
+      "neutral": {},
+      "prefer_follow": {"soft_eng": 1, "data": 1, "biosci": 1}
+    }
+  },
+
+  {
+    "id": "SALARY_PRIORITY",
+    "type": "single",
+    "category": "values",
+    "prompt_en": "How important is a high salary to you?",
+    "prompt_ar": "ما مدى أهمية الراتب المرتفع بالنسبة لك؟",
+    "options_en": {
+      "top_priority": "Top priority - I want to earn as much as possible",
+      "important": "Important but not the only factor",
+      "balanced": "I balance salary with other factors",
+      "secondary": "Secondary to job satisfaction",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "top_priority": "أولوية قصوى - أريد أن أكسب أكبر قدر ممكن",
+      "important": "مهم لكن ليس العامل الوحيد",
+      "balanced": "أوازن بين الراتب وعوامل أخرى",
+      "secondary": "ثانوي مقارنة بالرضا الوظيفي",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "top_priority": {"medicine": 3, "dentistry": 2, "cs_ai": 2, "acc_fin": 2, "law_intl": 2},
+      "important": {"medicine": 2, "cs_ai": 1, "acc_fin": 1},
+      "balanced": {},
+      "secondary": {"edu_lang": 2, "nursing": 1, "psych": 1}
+    }
+  },
+
+  {
+    "id": "JOB_STABILITY",
+    "type": "single",
+    "category": "values",
+    "prompt_en": "How important is job security and stability to you?",
+    "prompt_ar": "ما مدى أهمية الأمان والاستقرار الوظيفي بالنسبة لك؟",
+    "options_en": {
+      "very_important": "Very important - I need a stable career",
+      "important": "Important but open to some risk",
+      "moderate": "Moderately important",
+      "prefer_risk": "I prefer dynamic and changing careers",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "very_important": "مهم جداً - أحتاج مهنة مستقرة",
+      "important": "مهم لكن منفتح على بعض المخاطر",
+      "moderate": "مهم بشكل معتدل",
+      "prefer_risk": "أفضل المهن الديناميكية والمتغيرة",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "very_important": {"medicine": 2, "nursing": 2, "edu_lang": 2, "acc_fin": 2, "pharmacy": 1},
+      "important": {"medicine": 1, "nursing": 1, "edu_lang": 1},
+      "moderate": {},
+      "prefer_risk": {"marketing": 2, "tourism": 2, "aviation": 2, "media": 1}
+    }
+  },
+
+  {
+    "id": "SOCIAL_IMPACT",
+    "type": "single",
+    "category": "values",
+    "prompt_en": "How important is making a positive social impact in your career?",
+    "prompt_ar": "ما مدى أهمية إحداث تأثير اجتماعي إيجابي في مسيرتك المهنية؟",
+    "options_en": {
+      "essential": "Essential - I want to help people directly",
+      "very_important": "Very important to me",
+      "somewhat": "Somewhat important",
+      "not_priority": "Not a major priority for me",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "essential": "ضروري - أريد مساعدة الناس مباشرة",
+      "very_important": "مهم جداً بالنسبة لي",
+      "somewhat": "مهم إلى حد ما",
+      "not_priority": "ليس أولوية رئيسية بالنسبة لي",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "essential": {"medicine": 3, "nursing": 3, "psych": 3, "edu_lang": 2},
+      "very_important": {"medicine": 2, "nursing": 2, "psych": 2, "law_intl": 1},
+      "somewhat": {},
+      "not_priority": {"cs_ai": 1, "data": 1, "acc_fin": 1}
+    }
+  },
+
+  {
+    "id": "TRAVEL_PREFERENCE",
+    "type": "single",
+    "category": "work_style",
+    "prompt_en": "How do you feel about a job that requires frequent travel?",
+    "prompt_ar": "ما شعورك تجاه وظيفة تتطلب السفر المتكرر؟",
+    "options_en": {
+      "love_travel": "I love it - want to travel frequently",
+      "enjoy": "I enjoy occasional travel",
+      "neutral": "Neutral about travel",
+      "prefer_local": "I prefer staying local",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "love_travel": "أحبه - أريد السفر بشكل متكرر",
+      "enjoy": "أستمتع بالسفر من حين لآخر",
+      "neutral": "محايد تجاه السفر",
+      "prefer_local": "أفضل البقاء محلياً",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "love_travel": {"tourism": 3, "aviation": 3, "marketing": 2, "law_intl": 1},
+      "enjoy": {"tourism": 2, "aviation": 2, "marketing": 1},
+      "neutral": {},
+      "prefer_local": {"soft_eng": 1, "acc_fin": 1, "pharmacy": 1}
+    }
+  },
+
+  {
+    "id": "PHYSICAL_ACTIVITY",
+    "type": "single",
+    "category": "work_style",
+    "prompt_en": "How much physical activity do you want in your career?",
+    "prompt_ar": "كم من النشاط البدني تريد في مسيرتك المهنية؟",
+    "options_en": {
+      "very_active": "Very active - moving around constantly",
+      "moderate": "Moderate activity with some desk work",
+      "mostly_desk": "Mostly desk work with occasional movement",
+      "fully_desk": "Fully desk-based work",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "very_active": "نشط جداً - أتحرك باستمرار",
+      "moderate": "نشاط معتدل مع بعض العمل المكتبي",
+      "mostly_desk": "معظمه عمل مكتبي مع حركة من حين لآخر",
+      "fully_desk": "عمل مكتبي بالكامل",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "very_active": {"civil": 3, "mech": 2, "nursing": 2, "tourism": 2, "aviation": 2},
+      "moderate": {"medicine": 2, "dentistry": 2, "arch": 1},
+      "mostly_desk": {"bus_mgmt": 1, "acc_fin": 1, "marketing": 1},
+      "fully_desk": {"soft_eng": 2, "cs_ai": 2, "data": 2, "acc_fin": 1}
+    }
+  },
+
+  {
+    "id": "WORK_HOURS",
+    "type": "single",
+    "category": "work_style",
+    "prompt_en": "What type of work schedule appeals to you?",
+    "prompt_ar": "أي نوع من جداول العمل يجذبك؟",
+    "options_en": {
+      "structured": "Regular 9-to-5 structured hours",
+      "flexible": "Flexible hours with autonomy",
+      "shifts": "Shift work with varied schedules",
+      "project_based": "Project-based with intense periods",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "structured": "ساعات منتظمة ومنظمة من 9 إلى 5",
+      "flexible": "ساعات مرنة مع استقلالية",
+      "shifts": "عمل بنظام المناوبات مع جداول متنوعة",
+      "project_based": "قائم على المشاريع مع فترات مكثفة",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "structured": {"acc_fin": 2, "bus_mgmt": 2, "edu_lang": 2},
+      "flexible": {"soft_eng": 2, "graphic": 2, "media": 1, "marketing": 1},
+      "shifts": {"medicine": 2, "nursing": 2, "pharmacy": 1, "aviation": 2},
+      "project_based": {"arch": 2, "civil": 2, "mech": 2, "soft_eng": 1}
+    }
+  },
+
+  {
+    "id": "HEALTHCARE_INTEREST",
+    "type": "single",
+    "category": "interests",
+    "prompt_en": "How do you feel about working in healthcare?",
+    "prompt_ar": "ما شعورك تجاه العمل في مجال الرعاية الصحية؟",
+    "options_en": {
+      "passionate": "Very passionate - it's my calling",
+      "interested": "Interested and open to it",
+      "neutral": "Neutral about it",
+      "not_interested": "Not really interested",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "passionate": "شغوف جداً - هذا هو مسيري",
+      "interested": "مهتم ومنفتح عليه",
+      "neutral": "محايد تجاهه",
+      "not_interested": "غير مهتم حقاً",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "passionate": {"medicine": 4, "dentistry": 3, "nursing": 3, "pharmacy": 3, "biosci": 2},
+      "interested": {"medicine": 2, "dentistry": 2, "nursing": 2, "pharmacy": 2},
+      "neutral": {},
+      "not_interested": {"cs_ai": 1, "bus_mgmt": 1, "graphic": 1}
+    }
+  },
+
+  {
+    "id": "TECHNOLOGY_INTEREST",
+    "type": "single",
+    "category": "interests",
+    "prompt_en": "How interested are you in emerging technologies (AI, cybersecurity, etc.)?",
+    "prompt_ar": "ما مدى اهتمامك بالتقنيات الناشئة (الذكاء الاصطناعي، الأمن السيبراني، إلخ)؟",
+    "options_en": {
+      "very_excited": "Very excited - I want to work with cutting-edge tech",
+      "interested": "Interested in learning about it",
+      "some_interest": "Some interest",
+      "not_interested": "Not particularly interested",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "very_excited": "متحمس جداً - أريد العمل مع أحدث التقنيات",
+      "interested": "مهتم بالتعلم عنها",
+      "some_interest": "بعض الاهتمام",
+      "not_interested": "غير مهتم بشكل خاص",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "very_excited": {"cs_ai": 4, "cyber": 3, "data": 3, "soft_eng": 2, "mechatro": 2},
+      "interested": {"cs_ai": 2, "cyber": 2, "data": 2, "soft_eng": 1},
+      "some_interest": {"cs_ai": 1},
+      "not_interested": {}
+    }
+  },
+
+  {
+    "id": "BUSINESS_INTEREST",
+    "type": "single",
+    "category": "interests",
+    "prompt_en": "How interested are you in business and entrepreneurship?",
+    "prompt_ar": "ما مدى اهتمامك بالأعمال وريادة الأعمال؟",
+    "options_en": {
+      "want_own_business": "I want to start my own business someday",
+      "interested_corporate": "Interested in corporate management",
+      "some_interest": "Some interest in business concepts",
+      "not_interested": "Not really interested in business",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "want_own_business": "أريد بدء عملي الخاص يوماً ما",
+      "interested_corporate": "مهتم بالإدارة المؤسسية",
+      "some_interest": "بعض الاهتمام بمفاهيم الأعمال",
+      "not_interested": "غير مهتم حقاً بالأعمال",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "want_own_business": {"bus_mgmt": 4, "marketing": 3, "econ": 2, "acc_fin": 2},
+      "interested_corporate": {"bus_mgmt": 3, "acc_fin": 2, "marketing": 2, "econ": 1},
+      "some_interest": {"bus_mgmt": 1, "marketing": 1},
+      "not_interested": {}
+    }
+  },
+
+  {
+    "id": "LAW_POLITICS_INTEREST",
+    "type": "single",
+    "category": "interests",
+    "prompt_en": "How interested are you in law, politics, or international relations?",
+    "prompt_ar": "ما مدى اهتمامك بالقانون أو السياسة أو العلاقات الدولية؟",
+    "options_en": {
+      "very_interested": "Very interested - I follow current events closely",
+      "interested": "Interested and curious about these fields",
+      "some_interest": "Some interest",
+      "not_interested": "Not particularly interested",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "very_interested": "مهتم جداً - أتابع الأحداث الجارية عن كثب",
+      "interested": "مهتم وفضولي بشأن هذه المجالات",
+      "some_interest": "بعض الاهتمام",
+      "not_interested": "غير مهتم بشكل خاص",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "very_interested": {"law_intl": 4, "econ": 2, "media": 1},
+      "interested": {"law_intl": 2, "econ": 1},
+      "some_interest": {"law_intl": 1},
+      "not_interested": {}
+    }
+  },
+
+  {
+    "id": "DESIGN_MEDIA_INTEREST",
+    "type": "single",
+    "category": "interests",
+    "prompt_en": "How interested are you in design, media, or visual arts?",
+    "prompt_ar": "ما مدى اهتمامك بالتصميم أو الإعلام أو الفنون البصرية؟",
+    "options_en": {
+      "passionate": "Very passionate about visual creativity",
+      "interested": "Interested in design and media",
+      "some_interest": "Some interest",
+      "not_interested": "Not particularly interested",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "passionate": "شغوف جداً بالإبداع البصري",
+      "interested": "مهتم بالتصميم والإعلام",
+      "some_interest": "بعض الاهتمام",
+      "not_interested": "غير مهتم بشكل خاص",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "passionate": {"graphic": 4, "arch": 3, "media": 3},
+      "interested": {"graphic": 2, "arch": 2, "media": 2},
+      "some_interest": {"graphic": 1, "media": 1},
+      "not_interested": {}
+    }
+  },
+
+  {
+    "id": "LEARNING_STYLE",
+    "type": "single",
+    "category": "personality",
+    "prompt_en": "How do you learn best?",
+    "prompt_ar": "كيف تتعلم بشكل أفضل؟",
+    "options_en": {
+      "reading": "Reading and studying independently",
+      "hands_on": "Hands-on practice and experimentation",
+      "visual": "Visual aids like videos and diagrams",
+      "discussion": "Discussing with others and group study",
+      "lectures": "Listening to lectures and explanations",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "reading": "القراءة والدراسة المستقلة",
+      "hands_on": "الممارسة العملية والتجريب",
+      "visual": "الوسائل البصرية مثل الفيديوهات والرسوم البيانية",
+      "discussion": "النقاش مع الآخرين والدراسة الجماعية",
+      "lectures": "الاستماع للمحاضرات والشروحات",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "reading": {"law_intl": 2, "edu_lang": 2, "psych": 1},
+      "hands_on": {"mech": 2, "elec": 2, "civil": 2, "biosci": 1, "pharmacy": 1},
+      "visual": {"graphic": 2, "arch": 2, "media": 2},
+      "discussion": {"psych": 2, "bus_mgmt": 1, "marketing": 1, "law_intl": 1},
+      "lectures": {"medicine": 1, "edu_lang": 1}
+    },
+    "archetype_mapping": {
+      "reading": "investigative",
+      "hands_on": "practical",
+      "visual": "creative",
+      "discussion": "social",
+      "lectures": "conventional"
+    }
+  },
+
+  {
+    "id": "STRESS_HANDLING",
+    "type": "single",
+    "category": "personality",
+    "prompt_en": "How do you handle high-pressure situations?",
+    "prompt_ar": "كيف تتعامل مع المواقف عالية الضغط؟",
+    "options_en": {
+      "thrive": "I thrive under pressure",
+      "handle_well": "I handle it well most of the time",
+      "manage": "I manage but prefer calmer environments",
+      "avoid": "I prefer to avoid high-pressure situations",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "thrive": "أزدهر تحت الضغط",
+      "handle_well": "أتعامل معه جيداً في معظم الأوقات",
+      "manage": "أتدبر لكن أفضل البيئات الأهدأ",
+      "avoid": "أفضل تجنب المواقف عالية الضغط",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "thrive": {"medicine": 3, "nursing": 2, "aviation": 2, "law_intl": 2},
+      "handle_well": {"medicine": 2, "nursing": 1, "bus_mgmt": 1},
+      "manage": {"edu_lang": 1, "graphic": 1},
+      "avoid": {"soft_eng": 1, "data": 1, "arch": 1}
+    }
+  },
+
+  {
+    "id": "DECISION_STYLE",
+    "type": "single",
+    "category": "personality",
+    "prompt_en": "When making important decisions, you rely more on...",
+    "prompt_ar": "عند اتخاذ قرارات مهمة، تعتمد أكثر على...",
+    "options_en": {
+      "data_facts": "Data and facts",
+      "experience": "Past experience and patterns",
+      "intuition": "Intuition and gut feeling",
+      "advice": "Advice from trusted people",
+      "values": "Personal values and principles",
+      "none": "None of the above"
+    },
+    "options_ar": {
+      "data_facts": "البيانات والحقائق",
+      "experience": "الخبرة السابقة والأنماط",
+      "intuition": "الحدس والشعور الداخلي",
+      "advice": "النصيحة من أشخاص موثوقين",
+      "values": "القيم والمبادئ الشخصية",
+      "none": "لا شيء مما سبق"
+    },
+    "weights": {
+      "data_facts": {"data": 3, "cs_ai": 2, "acc_fin": 2, "biosci": 1},
+      "experience": {"medicine": 2, "bus_mgmt": 2, "law_intl": 1},
+      "intuition": {"graphic": 2, "marketing": 2, "media": 1},
+      "advice": {"psych": 2, "nursing": 1},
+      "values": {"law_intl": 2, "edu_lang": 2, "nursing": 1}
+    },
+    "archetype_mapping": {
+      "data_facts": "analytical",
+      "experience": "practical",
+      "intuition": "intuitive",
+      "advice": "social",
+      "values": "idealistic"
+    }
+  },
+
+  {
+    "id": "RISK_TOLERANCE",
+    "type": "scale",
+    "category": "personality",
+    "prompt_en": "How comfortable are you with taking risks?",
+    "prompt_ar": "ما مدى ارتياحك لتحمل المخاطر؟",
+    "scale_weight": 0.8,
+    "targets": ["aviation", "marketing", "bus_mgmt", "tourism"],
+    "negative_targets": ["acc_fin", "pharmacy", "edu_lang"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Risk-averse", "4": "Risk-taker"},
+    "labels_ar": {"0": "متحفظ تجاه المخاطر", "4": "مجازف"}
+  },
+
+  {
+    "id": "ANALYTICAL_THINKING",
+    "type": "scale",
+    "category": "aptitude",
+    "prompt_en": "How strong are your analytical and logical thinking skills?",
+    "prompt_ar": "ما مدى قوة مهاراتك في التفكير التحليلي والمنطقي؟",
+    "scale_weight": 1.3,
+    "targets": ["cs_ai", "data", "elec", "acc_fin", "law_intl"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not my strength", "4": "Very strong"},
+    "labels_ar": {"0": "ليست نقطة قوتي", "4": "قوية جداً"}
+  },
+
+  {
+    "id": "HELPING_OTHERS",
+    "type": "scale",
+    "category": "values",
+    "prompt_en": "How much do you want your work to directly help individuals?",
+    "prompt_ar": "ما مدى رغبتك في أن يساعد عملك الأفراد مباشرة؟",
+    "scale_weight": 1.2,
+    "targets": ["medicine", "nursing", "psych", "edu_lang", "dentistry"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not important", "4": "Very important"},
+    "labels_ar": {"0": "ليس مهماً", "4": "مهم جداً"}
+  },
+
+  {
+    "id": "INNOVATION_DRIVE",
+    "type": "scale",
+    "category": "values",
+    "prompt_en": "How important is innovation and creating new things in your career?",
+    "prompt_ar": "ما مدى أهمية الابتكار وخلق أشياء جديدة في مسيرتك المهنية؟",
+    "scale_weight": 1.1,
+    "targets": ["cs_ai", "arch", "graphic", "mechatro", "biosci"],
+    "min": 0,
+    "max": 4,
+    "step": 1,
+    "defaultValue": 2,
+    "labels_en": {"0": "Not important", "4": "Very important"},
+    "labels_ar": {"0": "ليس مهماً", "4": "مهم جداً"}
+  },
+
+  {
+    "id": "GRADE_BAND",
+    "type": "single",
+    "category": "academic",
+    "prompt_en": "What is your high school grade average?",
+    "prompt_ar": "ما هو معدلك في الثانوية العامة؟",
+    "options_en": {
+      "below_60": "Below 60%",
+      "60_70": "60% - 70%",
+      "70_80": "70% - 80%",
+      "80_90": "80% - 90%",
+      "above_90": "Above 90%",
+      "none": "Prefer not to say"
+    },
+    "options_ar": {
+      "below_60": "أقل من 60%",
+      "60_70": "60% - 70%",
+      "70_80": "70% - 80%",
+      "80_90": "80% - 90%",
+      "above_90": "أعلى من 90%",
+      "none": "أفضل عدم الإجابة"
+    },
+    "grade_rules": {
+      "below_60": {"medicine": -6, "dentistry": -5, "pharmacy": -4, "elec": -3, "mech": -3, "civil": -2},
+      "60_70": {"medicine": -4, "dentistry": -3, "pharmacy": -2, "elec": -2, "mech": -2},
+      "70_80": {},
+      "80_90": {"medicine": 2, "dentistry": 1, "cs_ai": 1, "elec": 1},
+      "above_90": {"medicine": 4, "dentistry": 3, "pharmacy": 2, "cs_ai": 2, "elec": 2, "law_intl": 1}
+    }
+  },
+
+  {
+    "id": "HIGHEST_TUITION",
+    "type": "scale",
+    "category": "academic",
+    "prompt_en": "What is your maximum tuition budget (USD per year)?",
+    "prompt_ar": "ما هي ميزانيتك القصوى للرسوم الدراسية (بالدولار سنوياً)؟",
+    "scale_weight": 1,
+    "targets": [],
     "min": 1500,
     "max": 44500,
     "step": 500,
-    "defaultValue": 1500
+    "defaultValue": 8000,
+    "labels_en": {"1500": "$1,500", "44500": "$44,500"},
+    "labels_ar": {"1500": "$1,500", "44500": "$44,500"}
   }
 ]
