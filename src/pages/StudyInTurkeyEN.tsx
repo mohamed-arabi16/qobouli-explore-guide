@@ -67,10 +67,11 @@ export default function StudyInTurkeyEN() {
         <Navbar />
         
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="ltr">
-        <div className="text-sm breadcrumbs">
-            <ul>
-                <li><Link to="/en">Home</Link></li>
-                <li>Study in Turkey</li>
+        <div className="text-sm breadcrumbs mb-4">
+            <ul className="flex gap-2 text-white/70">
+                <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+                <li className="text-white/50">/</li>
+                <li className="text-primary">Study in Turkey</li>
             </ul>
         </div>
         <Link to="/ar/study-in-turkey" className="text-sm text-primary hover:underline my-4 block">
@@ -128,7 +129,7 @@ export default function StudyInTurkeyEN() {
                     ["Total", "330 – 560"]
                 ]}
             />
-            <p className="mt-4 text-sm text-gray-600">Note: These figures are estimates and can vary significantly based on the city and student's lifestyle.</p>
+            <p className="mt-4 text-sm text-white/70">Note: These figures are estimates and can vary significantly based on the city and student's lifestyle.</p>
         </section>
 
         <section className="mb-12" id="study-tracks">

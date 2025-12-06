@@ -31,7 +31,11 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
 
   const setLanguage = (lang: Locale) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
+    try {
+      localStorage.setItem('language', lang);
+    } catch (e) {
+      // Storage may not be available in some contexts (e.g., embedded frames, privacy mode)
+    }
   };
 
   const t = useCallback((key: string, defaultValue?: string, options?: Record<string, string | number>): string => {
@@ -67,9 +71,13 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
 
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Locale;
-    if (savedLanguage && ['ar', 'en'].includes(savedLanguage)) {
-      setLanguageState(savedLanguage);
+    try {
+      const savedLanguage = localStorage.getItem('language') as Locale;
+      if (savedLanguage && ['ar', 'en'].includes(savedLanguage)) {
+        setLanguageState(savedLanguage);
+      }
+    } catch (e) {
+      // Storage may not be available in some contexts (e.g., embedded frames, privacy mode)
     }
   }, []);
 
