@@ -81,7 +81,7 @@ export default function TurkishPrivateUniversitiesAR() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="rtl">
         <div className="text-sm breadcrumbs mb-4">
             <ul className="flex gap-2 text-white/70">
-                <li><Link to="/ar" className="hover:text-primary transition-colors">الرئيسية</Link></li>
+                <li><Link to="/" className="hover:text-primary transition-colors">الرئيسية</Link></li>
                 <li className="text-white/50">/</li>
                 <li><span className="text-white/50">الدراسة في تركيا</span></li>
                 <li className="text-white/50">/</li>
