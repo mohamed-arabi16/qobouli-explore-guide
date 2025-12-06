@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SEODataTable from '@/components/SEODataTable';
 import FAQSection from '@/components/FAQSection';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -8,46 +9,26 @@ import Footer from '@/components/Footer';
 import { SubPageLayout, ContentSection } from '@/components/SubPageLayout';
 
 export default function TuitionFees2025AR() {
-    const faqItems = [
-        {
-            question: "لماذا رسوم الطب البشري وطب الأسنان هي الأعلى؟",
-            answer: "رسوم التخصصات الطبية تكون أعلى بسبب التكاليف المرتفعة لتجهيز المختبرات، المستشفيات الجامعية، والمواد المستخدمة في التدريب العملي، بالإضافة إلى طول فترة الدراسة."
-        },
-        {
-            question: "هل اختلاف لغة الدراسة يغير التكلفة؟",
-            answer: "نعم، في معظم الجامعات، تكون البرامج التي تُدرس باللغة الإنجليزية أغلى من نفس البرامج التي تُدرس باللغة التركية. هذا الفارق يمكن أن يتراوح من 20% إلى 50% أحيانًا."
-        },
-        {
-            question: "كيف أحصل على خصم مُقدمًا؟",
-            answer: "أفضل طريقة هي التسجيل عبر وكيل معتمد مثل قبولي. لدينا اتفاقيات مباشرة مع الجامعات تمنحنا القدرة على تقديم خصومات حصرية لا يحصل عليها الطالب إذا قدم مباشرة. التقديم المبكر يساعد أيضًا."
-        },
-        {
-            question: "هل توجد منح للمتفوقين؟",
-            answer: "نعم، بعض الجامعات تقدم منح تفوق إضافية للطلاب الحاصلين على معدلات مرتفعة في الثانوية العامة أو خلال سنوات دراستهم الجامعية. هذه المنح تكون محدودة وتنافسية."
-        },
-        {
-            question: "ما أفضل توقيت لدفع الرسوم؟",
-            answer: "أفضل توقيت هو دفع القسط الأول مباشرة بعد الحصول على القبول الأولي لتأمين مقعدك. لا تؤجل الدفع حتى لا تفقد الخصم الممنوح لك أو المقعد الدراسي نفسه."
-        }
-    ];
+    const { t } = useTranslation();
+    const faqItems = t('pages.universityFeesTurkey2025.faqSection.items', { returnObjects: true }) as Array<{ question: string; answer: string }>;
 
   return (
     <>
       <Helmet>
         <html lang="ar" dir="rtl" />
-        <title>تكاليف الدراسة في تركيا 2025: رسوم الجامعات الخاصة والحكومية</title>
-        <meta name="description" content="دليل شامل حول تكاليف ورسوم الدراسة في تركيا لعام 2025. تعرف على رسوم الجامعات الخاصة بعد الخصم والرسوم التقريبية للجامعات الحكومية." />
-        <link rel="canonical" href="https://qobouli.com/ar/tuition-fees-turkey-2025" />
+        <title>{t('pages.universityFeesTurkey2025.meta.title')}</title>
+        <meta name="description" content={t('pages.universityFeesTurkey2025.meta.description')} />
+        <link rel="canonical" href={t('pages.universityFeesTurkey2025.meta.canonical')} />
         <link rel="alternate" hrefLang="en" href="https://qobouli.com/en/tuition-fees-turkey-2025" />
-        <meta property="og:title" content="تكاليف الدراسة في تركيا 2025: رسوم الجامعات الخاصة والحكومية" />
-        <meta property="og:description" content="دليل شامل حول تكاليف ورسوم الدراسة في تركيا لعام 2025. تعرف على رسوم الجامعات الخاصة بعد الخصم والرسوم التقريبية للجامعات الحكومية." />
-        <meta property="og:url" content="https://qobouli.com/ar/tuition-fees-turkey-2025" />
+        <meta property="og:title" content={t('pages.universityFeesTurkey2025.meta.ogTitle')} />
+        <meta property="og:description" content={t('pages.universityFeesTurkey2025.meta.ogDescription')} />
+        <meta property="og:url" content={t('pages.universityFeesTurkey2025.meta.ogUrl')} />
         <script type="application/ld+json">{JSON.stringify({
           "@context":"https://schema.org",
           "@type":"WebPage",
-          "name":"تكاليف الدراسة في تركيا 2025: رسوم الجامعات الخاصة والحكومية",
-          "description":"دليل شامل حول تكاليف ورسوم الدراسة في تركيا لعام 2025. تعرف على رسوم الجامعات الخاصة بعد الخصم والرسوم التقريبية للجامعات الحكومية.",
-          "url":"https://qobouli.com/ar/tuition-fees-turkey-2025",
+          "name":t('pages.universityFeesTurkey2025.meta.title'),
+          "description":t('pages.universityFeesTurkey2025.meta.description'),
+          "url":t('pages.universityFeesTurkey2025.meta.canonical'),
           "inLanguage": "ar"
         })}</script>
         <script type="application/ld+json">{JSON.stringify({
@@ -70,99 +51,87 @@ export default function TuitionFees2025AR() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="rtl">
         <div className="text-sm breadcrumbs mb-4">
             <ul className="flex gap-2 text-white/70">
-                <li><Link to="/" className="hover:text-primary transition-colors">الرئيسية</Link></li>
+                <li><Link to="/" className="hover:text-primary transition-colors">{t('pages.universityFeesTurkey2025.breadcrumbs.home')}</Link></li>
                 <li className="text-white/50">/</li>
-                <li><span className="text-white/50">الدراسة في تركيا</span></li>
+                <li><span className="text-white/50">{t('pages.universityFeesTurkey2025.breadcrumbs.studyInTurkey')}</span></li>
                 <li className="text-white/50">/</li>
-                <li className="text-primary">تكاليف الدراسة في تركيا</li>
+                <li className="text-primary">{t('pages.universityFeesTurkey2025.breadcrumbs.current')}</li>
             </ul>
         </div>
         <Link to="/en/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline hover:text-secondary my-4 block transition-colors">
-          Read in English →
+          {t('pages.universityFeesTurkey2025.languageSwitch')}
         </Link>
 
         <header className="mb-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-            تكاليف الدراسة في تركيا 2025
+            {t('pages.universityFeesTurkey2025.header.title')}
           </h1>
           <p className="text-xl text-white/90 leading-relaxed">
-            لماذا تختلف الرسوم الدراسية بين الجامعات؟ وكيف يمكنك الاستفادة من الخصومات الحصرية التي تقدمها "قبولي" لتخفيض التكاليف بشكل كبير؟
+            {t('pages.universityFeesTurkey2025.header.subtitle')}
           </p>
         </header>
 
         <section className="mb-12" id="private-fees">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">رسوم الجامعات الخاصة (بعد الخصم)</h2>
-            <p className="mb-4 text-white/90">الجدول التالي يعرض أمثلة لرسوم سنوية في بعض الجامعات الخاصة الشريكة لنا. هذه الرسوم هي بعد تطبيق خصم "قبولي" الحصري.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.privateFees.title')}</h2>
+            <p className="mb-4 text-white/90">{t('pages.universityFeesTurkey2025.privateFees.intro')}</p>
             <SEODataTable
-                caption="جدول: أمثلة على رسوم الجامعات الخاصة السنوية بعد الخصم لعام 2025"
+                caption={t('pages.universityFeesTurkey2025.privateFees.tableCaption')}
                 descriptionId="private-fees-ar"
-                headers={["الجامعة", "التخصص", "اللغة", "الرسوم قبل الخصم (USD)", "بعد الخصم عبر قبولي (USD)", "ملاحظات"]}
-                rows={[
-                    ["جامعة إسطنبول أطلس", "الطب البشري", "الإنجليزية", "16,000", "14,400", "خصم 10%"],
-                    ["جامعة بهتشه شهير", "هندسة الذكاء الاصطناعي", "الإنجليزية", "8,900", "6,230", "خصم 30%"],
-                    ["جامعة استينيا", "طب الأسنان", "الإنجليزية", "17,850", "15,172", "خصم 15%"],
-                    ["جامعة ميديبول", "العلاقات الدولية", "الإنجليزية", "5,000", "3,800", "خصم ثابت"],
-                    ["جامعة أوسكودار", "علم النفس", "التركية", "3,900", "3,200", "خصم خاص"],
-                    ["جامعة نيشان تاشي", "فن الطهي", "التركية", "3,400", "2,950", "خصم للدفع النقدي"]
-                ]}
+                headers={t('pages.universityFeesTurkey2025.privateFees.headers', { returnObjects: true }) as string[]}
+                rows={t('pages.universityFeesTurkey2025.privateFees.rows', { returnObjects: true }) as string[][]}
             />
         </section>
 
         <section className="mb-12" id="public-fees">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">رسوم الجامعات الحكومية (تقريبي)</h2>
-            <p className="mb-4 text-white/90">القبول في الجامعات الحكومية أصعب ويتطلب امتحانات (YÖS/SAT)، ورسومها أقل بكثير ولكنها غير ثابتة وتعتمد على قرار مجلس الجامعة سنويًا. الأرقام التالية هي تقديرات تقريبية.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.publicFees.title')}</h2>
+            <p className="mb-4 text-white/90">{t('pages.universityFeesTurkey2025.publicFees.intro')}</p>
             <SEODataTable
-                caption="جدول: رسوم تقريبية للجامعات الحكومية السنوية لعام 2025"
+                caption={t('pages.universityFeesTurkey2025.publicFees.tableCaption')}
                 descriptionId="public-fees-ar"
-                headers={["الجامعة", "التخصص", "اللغة", "الرسوم التقريبية (USD)", "ملاحظات"]}
-                rows={[
-                    ["جامعة إسطنبول", "الحقوق", "التركية", "1,000 - 1,500", "تعتمد على البرنامج"],
-                    ["جامعة الشرق الأوسط التقنية", "الهندسة الميكانيكية", "الإنجليزية", "600 - 1,000", "رسوم منخفضة للطلاب الأجانب"],
-                    ["جامعة حجة تبة", "الطب", "التركية", "3,000 - 5,000", "من أفضل كليات الطب"],
-                    ["جامعة غازي", "التربية", "التركية", "400 - 800", "تختلف حسب التخصص"]
-                ]}
+                headers={t('pages.universityFeesTurkey2025.publicFees.headers', { returnObjects: true }) as string[]}
+                rows={t('pages.universityFeesTurkey2025.publicFees.rows', { returnObjects: true }) as string[][]}
             />
         </section>
 
         <section className="mb-12" id="budget-planning">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">كيفية حساب الميزانية السنوية</h2>
-            <p className="mb-4">عند التخطيط لميزانيتك، لا تنس إضافة التكاليف الأخرى إلى جانب الرسوم الدراسية:</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.budgetPlanning.title')}</h2>
+            <p className="mb-4">{t('pages.universityFeesTurkey2025.budgetPlanning.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-white/90">
-                <li><strong>دفعات الأقساط:</strong> معظم الجامعات تقسم الرسوم على دفعتين، واحدة لكل فصل دراسي.</li>
-                <li><strong>تكاليف إضافية:</strong> تشمل رسوم التأمين الصحي (إلزامي)، رسوم استخراج الإقامة الطلابية، وترجمة وتصديق الوثائق.</li>
-                <li><strong>تقدير المعيشة:</strong> أضف تكلفة المعيشة الشهرية (300-600 دولار) واضربها في 12 شهرًا. يمكنك الرجوع إلى <Link to="/ar/study-in-turkey#living-costs" className="text-primary hover:underline">دليل المعيشة في تركيا</Link> للمزيد من التفاصيل.</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.installments')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.installmentsContent')}</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.additionalCosts')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.additionalCostsContent')}</li>
+                <li><strong>{t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimate')}</strong> {t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimateContent')} <Link to="/ar/study-in-turkey#living-costs" className="text-primary hover:underline">{t('pages.universityFeesTurkey2025.budgetPlanning.livingGuideLink')}</Link> {t('pages.universityFeesTurkey2025.budgetPlanning.livingEstimateEnd')}</li>
             </ul>
         </section>
 
         <section className="mb-12" id="payment-methods">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">طرق الدفع والأقساط</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.paymentMethods.title')}</h2>
             <div className="space-y-4 text-white/90">
-                <p>سياسات الدفع تختلف، ولكن بشكل عام:</p>
+                <p>{t('pages.universityFeesTurkey2025.paymentMethods.intro')}</p>
                 <ul className="list-disc list-inside space-y-2">
-                    <li><strong>الدفع عبر التحويل البنكي:</strong> الطريقة الأكثر شيوعًا هي تحويل القسط الأول مباشرة إلى حساب الجامعة الرسمي (SWIFT).</li>
-                    <li><strong>الدفع في الحرم الجامعي:</strong> بعد الوصول، يمكن دفع الأقساط المتبقية مباشرة في قسم المالية بالجامعة.</li>
-                    <li><strong>المواعيد النهائية:</strong> لكل جامعة مواعيد نهائية لدفع الأقساط. التأخر في الدفع قد يؤدي إلى تجميد قيدك أو فرض غرامات.</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.bankTransfer')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.bankTransferContent')}</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.onCampus')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.onCampusContent')}</li>
+                    <li><strong>{t('pages.universityFeesTurkey2025.paymentMethods.deadlines')}</strong> {t('pages.universityFeesTurkey2025.paymentMethods.deadlinesContent')}</li>
                 </ul>
             </div>
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">أسئلة شائعة</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.universityFeesTurkey2025.faqSection.title')}</h2>
           <FAQSection variant="dark" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">
-            <h2 className="text-3xl font-bold mb-3">احصل على خصمك الآن</h2>
-            <p className="mb-6 text-lg opacity-90">نرسل لك عرضًا مناسبًا يتضمن الرسوم الدراسية بعد الخصم خلال 24 ساعة.</p>
+            <h2 className="text-3xl font-bold mb-3">{t('pages.universityFeesTurkey2025.cta.title')}</h2>
+            <p className="mb-6 text-lg opacity-90">{t('pages.universityFeesTurkey2025.cta.subtitle')}</p>
             <WhatsAppButton />
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4 text-white">اكتشف المزيد</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">{t('pages.universityFeesTurkey2025.discoverMore.title')}</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/ar/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">الجامعات التركية الخاصة</Link>
+                <Link to="/ar/turkish-private-universities" className="text-primary hover:underline hover:text-secondary transition-colors">{t('pages.universityFeesTurkey2025.discoverMore.privateUniversities')}</Link>
                 <span className="text-white/40">|</span>
-                <Link to="/ar/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">دليل الدراسة في تركيا</Link>
+                <Link to="/ar/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">{t('pages.universityFeesTurkey2025.discoverMore.studyGuide')}</Link>
             </div>
         </div>
       </div>
