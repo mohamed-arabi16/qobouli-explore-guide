@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -124,6 +124,10 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
 
   const componentRef = useRef<HTMLDivElement>(null);
   const resultCardRef = useRef<HTMLDivElement>(null);
+  
+  // Guard to prevent duplicate AI calls
+  const aiCallMadeRef = useRef<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     try {
@@ -266,121 +270,165 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
     },
   });
 
+  // Compute results when completed - separate from AI call
   useEffect(() => {
     if (completed && computedScorerResult) {
-      setIsLoadingResults(true);
       const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
       setRecommendedPrograms(finalPrograms);
       const explanations = buildExplanation(computedScorerResult.boosters, language as Locale);
       setExplanationPhrases(explanations);
-      
-      // Check cache first
-      const cacheKey = generateCacheKey(scorerAnswers);
-      const cached = getFromCache(cacheKey);
-      
-      if (cached) {
-        console.log('✅ Using cached AI explanation');
-        setAiExplanation(cached.aiExplanation);
-        setIsLoadingResults(false);
-        sessionStorage.setItem('quizCompleted', 'true');
-        return;
-      }
-      
-      // Generate AI-powered explanation
-      setIsLoadingAI(true);
-      setAiUnavailable(false);
-      console.log('📝 Calling AI edge function with:', { 
-        userName, 
-        answersCount: scorerAnswers.length, 
-        programsCount: finalPrograms.length, 
-        boostersCount: computedScorerResult.boosters.length 
-      });
-      
-      // Build enriched answers with human-readable labels and values
-      const enrichedAnswers = scorerAnswers.map(ans => {
-        const question = scorerQuestionsConfig.find(q => q.id === ans.questionId);
-        if (!question) return { questionId: ans.questionId, questionLabel: ans.questionId, displayValue: String(ans.value) };
-
-        const questionLabel = t(`question.${ans.questionId}.prompt`, question.prompt_en);
-        let displayValue: string;
-
-        if (Array.isArray(ans.value)) {
-          const opts = (Array.isArray(question.options) ? question.options : []) as any[];
-          displayValue = ans.value.map(optId => {
-            const opt = opts.find(o => o.id === optId);
-            return opt ? (language === 'ar' ? opt.label_ar : opt.label_en) : optId;
-          }).join(', ');
-        } else if (question.type === 'single') {
-          const opts = (Array.isArray(question.options) ? question.options : []) as any[];
-          const opt = opts.find(o => o.id === ans.value);
-          displayValue = opt ? (language === 'ar' ? opt.label_ar : opt.label_en) : String(ans.value);
-        } else {
-          displayValue = String(ans.value);
-        }
-
-        return { questionId: ans.questionId, questionLabel, displayValue };
-      });
-
-      // Reduced timeout (15 seconds for better UX)
-      const aiTimeout = setTimeout(() => {
-        setIsLoadingAI(false);
-        setAiUnavailable(true);
-      }, 15000);
-
-      supabase.functions.invoke('generate-ai-recommendation', {
-        body: {
-          userName,
-          answers: enrichedAnswers,
-          topPrograms: finalPrograms,
-          boosters: computedScorerResult.boosters
-        }
-      }).then(({ data, error }) => {
-        clearTimeout(aiTimeout);
-        console.log('🤖 AI response:', { data, error });
-        
-        // Check if function returned error in data (even with 200 status)
-        if (data?.error || data?.status === 429 || data?.status === 402) {
-          console.error('❌ AI recommendation error:', data);
-          setAiUnavailable(true);
-          
-          // Show toast only for specific errors
-          if (data?.status === 429 || data?.error?.includes('429')) {
-            toast({ 
-              title: t('errors.rateLimitTitle', 'طلبات كثيرة'), 
-              description: t('errors.rateLimitDesc', 'يرجى المحاولة مرة أخرى بعد قليل'),
-              variant: 'default' 
-            });
-          } else if (data?.status === 402 || data?.error?.includes('402')) {
-            toast({ 
-              title: t('errors.quotaExceededTitle', 'تم تجاوز الحصة'), 
-              description: t('errors.quotaExceededDesc', 'يرجى التواصل مع الدعم'),
-              variant: 'default' 
-            });
-          }
-        } else if (error) {
-          console.error('❌ AI function error:', error);
-          setAiUnavailable(true);
-        } else if (data?.aiExplanation) {
-          console.log('✅ AI explanation received, length:', data.aiExplanation.length);
-          setAiExplanation(data.aiExplanation);
-          // Cache the successful result
-          saveToCache(cacheKey, data.aiExplanation);
-        } else {
-          console.warn('⚠️ No AI explanation in response');
-          setAiUnavailable(true);
-        }
-        setIsLoadingAI(false);
-      }).catch(err => {
-        clearTimeout(aiTimeout);
-        console.error('❌ Unexpected error calling AI function:', err);
-        setIsLoadingAI(false);
-        setAiUnavailable(true);
-      });
-      
-      setIsLoadingResults(false);
       sessionStorage.setItem('quizCompleted', 'true');
     }
-  }, [completed, computedScorerResult, language, userName, scorerAnswers, toast, t]);
+  }, [completed, computedScorerResult, language]);
+
+  // AI call effect - with strict guards to prevent duplicate calls
+  useEffect(() => {
+    if (!completed || !computedScorerResult || scorerAnswers.length === 0) {
+      return;
+    }
+
+    const cacheKey = generateCacheKey(scorerAnswers);
+    
+    // Guard 1: Already made AI call for this exact answer set
+    if (aiCallMadeRef.current === cacheKey) {
+      console.log('🛑 AI call already made for this answer set, skipping');
+      return;
+    }
+    
+    // Guard 2: Already have an AI explanation loaded
+    if (aiExplanation) {
+      console.log('🛑 AI explanation already loaded, skipping');
+      return;
+    }
+    
+    // Guard 3: Check localStorage cache
+    const cached = getFromCache(cacheKey);
+    if (cached) {
+      console.log('✅ Using cached AI explanation');
+      setAiExplanation(cached.aiExplanation);
+      aiCallMadeRef.current = cacheKey;
+      return;
+    }
+    
+    // Guard 4: Check sessionStorage for AI explanation from this session
+    try {
+      const sessionAI = sessionStorage.getItem('aiExplanation');
+      if (sessionAI) {
+        console.log('✅ Using session-stored AI explanation');
+        setAiExplanation(sessionAI);
+        aiCallMadeRef.current = cacheKey;
+        return;
+      }
+    } catch (e) {
+      console.warn('Session storage read error:', e);
+    }
+    
+    // Mark that we're making the call for this answer set
+    aiCallMadeRef.current = cacheKey;
+    
+    // Cancel any in-flight request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+    
+    // Generate AI-powered explanation
+    setIsLoadingAI(true);
+    setAiUnavailable(false);
+    
+    const finalPrograms = pickPrograms(computedScorerResult.sortedMajors);
+    console.log('📝 Calling AI edge function with:', { 
+      userName, 
+      answersCount: scorerAnswers.length, 
+      programsCount: finalPrograms.length, 
+      boostersCount: computedScorerResult.boosters.length,
+      cacheKey
+    });
+    
+    // Build enriched answers with human-readable labels and values
+    const enrichedAnswers = scorerAnswers.map(ans => {
+      const question = scorerQuestionsConfig.find(q => q.id === ans.questionId);
+      if (!question) return { questionId: ans.questionId, questionLabel: ans.questionId, displayValue: String(ans.value) };
+
+      const questionLabel = question.prompt_en;
+      let displayValue: string;
+
+      if (Array.isArray(ans.value)) {
+        const opts = (Array.isArray(question.options) ? question.options : []) as any[];
+        displayValue = ans.value.map(optId => {
+          const opt = opts.find((o: any) => o.id === optId);
+          return opt ? opt.label_en : optId;
+        }).join(', ');
+      } else if (question.type === 'single') {
+        const opts = (Array.isArray(question.options) ? question.options : []) as any[];
+        const opt = opts.find((o: any) => o.id === ans.value);
+        displayValue = opt ? opt.label_en : String(ans.value);
+      } else {
+        displayValue = String(ans.value);
+      }
+
+      return { questionId: ans.questionId, questionLabel, displayValue };
+    });
+
+    // Reduced timeout (15 seconds for better UX)
+    const aiTimeout = setTimeout(() => {
+      console.log('⏱️ AI timeout reached');
+      setIsLoadingAI(false);
+      setAiUnavailable(true);
+    }, 15000);
+
+    supabase.functions.invoke('generate-ai-recommendation', {
+      body: {
+        userName,
+        answers: enrichedAnswers,
+        topPrograms: finalPrograms,
+        boosters: computedScorerResult.boosters
+      }
+    }).then(({ data, error }) => {
+      clearTimeout(aiTimeout);
+      console.log('🤖 AI response:', { data, error });
+      
+      // Check if function returned error in data (even with 200 status)
+      if (data?.error || data?.status === 429 || data?.status === 402) {
+        console.error('❌ AI recommendation error:', data);
+        setAiUnavailable(true);
+      } else if (error) {
+        console.error('❌ AI function error:', error);
+        setAiUnavailable(true);
+      } else if (data?.aiExplanation) {
+        console.log('✅ AI explanation received, length:', data.aiExplanation.length);
+        setAiExplanation(data.aiExplanation);
+        // Cache the successful result in both localStorage and sessionStorage
+        saveToCache(cacheKey, data.aiExplanation);
+        try {
+          sessionStorage.setItem('aiExplanation', data.aiExplanation);
+        } catch (e) {
+          console.warn('Session storage write error:', e);
+        }
+      } else {
+        console.warn('⚠️ No AI explanation in response');
+        setAiUnavailable(true);
+      }
+      setIsLoadingAI(false);
+    }).catch(err => {
+      clearTimeout(aiTimeout);
+      // Ignore abort errors
+      if (err.name === 'AbortError') {
+        console.log('🛑 AI request aborted');
+        return;
+      }
+      console.error('❌ Unexpected error calling AI function:', err);
+      setIsLoadingAI(false);
+      setAiUnavailable(true);
+    });
+    
+    // Cleanup function
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [completed, computedScorerResult, scorerAnswers, userName, aiExplanation]);
 
   useEffect(() => {
     if (completed && !sessionId && computedScorerResult) {
