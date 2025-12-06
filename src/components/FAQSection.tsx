@@ -11,22 +11,26 @@ import { useLanguage } from '@/contexts/LanguageContext'; // Keep for language v
 interface FAQSectionProps {
   id?: string;
   variant?: 'light' | 'dark';
+  faqKey?: string; // Translation key for FAQ items (e.g., 'faq.items' or 'pages.studyInTurkey.faqSection.items')
+  titleKey?: string; // Translation key for FAQ title (e.g., 'faq.title' or 'pages.studyInTurkey.faqSection.title')
 }
 
 // Define a type for the translated FAQ item structure we expect from i18next
 interface TranslatedFAQItem {
-  q: string;
-  a: string[]; // Array of strings for paragraphs/list items
+  q?: string;
+  a?: string[]; // Array of strings for paragraphs/list items
+  question?: string; // Alternative format used in page-specific FAQs
+  answer?: string; // Alternative format used in page-specific FAQs
 }
 
-const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light' }) => {
+const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey = 'faq.items', titleKey = 'faq.title' }) => {
   const { t, i18n } = useTranslation();
   const { language } = useLanguage(); // Still used for Farsi fallback logic
 
   // Fetch FAQ items using i18next.
   // `returnObjects: true` allows fetching the array of objects.
   // Need to cast the result as it's `unknown` by default.
-  const items = t('faq.items', { returnObjects: true }) as
+  const items = t(faqKey, { returnObjects: true }) as
     | TranslatedFAQItem[]
     | string;
 
@@ -57,40 +61,56 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light' }) => {
 
   const currentFaqsToDisplay = (language as string) === 'fa' && farsiFaqsStatic.length > 0
     ? farsiFaqsStatic
-    : faqs.map(faq => ({
-        question: faq.q,
-        answer: (() => {
-          const elements: React.ReactNode[] = [];
-          let currentList: string[] = [];
+    : faqs.map(faq => {
+        // Support both formats: { q, a } and { question, answer }
+        const questionText = faq.question || faq.q || '';
+        const answerData = faq.answer || faq.a;
 
-          const flushList = (key: string | number) => {
-            if (currentList.length > 0) {
-              elements.push(
-                <ul key={`ul-${key}`} className="list-disc ml-6 mt-2 space-y-1">
-                  {currentList.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              );
-              currentList = [];
+        return {
+          question: questionText,
+          answer: (() => {
+            // If answer is a string, just return it as a paragraph
+            if (typeof answerData === 'string') {
+              return <p>{answerData}</p>;
             }
-          };
 
-          faq.a.forEach((text, idx) => {
-            if (text.startsWith('• ') || (text.startsWith('<li>') && text.endsWith('</li>'))) {
-              const listItemText = text.startsWith('• ') ? text.substring(2) : text.substring(4, text.length - 5);
-              currentList.push(listItemText);
-            } else {
-              flushList(idx);
-              elements.push(<p key={`p-${idx}`} className={elements.length > 0 ? "mt-2" : ""}>{text}</p>);
+            // If answer is an array, process it
+            if (Array.isArray(answerData)) {
+              const elements: React.ReactNode[] = [];
+              let currentList: string[] = [];
+
+              const flushList = (key: string | number) => {
+                if (currentList.length > 0) {
+                  elements.push(
+                    <ul key={`ul-${key}`} className="list-disc ml-6 mt-2 space-y-1">
+                      {currentList.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  );
+                  currentList = [];
+                }
+              };
+
+              answerData.forEach((text, idx) => {
+                if (text.startsWith('• ') || (text.startsWith('<li>') && text.endsWith('</li>'))) {
+                  const listItemText = text.startsWith('• ') ? text.substring(2) : text.substring(4, text.length - 5);
+                  currentList.push(listItemText);
+                } else {
+                  flushList(idx);
+                  elements.push(<p key={`p-${idx}`} className={elements.length > 0 ? "mt-2" : ""}>{text}</p>);
+                }
+              });
+
+              flushList('last');
+
+              return <div>{elements}</div>;
             }
-          });
 
-          flushList('last');
-
-          return <div>{elements}</div>;
-        })()
-      }));
+            return null;
+          })()
+        };
+      });
 
   const isDark = variant === 'dark';
 
@@ -101,7 +121,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light' }) => {
           <h2 className={`text-2xl md:text-3xl font-bold mb-8 text-center leading-relaxed md:leading-normal ${
             isDark ? 'bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent' : 'text-qobouli-text'
           }`}>
-            {t('faq.title')}
+            {t(titleKey)}
           </h2>
 
           <Accordion type="multiple" className="space-y-4">

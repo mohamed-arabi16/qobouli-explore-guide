@@ -91,11 +91,13 @@ export default function StudyInTurkeyEN() {
                 </div>
                  <div className="glass-panel p-6 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
                     <h3 className="text-xl font-semibold text-white mb-2">{t('pages.studyInTurkey.cities.other.title')}</h3>
+                    {/* eslint-disable i18next/no-literal-string */}
                     <ul className="list-disc list-inside space-y-2 mt-2 text-white/90">
                         <li><strong>Izmir:</strong> {t('pages.studyInTurkey.cities.other.izmir')}</li>
                         <li><strong>Sakarya:</strong> {t('pages.studyInTurkey.cities.other.sakarya')}</li>
                         <li><strong>Kayseri:</strong> {t('pages.studyInTurkey.cities.other.kayseri')}</li>
                     </ul>
+                    {/* eslint-enable i18next/no-literal-string */}
                 </div>
             </div>
         </section>
@@ -144,7 +146,7 @@ export default function StudyInTurkeyEN() {
 
         <section className="mb-12" id="faq">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">{t('pages.studyInTurkey.faqSection.title')}</h2>
-          <FAQSection variant="dark" />
+          <FAQSection variant="dark" faqKey="pages.studyInTurkey.faqSection.items" titleKey="pages.studyInTurkey.faqSection.title" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">

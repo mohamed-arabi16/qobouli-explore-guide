@@ -88,11 +88,13 @@ export default function StudyInTurkeyAR() {
                 </div>
                  <div>
                     <h3 className="text-xl font-semibold text-white mb-2">{t('pages.studyInTurkey.cities.other.title')}</h3>
+                    {/* eslint-disable i18next/no-literal-string */}
                     <ul className="list-disc list-inside space-y-2 mt-2 text-white/90">
                         <li><strong>إزمير:</strong> {t('pages.studyInTurkey.cities.other.izmir')}</li>
                         <li><strong>سكاريا:</strong> {t('pages.studyInTurkey.cities.other.sakarya')}</li>
                         <li><strong>قيصري:</strong> {t('pages.studyInTurkey.cities.other.kayseri')}</li>
                     </ul>
+                    {/* eslint-enable i18next/no-literal-string */}
                 </div>
             </div>
         </ContentSection>
@@ -141,7 +143,7 @@ export default function StudyInTurkeyAR() {
 
         <section className="mb-12" id="faq">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2 text-white">{t('pages.studyInTurkey.faqSection.title')}</h2>
-          <FAQSection variant="dark" />
+          <FAQSection variant="dark" faqKey="pages.studyInTurkey.faqSection.items" titleKey="pages.studyInTurkey.faqSection.title" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">

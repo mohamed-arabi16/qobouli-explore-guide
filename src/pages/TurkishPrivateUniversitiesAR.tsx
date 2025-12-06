@@ -188,7 +188,7 @@ export default function TurkishPrivateUniversitiesAR() {
 
         <section className="mb-12" id="faq">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2 text-white">{t('pages.turkishPrivateUniversities.faqSection.title')}</h2>
-          <FAQSection variant="dark" />
+          <FAQSection variant="dark" faqKey="pages.turkishPrivateUniversities.faqSection.items" titleKey="pages.turkishPrivateUniversities.faqSection.title" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">
