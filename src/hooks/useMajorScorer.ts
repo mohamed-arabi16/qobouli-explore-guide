@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import questionsConfig from '@/configs/scorer_questions.json';
 
 // Types based on scorer_questions.json structure
@@ -455,187 +456,192 @@ function findWildcardMajor(
 }
 
 const useMajorScorer = (answers: Answer[]): MajorScorerResult => {
-  const scores: Scores = BUCKET_SLUGS.reduce((acc, slug) => {
-    acc[slug] = 0;
-    return acc;
-  }, {} as Scores);
+  // Memoize the result to prevent recalculation on every render
+  // Only recalculate when answers actually change (using JSON.stringify for deep comparison)
+  const answersKey = useMemo(() => JSON.stringify(answers), [answers]);
 
-  const boosters: string[] = [];
+  return useMemo(() => {
+    const scores: Scores = BUCKET_SLUGS.reduce((acc, slug) => {
+      acc[slug] = 0;
+      return acc;
+    }, {} as Scores);
 
-  // Calculate archetype scores first
-  const archetypeScores = calculateArchetypeScores(answers);
-  const psychologicalProfile = determinePsychologicalProfile(archetypeScores);
+    const boosters: string[] = [];
 
-  answers.forEach(answer => {
-    const question = questions.find(q => q.id === answer.questionId);
-    if (!question) {
-      console.warn(`Question with id "${answer.questionId}" not found in configuration.`);
-      return;
-    }
+    // Calculate archetype scores first
+    const archetypeScores = calculateArchetypeScores(answers);
+    const psychologicalProfile = determinePsychologicalProfile(archetypeScores);
 
-    // Add boosters for single type questions
-    if (typeof answer.value === 'string' && question.type === 'single') {
-      if (question.id !== 'GRADE_BAND') {
-        boosters.push(answer.value);
+    answers.forEach(answer => {
+      const question = questions.find(q => q.id === answer.questionId);
+      if (!question) {
+        console.warn(`Question with id "${answer.questionId}" not found in configuration.`);
+        return;
       }
-    }
 
-    // 1. Rank type questions - assign 3/2/1 points
-    if (question.type === 'rank' && Array.isArray(answer.value)) {
-      (answer.value as string[]).forEach((optionKey, index) => {
-        if (question.weight_mapping && question.weight_mapping[optionKey]) {
-          boosters.push(optionKey);
-          const rankScoreValue = 3 - index; // 1st = 3, 2nd = 2, 3rd = 1
-
-          const bucketWeights = question.weight_mapping[optionKey];
-          for (const slug in bucketWeights) {
-            if (BUCKET_SLUGS.includes(slug)) {
-              scores[slug] += bucketWeights[slug] * rankScoreValue;
-            }
-          }
-        }
-      });
-    }
-
-    // 2. Single type questions - apply weights
-    else if (question.type === 'single' && typeof answer.value === 'string') {
-      const optionKey = answer.value;
-
-      // Handle grade rules specially
-      if (question.id === 'GRADE_BAND' && question.grade_rules) {
-        const gradeRules = question.grade_rules[optionKey];
-        if (gradeRules) {
-          for (const slug in gradeRules) {
-            if (BUCKET_SLUGS.includes(slug)) {
-              scores[slug] += gradeRules[slug];
-            }
-          }
-          // Add grade-based booster
-          if (optionKey === 'above_90') boosters.push('gradeBand2');
-          else if (optionKey === '80_90') boosters.push('gradeBand1');
-          else if (optionKey === '70_80') boosters.push('gradeBand0');
-          else boosters.push('gradeBandLow');
+      // Add boosters for single type questions
+      if (typeof answer.value === 'string' && question.type === 'single') {
+        if (question.id !== 'GRADE_BAND') {
+          boosters.push(answer.value);
         }
       }
-      // Standard weight mapping
-      else if (question.weights) {
-        const weightEntry = question.weights[optionKey];
-        if (typeof weightEntry === 'object') {
-          const bucketWeights = weightEntry as QuestionOptionWeight;
-          for (const slug in bucketWeights) {
-            if (BUCKET_SLUGS.includes(slug)) {
-              scores[slug] += bucketWeights[slug];
+
+      // 1. Rank type questions - assign 3/2/1 points
+      if (question.type === 'rank' && Array.isArray(answer.value)) {
+        (answer.value as string[]).forEach((optionKey, index) => {
+          if (question.weight_mapping && question.weight_mapping[optionKey]) {
+            boosters.push(optionKey);
+            const rankScoreValue = 3 - index; // 1st = 3, 2nd = 2, 3rd = 1
+
+            const bucketWeights = question.weight_mapping[optionKey];
+            for (const slug in bucketWeights) {
+              if (BUCKET_SLUGS.includes(slug)) {
+                scores[slug] += bucketWeights[slug] * rankScoreValue;
+              }
             }
-          }
-        }
-      }
-      // Yes/No type with yes_weight
-      else if (question.yes_weight && optionKey === 'yes' && question.targets) {
-        question.targets.forEach(slug => {
-          if (BUCKET_SLUGS.includes(slug)) {
-            scores[slug] += question.yes_weight!;
           }
         });
       }
-    }
 
-    // 3. Scale type questions - value * scale_weight
-    else if (question.type === 'scale' && typeof answer.value === 'number') {
-      if (question.targets && question.scale_weight && question.id !== 'HIGHEST_TUITION') {
-        question.targets.forEach(slug => {
-          if (BUCKET_SLUGS.includes(slug)) {
-            scores[slug] += (answer.value as number) * question.scale_weight!;
+      // 2. Single type questions - apply weights
+      else if (question.type === 'single' && typeof answer.value === 'string') {
+        const optionKey = answer.value;
+
+        // Handle grade rules specially
+        if (question.id === 'GRADE_BAND' && question.grade_rules) {
+          const gradeRules = question.grade_rules[optionKey];
+          if (gradeRules) {
+            for (const slug in gradeRules) {
+              if (BUCKET_SLUGS.includes(slug)) {
+                scores[slug] += gradeRules[slug];
+              }
+            }
+            // Add grade-based booster
+            if (optionKey === 'above_90') boosters.push('gradeBand2');
+            else if (optionKey === '80_90') boosters.push('gradeBand1');
+            else if (optionKey === '70_80') boosters.push('gradeBand0');
+            else boosters.push('gradeBandLow');
           }
-        });
-
-        // Handle negative targets (inverse relationship)
-        if (question.negative_targets) {
-          question.negative_targets.forEach(slug => {
+        }
+        // Standard weight mapping
+        else if (question.weights) {
+          const weightEntry = question.weights[optionKey];
+          if (typeof weightEntry === 'object') {
+            const bucketWeights = weightEntry as QuestionOptionWeight;
+            for (const slug in bucketWeights) {
+              if (BUCKET_SLUGS.includes(slug)) {
+                scores[slug] += bucketWeights[slug];
+              }
+            }
+          }
+        }
+        // Yes/No type with yes_weight
+        else if (question.yes_weight && optionKey === 'yes' && question.targets) {
+          question.targets.forEach(slug => {
             if (BUCKET_SLUGS.includes(slug)) {
-              scores[slug] -= ((answer.value as number) - 2) * question.scale_weight! * 0.5;
+              scores[slug] += question.yes_weight!;
             }
           });
         }
       }
-    }
-  });
 
-  // Floor negative totals at 0
-  for (const slug in scores) {
-    if (scores[slug] < 0) {
-      scores[slug] = 0;
-    }
-  }
+      // 3. Scale type questions - value * scale_weight
+      else if (question.type === 'scale' && typeof answer.value === 'number') {
+        if (question.targets && question.scale_weight && question.id !== 'HIGHEST_TUITION') {
+          question.targets.forEach(slug => {
+            if (BUCKET_SLUGS.includes(slug)) {
+              scores[slug] += (answer.value as number) * question.scale_weight!;
+            }
+          });
 
-  // Calculate max possible score for normalization
-  const allScoreValues = Object.values(scores).filter(s => s > 0);
-  const maxScore = Math.max(...allScoreValues, 1);
-
-  // Sort majors by score
-  let sortedMajors = Object.entries(scores)
-    .filter(([slug]) => slug !== '_other')
-    .map(([slug, score]) => {
-      const matchScore = Math.round((score / maxScore) * 100);
-      return {
-        slug,
-        score,
-        matchScore: Math.min(99, Math.max(0, matchScore)), // Cap at 99 to leave room for perfect matches
-        reasons: generateReasonsForMajor(slug, answers, boosters),
-        isWildcard: false
-      };
-    })
-    .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      // Tie-breaking
-      if (a.slug === 'cs_ai') return -1;
-      if (b.slug === 'cs_ai') return 1;
-      if (a.slug === 'aviation') return 1;
-      if (b.slug === 'aviation') return -1;
-      return a.slug.localeCompare(b.slug);
-    });
-
-  // Adjust match scores to be more realistic (top 3 should be 70-95)
-  if (sortedMajors.length > 0) {
-    const topScore = sortedMajors[0].matchScore;
-    sortedMajors = sortedMajors.map((major, index) => {
-      let adjustedScore = major.matchScore;
-      if (index === 0) {
-        adjustedScore = Math.max(75, Math.min(95, major.matchScore));
-      } else if (index < 3) {
-        adjustedScore = Math.max(60, Math.min(90, major.matchScore - (index * 5)));
+          // Handle negative targets (inverse relationship)
+          if (question.negative_targets) {
+            question.negative_targets.forEach(slug => {
+              if (BUCKET_SLUGS.includes(slug)) {
+                scores[slug] -= ((answer.value as number) - 2) * question.scale_weight! * 0.5;
+              }
+            });
+          }
+        }
       }
-      return { ...major, matchScore: adjustedScore };
     });
-  }
 
-  // Validate top major exists
-  const validSlugs = BUCKET_SLUGS.filter(s => s !== '_other');
-  if (sortedMajors.length > 0 && !validSlugs.includes(sortedMajors[0].slug)) {
-    sortedMajors = sortedMajors.filter(m => validSlugs.includes(m.slug));
-    if (sortedMajors.length === 0) {
-      sortedMajors = [{
-        slug: 'cs_ai',
-        score: 0,
-        matchScore: 60,
-        reasons: { en: ['Default recommendation'], ar: ['توصية افتراضية'] },
-        isWildcard: false
-      }];
+    // Floor negative totals at 0
+    for (const slug in scores) {
+      if (scores[slug] < 0) {
+        scores[slug] = 0;
+      }
     }
-  }
 
-  // Find wildcard suggestion
-  const wildcardMajor = findWildcardMajor(sortedMajors, psychologicalProfile, answers);
+    // Calculate max possible score for normalization
+    const allScoreValues = Object.values(scores).filter(s => s > 0);
+    const maxScore = Math.max(...allScoreValues, 1);
 
-  // Unique boosters
-  const uniqueBoosters = [...new Set(boosters)];
+    // Sort majors by score
+    let sortedMajors = Object.entries(scores)
+      .filter(([slug]) => slug !== '_other')
+      .map(([slug, score]) => {
+        const matchScore = Math.round((score / maxScore) * 100);
+        return {
+          slug,
+          score,
+          matchScore: Math.min(99, Math.max(0, matchScore)), // Cap at 99 to leave room for perfect matches
+          reasons: generateReasonsForMajor(slug, answers, boosters),
+          isWildcard: false
+        };
+      })
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        // Tie-breaking
+        if (a.slug === 'cs_ai') return -1;
+        if (b.slug === 'cs_ai') return 1;
+        if (a.slug === 'aviation') return 1;
+        if (b.slug === 'aviation') return -1;
+        return a.slug.localeCompare(b.slug);
+      });
 
-  return {
-    scores,
-    sortedMajors,
-    boosters: uniqueBoosters,
-    psychologicalProfile,
-    wildcardMajor
-  };
+    // Adjust match scores to be more realistic (top 3 should be 70-95)
+    if (sortedMajors.length > 0) {
+      sortedMajors = sortedMajors.map((major, index) => {
+        let adjustedScore = major.matchScore;
+        if (index === 0) {
+          adjustedScore = Math.max(75, Math.min(95, major.matchScore));
+        } else if (index < 3) {
+          adjustedScore = Math.max(60, Math.min(90, major.matchScore - (index * 5)));
+        }
+        return { ...major, matchScore: adjustedScore };
+      });
+    }
+
+    // Validate top major exists
+    const validSlugs = BUCKET_SLUGS.filter(s => s !== '_other');
+    if (sortedMajors.length > 0 && !validSlugs.includes(sortedMajors[0].slug)) {
+      sortedMajors = sortedMajors.filter(m => validSlugs.includes(m.slug));
+      if (sortedMajors.length === 0) {
+        sortedMajors = [{
+          slug: 'cs_ai',
+          score: 0,
+          matchScore: 60,
+          reasons: { en: ['Default recommendation'], ar: ['توصية افتراضية'] },
+          isWildcard: false
+        }];
+      }
+    }
+
+    // Find wildcard suggestion
+    const wildcardMajor = findWildcardMajor(sortedMajors, psychologicalProfile, answers);
+
+    // Unique boosters
+    const uniqueBoosters = [...new Set(boosters)];
+
+    return {
+      scores,
+      sortedMajors,
+      boosters: uniqueBoosters,
+      psychologicalProfile,
+      wildcardMajor
+    };
+  }, [answersKey, answers]);
 };
 
 export { MAJOR_NAMES };
