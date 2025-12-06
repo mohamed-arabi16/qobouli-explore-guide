@@ -23,8 +23,9 @@ interface TranslatedFAQItem {
 }
 
 const Index = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { t: tRoot } = useTranslation();
+  const isRTL = language === 'ar';
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -66,8 +67,9 @@ const Index = () => {
   }
   
   return (
-    <div className="min-h-screen bg-qobouli-bg-soft text-direction-rtl">
+    <div className="min-h-screen bg-qobouli-bg-soft" dir={isRTL ? 'rtl' : 'ltr'}>
       <Helmet>
+        <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
         {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}

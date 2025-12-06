@@ -254,7 +254,7 @@ export default function TurkishPrivateUniversitiesEN() {
 
         <section className="mb-12" id="faq">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 pb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent border-b-2 border-primary/30">FAQs</h2>
-          <FAQSection />
+          <FAQSection variant="dark" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">

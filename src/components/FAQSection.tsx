@@ -10,6 +10,7 @@ import { useLanguage } from '@/contexts/LanguageContext'; // Keep for language v
 
 interface FAQSectionProps {
   id?: string;
+  variant?: 'light' | 'dark';
 }
 
 // Define a type for the translated FAQ item structure we expect from i18next
@@ -18,7 +19,7 @@ interface TranslatedFAQItem {
   a: string[]; // Array of strings for paragraphs/list items
 }
 
-const FAQSection: React.FC<FAQSectionProps> = ({ id }) => {
+const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light' }) => {
   const { t, i18n } = useTranslation();
   const { language } = useLanguage(); // Still used for Farsi fallback logic
 
@@ -91,26 +92,40 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id }) => {
         })()
       }));
 
+  const isDark = variant === 'dark';
+
   return (
     <div id={id} dir={language === 'ar' || (language as string) === 'fa' ? 'rtl' : 'ltr'}>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-qobouli-text leading-relaxed md:leading-normal">
+          <h2 className={`text-2xl md:text-3xl font-bold mb-8 text-center leading-relaxed md:leading-normal ${
+            isDark ? 'bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent' : 'text-qobouli-text'
+          }`}>
             {t('faq.title')}
           </h2>
-          
+
           <Accordion type="multiple" className="space-y-4">
             {currentFaqsToDisplay.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
+              <AccordionItem
+                key={index}
                 value={`item-${index}`}
-                className="border border-qobouli-accent rounded-lg overflow-hidden bg-white"
+                className={`border rounded-lg overflow-hidden ${
+                  isDark
+                    ? 'border-white/20 bg-white/5 backdrop-blur-sm'
+                    : 'border-qobouli-accent bg-white'
+                }`}
               >
-                <AccordionTrigger className="px-4 py-4 hover:no-underline hover:bg-qobouli-bg-soft focus:bg-qobouli-bg-soft">
+                <AccordionTrigger className={`px-4 py-4 hover:no-underline ${
+                  isDark
+                    ? 'hover:bg-white/10 focus:bg-white/10'
+                    : 'hover:bg-qobouli-bg-soft focus:bg-qobouli-bg-soft'
+                }`}>
                   {/* The question is now directly from the translated object */}
-                  <span className="text-qobouli-text font-bold text-right">{faq.question}</span>
+                  <span className={`font-bold text-right ${isDark ? 'text-white' : 'text-qobouli-text'}`}>{faq.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="px-4 py-4 text-qobouli-text bg-white">
+                <AccordionContent className={`px-4 py-4 ${
+                  isDark ? 'text-white/90 bg-white/5' : 'text-qobouli-text bg-white'
+                }`}>
                   {/* The answer is now constructed from the array of strings */}
                   {faq.answer}
                 </AccordionContent>
