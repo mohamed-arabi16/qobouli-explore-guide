@@ -223,6 +223,21 @@
     "aviation": "قائد طيران"
   },
   "question": {
+    "SUBJECTS": {
+      "prompt": "رتب ثلاث مواد دراسية تفضلها",
+      "options": {
+        "math": "الرياضيات",
+        "physics": "الفيزياء",
+        "biology": "الأحياء",
+        "chemistry": "الكيمياء",
+        "computer": "علوم الحاسوب",
+        "literature": "الأدب",
+        "art": "الفن",
+        "economics": "الاقتصاد",
+        "history": "التاريخ",
+        "psychology": "علم النفس"
+      }
+    },
     "SP1": {
       "prompt": "رتب ثلاث مواد تحبها أكثر",
       "options": {
