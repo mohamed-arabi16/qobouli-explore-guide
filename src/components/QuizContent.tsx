@@ -61,6 +61,27 @@ interface UiQuestion {
 
 type RawAnswerValue = string | string[] | number | undefined;
 
+// Helper function to detect if text is primarily Arabic
+const isArabicText = (text: string): boolean => {
+  const arabicPattern = /[\u0600-\u06FF]/g;
+  const arabicMatches = text.match(arabicPattern) || [];
+  // Consider text as Arabic if more than 30% of characters are Arabic
+  return arabicMatches.length > text.length * 0.3;
+};
+
+// Simple markdown renderer for bold text (**text** -> <strong>text</strong>)
+const renderFormattedText = (text: string): React.ReactNode => {
+  // Split by **text** pattern and render with bold formatting
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      // Remove the ** and wrap in strong tag
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+};
+
 interface QuizContentProps {
   userName: string;
   userPhone: string;
@@ -406,7 +427,8 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
           userName,
           answers: enrichedAnswers,
           topPrograms: topPrograms.map(p => ({ title: p.title })),
-          boosters
+          boosters,
+          language  // Pass the current UI language to ensure AI responds in correct language
         }
       });
       
@@ -674,8 +696,15 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
                         {t('results.aiInsights', isRTL ? 'توصيات ذكية' : 'AI Insights')}
                       </h3>
                     </div>
-                    <p className={cn("text-foreground leading-relaxed whitespace-pre-line", isRTL && "text-right")}>
-                      {aiExplanation}
+                    {/* Detect AI text language and apply correct text direction */}
+                    <p
+                      className={cn(
+                        "text-foreground leading-relaxed whitespace-pre-line",
+                        isArabicText(aiExplanation) ? "text-right" : "text-left"
+                      )}
+                      dir={isArabicText(aiExplanation) ? "rtl" : "ltr"}
+                    >
+                      {renderFormattedText(aiExplanation)}
                     </p>
                   </div>
                 )}
