@@ -80,11 +80,13 @@ export default function TurkishPrivateUniversitiesEN() {
         <Navbar />
         
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content">
-        <div className="text-sm breadcrumbs">
-            <ul>
-                <li><Link to="/en">Home</Link></li>
-                <li>Study in Turkey</li>
-                <li>Turkish Private Universities</li>
+        <div className="text-sm breadcrumbs mb-4">
+            <ul className="flex gap-2 text-white/70">
+                <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+                <li className="text-white/50">/</li>
+                <li><span className="text-white/50">Study in Turkey</span></li>
+                <li className="text-white/50">/</li>
+                <li className="text-primary">Turkish Private Universities</li>
             </ul>
         </div>
         <Link to="/ar/turkish-private-universities" className="text-sm text-primary hover:underline my-4 block">
@@ -240,11 +242,11 @@ export default function TurkishPrivateUniversitiesEN() {
 
         <section className="mb-12" id="common-mistakes">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">Common Mistakes to Avoid</h2>
-          <ul className="list-disc list-inside space-y-3 text-red-700 bg-red-50 p-6 rounded-lg">
-            <li><strong>Waiting for direct university replies:</strong> University international offices are often very busy, leading to slow responses. Applying through a certified agent ensures faster follow-up.</li>
-            <li><strong>Late submissions:</strong> Popular programs and universities fill up fast. Don't wait until the last minute.</li>
-            <li><strong>Incomplete dossiers:</strong> Any missing or unclear documents will delay your admission process.</li>
-            <li><strong>Language mismatch:</strong> Choose a language of instruction that matches your academic background and career goals. Don't opt for a Turkish program if you are not prepared to study the language for a year.</li>
+          <ul className="list-disc list-inside space-y-3 text-red-200 bg-red-900/30 border border-red-500/30 p-6 rounded-lg backdrop-blur-sm">
+            <li><strong className="text-red-300">Waiting for direct university replies:</strong> University international offices are often very busy, leading to slow responses. Applying through a certified agent ensures faster follow-up.</li>
+            <li><strong className="text-red-300">Late submissions:</strong> Popular programs and universities fill up fast. Don't wait until the last minute.</li>
+            <li><strong className="text-red-300">Incomplete dossiers:</strong> Any missing or unclear documents will delay your admission process.</li>
+            <li><strong className="text-red-300">Language mismatch:</strong> Choose a language of instruction that matches your academic background and career goals. Don't opt for a Turkish program if you are not prepared to study the language for a year.</li>
           </ul>
         </section>
 

@@ -243,11 +243,11 @@ export default function TurkishPrivateUniversitiesAR() {
 
         <section className="mb-12" id="common-mistakes">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">أخطاء شائعة يجب تجنّبها</h2>
-          <ul className="list-disc list-inside space-y-3 text-red-700 bg-red-50 p-6 rounded-lg">
-            <li><strong>الاعتماد على التواصل المباشر مع الجامعة:</strong> غالبًا ما تكون مكاتب الطلاب الدوليين في الجامعات مشغولة جدًا، مما يؤدي إلى تأخر الردود. التسجيل عبر وكيل معتمد يضمن لك متابعة أسرع.</li>
-            <li><strong>تأخير التقديم:</strong> التخصصات والجامعات الشهيرة تمتلئ بسرعة. لا تنتظر حتى اللحظة الأخيرة.</li>
-            <li><strong>ملفات غير مكتملة:</strong> أي نقص في المستندات أو عدم وضوحها يؤخر عملية القبول.</li>
-            <li><strong>سوء اختيار اللغة:</strong> اختر لغة الدراسة التي تناسب خلفيتك الأكاديمية وأهدافك المهنية. لا تختر برنامجًا باللغة التركية إذا لم تكن مستعدًا لدراسة اللغة لمدة عام.</li>
+          <ul className="list-disc list-inside space-y-3 text-red-200 bg-red-900/30 border border-red-500/30 p-6 rounded-lg backdrop-blur-sm">
+            <li><strong className="text-red-300">الاعتماد على التواصل المباشر مع الجامعة:</strong> غالبًا ما تكون مكاتب الطلاب الدوليين في الجامعات مشغولة جدًا، مما يؤدي إلى تأخر الردود. التسجيل عبر وكيل معتمد يضمن لك متابعة أسرع.</li>
+            <li><strong className="text-red-300">تأخير التقديم:</strong> التخصصات والجامعات الشهيرة تمتلئ بسرعة. لا تنتظر حتى اللحظة الأخيرة.</li>
+            <li><strong className="text-red-300">ملفات غير مكتملة:</strong> أي نقص في المستندات أو عدم وضوحها يؤخر عملية القبول.</li>
+            <li><strong className="text-red-300">سوء اختيار اللغة:</strong> اختر لغة الدراسة التي تناسب خلفيتك الأكاديمية وأهدافك المهنية. لا تختر برنامجًا باللغة التركية إذا لم تكن مستعدًا لدراسة اللغة لمدة عام.</li>
           </ul>
         </section>
 

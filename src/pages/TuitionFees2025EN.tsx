@@ -67,11 +67,13 @@ export default function TuitionFees2025EN() {
         <Navbar />
         
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="ltr">
-        <div className="text-sm breadcrumbs">
-            <ul>
-                <li><Link to="/en">Home</Link></li>
-                <li>Study in Turkey</li>
-                <li>Tuition Fees in Turkey</li>
+        <div className="text-sm breadcrumbs mb-4">
+            <ul className="flex gap-2 text-white/70">
+                <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+                <li className="text-white/50">/</li>
+                <li><span className="text-white/50">Study in Turkey</span></li>
+                <li className="text-white/50">/</li>
+                <li className="text-primary">Tuition Fees in Turkey</li>
             </ul>
         </div>
         <Link to="/ar/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline my-4 block">

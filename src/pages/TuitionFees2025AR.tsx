@@ -68,11 +68,13 @@ export default function TuitionFees2025AR() {
         <Navbar />
         
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-24 text-white page-content" dir="rtl">
-        <div className="text-sm breadcrumbs">
-            <ul>
-                <li><Link to="/ar">الرئيسية</Link></li>
-                <li>الدراسة في تركيا</li>
-                <li>تكاليف الدراسة في تركيا</li>
+        <div className="text-sm breadcrumbs mb-4">
+            <ul className="flex gap-2 text-white/70">
+                <li><Link to="/" className="hover:text-primary transition-colors">الرئيسية</Link></li>
+                <li className="text-white/50">/</li>
+                <li><span className="text-white/50">الدراسة في تركيا</span></li>
+                <li className="text-white/50">/</li>
+                <li className="text-primary">تكاليف الدراسة في تركيا</li>
             </ul>
         </div>
         <Link to="/en/tuition-fees-turkey-2025" className="text-sm text-primary hover:underline my-4 block">
