@@ -82,6 +82,7 @@ const Navbar = () => {
               <HashLink to="/#ai-tool" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.major')}</HashLink>
               <Link to={`/${t('nav.lang')}/turkish-private-universities`} className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.universities')}</Link>
               <Link to={`/${t('nav.lang')}/study-in-turkey`} className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.studyInTurkey')}</Link>
+              <Link to={`/${t('nav.lang')}/tuition-fees-turkey-2025`} className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.tuitionFees')}</Link>
               <HashLink to="/#faq" className="text-white hover:text-secondary focus:text-secondary focus:underline transition-colors font-medium drop-shadow-md">{t('nav.faq')}</HashLink>
               <LanguageSwitch abbreviated={false} />
             </nav>
@@ -173,17 +174,25 @@ const Navbar = () => {
                 >
                   {t('nav.studyInTurkey')}
                 </Link>
+                <Link
+                  to={`/${t('nav.lang')}/tuition-fees-turkey-2025`}
+                  onClick={closeMobileMenu}
+                  className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  {t('nav.tuitionFees')}
+                </Link>
                 <HashLink
                   to="/#faq"
                   onClick={closeMobileMenu}
                   className="text-white hover:bg-primary/20 focus:bg-primary/20 py-4 px-5 rounded-xl transition-all duration-200 font-semibold text-lg hover:translate-x-1 hover:shadow-lg border border-transparent hover:border-primary/30 animate-fade-in"
-                  style={{ animationDelay: '0.3s' }}
+                  style={{ animationDelay: '0.35s' }}
                 >
                   {t('nav.faq')}
                 </HashLink>
               </nav>
               
-              <div className="mt-auto space-y-4 pt-6 border-t border-primary/30 animate-fade-in" style={{ animationDelay: '0.35s' }}>
+              <div className="mt-auto space-y-4 pt-6 border-t border-primary/30 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <WhatsAppLink
                    message={t('nav.whatsappMessage')}
                    data-cta="whatsapp-mobile"

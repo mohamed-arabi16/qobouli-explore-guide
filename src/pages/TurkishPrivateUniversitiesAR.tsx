@@ -252,8 +252,8 @@ export default function TurkishPrivateUniversitiesAR() {
         </section>
 
         <section className="mb-12" id="faq">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2">أسئلة شائعة</h2>
-          <FAQSection />
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-primary pb-2 text-white">أسئلة شائعة</h2>
+          <FAQSection variant="dark" />
         </section>
 
         <section className="text-center py-10 bg-primary text-white rounded-lg" id="cta">
@@ -263,11 +263,11 @@ export default function TurkishPrivateUniversitiesAR() {
         </section>
 
         <div className="mt-12 text-center">
-            <h3 className="text-xl font-bold mb-4">اكتشف المزيد</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">اكتشف المزيد</h3>
             <div className="flex justify-center gap-4">
-                <Link to="/ar/study-in-turkey" className="text-primary hover:underline">دليل الدراسة في تركيا</Link>
-                <span className="text-gray-400">|</span>
-                <Link to="/ar/tuition-fees-turkey-2025" className="text-primary hover:underline">تكاليف ورسوم الدراسة</Link>
+                <Link to="/ar/study-in-turkey" className="text-primary hover:underline hover:text-secondary transition-colors">دليل الدراسة في تركيا</Link>
+                <span className="text-white/40">|</span>
+                <Link to="/ar/tuition-fees-turkey-2025" className="text-primary hover:underline hover:text-secondary transition-colors">تكاليف ورسوم الدراسة</Link>
             </div>
         </div>
       </div>

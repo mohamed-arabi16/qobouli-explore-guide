@@ -3,6 +3,7 @@ import React from 'react';
 import { Globe } from 'lucide-react';
 import { useLanguage, Locale } from '@/contexts/LanguageContext';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -18,6 +19,8 @@ interface LanguageSwitchProps {
 const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ abbreviated = false }) => {
   const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const getLanguageLabel = (lang: string, isAbbreviated: boolean) => {
     if (isAbbreviated) {
@@ -26,9 +29,27 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ abbreviated = false }) 
     return t(`language.${lang}`, lang.toUpperCase());
   };
 
-  // Assuming availableLanguages are 'ar', 'en', 'fa'
-  // This might need to come from context if it's dynamic
-  const availableLanguages = ['ar', 'en'];
+  const handleLanguageChange = (newLang: Locale) => {
+    const currentPath = location.pathname;
+
+    // Check if we're on a sub-page with a language prefix
+    const langPrefixPattern = /^\/(ar|en)(\/.*)?$/;
+    const match = currentPath.match(langPrefixPattern);
+
+    if (match) {
+      // We're on a sub-page, navigate to the same page with the new language
+      const restOfPath = match[2] || '';
+      const newPath = `/${newLang}${restOfPath}`;
+      navigate(newPath);
+    } else {
+      // We're on the homepage or a page without language prefix
+      // Just update the language context
+      setLanguage(newLang);
+    }
+  };
+
+  // Available languages
+  const availableLanguages: Locale[] = ['ar', 'en'];
 
   return (
     <DropdownMenu>
@@ -46,7 +67,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ abbreviated = false }) 
         {availableLanguages.map((langCode) => (
           <DropdownMenuItem
             key={langCode}
-            onClick={() => setLanguage(langCode as Locale)}
+            onClick={() => handleLanguageChange(langCode)}
             className={cn(
               language === langCode && "bg-primary/10 text-primary font-semibold"
             )}
