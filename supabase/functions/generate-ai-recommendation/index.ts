@@ -17,7 +17,7 @@ serve(async (req) => {
     const requestBody = await req.json();
     console.log('📦 Request body:', JSON.stringify(requestBody, null, 2));
     
-    const { userName, answers, topPrograms, boosters } = requestBody;
+    const { userName, answers, topPrograms, boosters, language } = requestBody;
     
     if (!userName) {
       throw new Error('userName is required');
@@ -75,14 +75,20 @@ serve(async (req) => {
       `${i + 1}. ${p.title}`
     ).join('\n');
 
-    const systemPrompt = `You are an expert educational counselor at Qobouli Education, specializing in helping Arab students choose the right university major in Turkey. 
+    // Determine the output language based on the passed language parameter
+    const outputLanguage = language === 'ar' ? 'Arabic' : 'English';
+
+    const systemPrompt = `You are an expert educational counselor at Qobouli Education, specializing in helping Arab students choose the right university major in Turkey.
 
 Your approach:
 - Analyze ALL the student's responses holistically to understand their personality, interests, and goals
 - Connect specific answers to career paths and program recommendations
 - Provide insights that show you truly understood their unique profile
 - Be warm, supportive, and culturally sensitive
-- Focus on their strengths and potential for success`;
+- Focus on their strengths and potential for success
+
+CRITICAL LANGUAGE REQUIREMENT: You MUST respond entirely in ${outputLanguage}. ${outputLanguage === 'Arabic' ? 'Use formal Arabic (فصحى) suitable for educational guidance. All text must be in Arabic with no English words.' : 'Use clear, encouraging English.'}
+Do NOT use markdown formatting like ** for bold. Write plain text only.`;
 
     const userPrompt = `Provide a personalized recommendation for ${userName} based on their complete profile:
 
@@ -102,9 +108,11 @@ Based on analyzing ALL their responses above, create a recommendation that:
 3. Connects their responses to real career opportunities and growth potential
 4. Provides encouraging, specific insights about their fit for these fields
 
-Language: ${userName.match(/[\u0600-\u06FF]/) ? 'Arabic' : 'English'}
+IMPORTANT - Language: ${outputLanguage}
+You MUST write your entire response in ${outputLanguage}. ${outputLanguage === 'Arabic' ? 'كل النص يجب أن يكون بالعربية الفصحى.' : ''}
 Length: 250-350 words
 Tone: Personal, insightful, encouraging
+Format: Plain text only, no markdown formatting (no ** or other special characters)
 
 Remember: Reference specific choices they made to show you truly analyzed their complete profile.`;
 
