@@ -11,8 +11,7 @@
     "closeMenu": "Close navigation menu",
     "universities": "Private Universities",
     "studyInTurkey": "Study in Turkey",
-    "lang": "en",
-    "menu": "Menu"
+    "lang": "en"
   },
   "hero": {
     "title": "Your comprehensive guide to studying in Turkey - from the first step until becoming a university student!",
@@ -25,7 +24,6 @@
   },
   "roadmap": {
     "title": "How do we help you?",
-    "subtitle": "Follow these simple steps to start your educational journey in Turkey",
     "step1": "Contact us",
     "step2": "We'll help you choose your major",
     "step3": "Select the best university",
@@ -130,12 +128,10 @@
     "selectValue": "Select a value (0-4)",
     "dragReorderHint": "(Drag to reorder - Top 3 matter)",
     "unsupportedQuestionType": "Unsupported question type: {{type}}",
-    "simplifiedDragDropNote": "(Note: This is a simplified drag & drop. Full version would use a library like dnd-kit for better UX and accessibility.)",
-    "select3Rank": "Select exactly 3 and click Next"
+    "simplifiedDragDropNote": "(Note: This is a simplified drag & drop. Full version would use a library like dnd-kit for better UX and accessibility.)"
   },
   "results": {
     "title": "Your Recommended Majors",
-    "subtitle": "Based on your responses, here are your personalized recommendations",
     "recommendedProgramsTitle": "Recommended Programs",
     "explanationTitle": "Why these recommendations?",
     "resetButton": "Restart Quiz",
@@ -505,22 +501,6 @@
   },
   "userInfoForm": {
     "submitting": "Submitting..."
-  },
-  "countries": {
-    "turkey": "Turkey",
-    "jordan": "Jordan",
-    "saudiArabia": "Saudi Arabia",
-    "uae": "UAE",
-    "egypt": "Egypt",
-    "syria": "Syria",
-    "iraq": "Iraq",
-    "lebanon": "Lebanon",
-    "palestine": "Palestine",
-    "libya": "Libya",
-    "tunisia": "Tunisia",
-    "algeria": "Algeria",
-    "morocco": "Morocco",
-    "iran": "Iran"
   },
   "ai": {
     "title": "Help me choose my major",

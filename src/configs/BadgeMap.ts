@@ -8,135 +8,101 @@ export interface BadgeMap {
   [major_slug: string]: BadgeDetail;
 }
 
-// Badge map using the correct major slugs from useMajorScorer.ts
-// Slugs: cs_ai, cyber, data, soft_eng, elec, mech, civil, mechatro, arch, graphic,
-//        media, bus_mgmt, acc_fin, econ, marketing, law_intl, medicine, dentistry,
-//        pharmacy, nursing, biosci, psych, edu_lang, tourism, aviation
 const badgeMap: BadgeMap = {
-  cs_ai: {
+  computer: {
     emoji: '💻',
     label_en: 'Tech Explorer',
-    label_ar: 'مستكشف التقنية',
+    label_ar: 'مستكشف التكنولوجيا',
   },
-  cyber: {
-    emoji: '🛡️',
-    label_en: 'Cybersecurity Guardian',
-    label_ar: 'حارس الأمن السيبراني',
-  },
-  data: {
-    emoji: '📊',
-    label_en: 'Data Analyst',
-    label_ar: 'محلل بيانات',
-  },
-  soft_eng: {
-    emoji: '👨‍💻',
-    label_en: 'Software Developer',
-    label_ar: 'مطور برمجيات',
-  },
-  elec: {
-    emoji: '⚡',
-    label_en: 'Circuit Expert',
-    label_ar: 'خبير الدوائر الكهربائية',
-  },
-  mech: {
+  engineering: {
     emoji: '⚙️',
-    label_en: 'Mechanical Engineer',
-    label_ar: 'مهندس ميكانيكا',
-  },
-  civil: {
-    emoji: '🏗️',
-    label_en: 'Infrastructure Engineer',
-    label_ar: 'مهندس بنية تحتية',
-  },
-  mechatro: {
-    emoji: '🤖',
-    label_en: 'Robotics Engineer',
-    label_ar: 'مهندس روبوتات',
-  },
-  arch: {
-    emoji: '🏛️',
-    label_en: 'Creative Architect',
-    label_ar: 'مهندس معماري مبدع',
-  },
-  graphic: {
-    emoji: '🎨',
-    label_en: 'Visual Designer',
-    label_ar: 'مصمم بصري',
-  },
-  media: {
-    emoji: '🎥',
-    label_en: 'Media Expert',
-    label_ar: 'خبير الإعلام',
-  },
-  bus_mgmt: {
-    emoji: '📈',
-    label_en: 'Business Leader',
-    label_ar: 'قائد أعمال',
-  },
-  acc_fin: {
-    emoji: '💰',
-    label_en: 'Finance Specialist',
-    label_ar: 'اختصاصي مالية',
-  },
-  econ: {
-    emoji: '📉',
-    label_en: 'Economic Analyst',
-    label_ar: 'محلل اقتصادي',
-  },
-  marketing: {
-    emoji: '📣',
-    label_en: 'Marketing Expert',
-    label_ar: 'خبير تسويق',
-  },
-  law_intl: {
-    emoji: '⚖️',
-    label_en: 'International Lawyer',
-    label_ar: 'محامي دولي',
+    label_en: 'Engineering Innovator',
+    label_ar: 'مبتكر الهندسة',
   },
   medicine: {
     emoji: '🩺',
-    label_en: 'Doctor',
-    label_ar: 'طبيب',
+    label_en: 'Healing Hero',
+    label_ar: 'بطل الشفاء',
   },
-  dentistry: {
-    emoji: '🦷',
-    label_en: 'Dentist',
-    label_ar: 'اختصاصي أسنان',
+  design: {
+    emoji: '🎨',
+    label_en: 'Design Visionary',
+    label_ar: 'صاحب رؤية في التصميم',
+  },
+  business: {
+    emoji: '📈',
+    label_en: 'Business Strategist',
+    label_ar: 'استراتيجي الأعمال',
+  },
+  law: {
+    emoji: '⚖️',
+    label_en: 'Justice Advocate',
+    label_ar: 'ناصر العدالة',
+  },
+  science: {
+    emoji: '🔬',
+    label_en: 'Science Pathfinder',
+    label_ar: 'رائد العلوم',
+  },
+  arts: {
+    emoji: '🎭',
+    label_en: 'Creative Spirit',
+    label_ar: 'روح إبداعية',
+  },
+  education: {
+    emoji: '🧑‍🏫',
+    label_en: 'Knowledge Shaper',
+    label_ar: 'صانع المعرفة',
+  },
+  architecture: {
+    emoji: '🏗️',
+    label_en: 'Structure Shaper',
+    label_ar: 'مصمم هياكل',
   },
   pharmacy: {
     emoji: '💊',
-    label_en: 'Pharmacist',
-    label_ar: 'صيدلاني',
+    label_en: 'Wellness Expert',
+    label_ar: 'خبير العافية',
+  },
+  dentistry: {
+    emoji: '🦷',
+    label_en: 'Smile Guardian',
+    label_ar: 'حارس الابتسامة',
+  },
+  media: {
+    emoji: '🎥',
+    label_en: 'Media Maven',
+    label_ar: 'خبير الإعلام'
   },
   nursing: {
     emoji: '👩‍⚕️',
-    label_en: 'Care Nurse',
-    label_ar: 'ممرض رعاية',
+    label_en: 'Care Giver',
+    label_ar: 'مقدّم الرعاية'
   },
-  biosci: {
-    emoji: '🔬',
-    label_en: 'Bioscience Researcher',
-    label_ar: 'باحث علوم حيوية',
+  sports: {
+    emoji: '🏃',
+    label_en: 'Sports Pro',
+    label_ar: 'محترف رياضي'
   },
-  psych: {
-    emoji: '🧠',
-    label_en: 'Psychological Counselor',
-    label_ar: 'مستشار نفسي',
+  language: {
+    emoji: '🈶',
+    label_en: 'Linguist',
+    label_ar: 'خبير لغات'
   },
-  edu_lang: {
-    emoji: '🧑‍🏫',
-    label_en: 'Educator & Language Expert',
-    label_ar: 'معلّم وخبير لغات',
+  social_sciences: {
+    emoji: '🌍',
+    label_en: 'Social Analyst',
+    label_ar: 'محلل اجتماعي'
   },
   tourism: {
     emoji: '🏨',
-    label_en: 'Hospitality & Tourism Expert',
-    label_ar: 'خبير ضيافة وسياحة',
+    label_en: 'Hospitality Star',
+    label_ar: 'نجم الضيافة'
   },
-  aviation: {
-    emoji: '✈️',
-    label_en: 'Aviation Leader',
-    label_ar: 'قائد طيران',
+  health: {
+    emoji: '🏥',
+    label_en: 'Health Hero',
+    label_ar: 'بطل الصحة'
   },
   // Default or fallback badge
   default: {
