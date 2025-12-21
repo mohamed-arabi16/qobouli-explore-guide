@@ -121,6 +121,7 @@
     ]
   },
   "quiz": {
+    "progressLabel": "Quiz Progress",
     "nextButton": "Next",
     "previousButton": "Back",
     "questionProgress": "Question {{current}} of {{total}}",
