@@ -9,6 +9,7 @@ import { useLanguage, Locale } from '@/contexts/LanguageContext';
 import { useSession } from '@/contexts/SessionContext';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { Progress } from "@/components/ui/progress";
 
 // Type assertion helper for Supabase queries
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -826,18 +827,11 @@ const QuizContent: React.FC<QuizContentProps> = ({ userName, userPhone, onReset 
                 </span>
                 <span className="font-bold text-primary">{Math.round(((currentStep + 1) / uiQuestions.length) * 100)}%</span>
               </div>
-              <div
-                className="w-full bg-muted rounded-full h-2 overflow-hidden"
-                style={{ direction: isRTL ? 'rtl' : 'ltr' }}
-              >
-                <div
-                  className={cn(
-                    "h-2 rounded-full transition-all duration-500 ease-out",
-                    isRTL ? "bg-gradient-to-l from-primary to-secondary" : "bg-gradient-to-r from-primary to-secondary"
-                  )}
-                  style={{ width: `${((currentStep + 1) / uiQuestions.length) * 100}%` }}
-                />
-              </div>
+              <Progress
+                value={Math.round(((currentStep + 1) / uiQuestions.length) * 100)}
+                aria-label={t('quiz.progressLabel', isRTL ? 'تقدم الاختبار' : 'Quiz Progress')}
+                className={cn("h-2", isRTL && "scale-x-[-1]")}
+              />
             </div>
             <CardTitle className={cn("text-xl md:text-2xl", isRTL && "text-right")}>{currentUiQuestion.prompt}</CardTitle>
           </CardHeader>

@@ -121,6 +121,7 @@
     ]
   },
   "quiz": {
+    "progressLabel": "تقدم الاختبار",
     "nextButton": "التالي",
     "previousButton": "السابق",
     "questionProgress": "سؤال {{current}} من {{total}}",
