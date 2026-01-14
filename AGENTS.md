@@ -4,9 +4,18 @@ This document provides comprehensive guidance for AI agents (such as OpenAI Code
 
 ## Project Overview
 
-This project is a modern frontend application built with **React 18**, **Vite**, **TypeScript**, and **shadcn/ui**. It serves as a foundation for developing high-performance, scalable, and maintainable Single Page Applications (SPAs).
+**Qobouli Education** is a comprehensive web platform designed to assist students in Egypt with AI-powered major recommendations, educational resources, and career guidance. Built with **React 18**, **Vite**, **TypeScript**, and **shadcn/ui**, it provides a modern, high-performance, and accessible Single Page Application (SPA).
 
-The primary goal of this project is to provide a robust starting point that incorporates a modern development toolchain and best practices. It aims to solve common challenges in web development by offering a well-structured architecture, efficient build processes, and a rich set of pre-configured tools and UI components. This allows developers and AI agents to focus on building features rather than on boilerplate setup.
+The primary goal of this project is to help students make informed decisions about their academic and career paths. The platform features:
+
+*   **AI Major Recommender (v3.0):** An intelligent 25-question quiz that analyzes student preferences, grades, interests, and skills to recommend suitable academic majors from an offline catalog of Egyptian university programs.
+*   **Bilingual Support (Arabic & English):** Full internationalization (i18n) support using react-i18next, with comprehensive translations and RTL (Right-to-Left) layout support for Arabic.
+*   **Resource Toolbox:** Curated collection of helpful links, tools, and materials for students.
+*   **Educational Roadmap:** Guidance and milestones for various academic and career paths.
+*   **FAQ Section:** Answers to common questions about studies and career prospects.
+*   **WhatsApp Integration:** Direct contact option for personalized guidance.
+
+This platform combines modern web development best practices with domain-specific educational content to create a valuable resource for Egyptian students navigating their educational choices.
 
 ## Tech Stack
 
@@ -43,8 +52,17 @@ This project leverages a range of modern technologies and tools to ensure an eff
     *   **ESLint:** For identifying and reporting on patterns in JavaScript and TypeScript code.
     *   **Prettier (Recommended):** While not explicitly enforced by a script, using Prettier for code formatting is highly recommended for consistency.
 
+*   **Internationalization (i18n):**
+    *   **i18next & react-i18next:** For managing translations and language switching.
+    *   **eslint-plugin-i18next:** Enforces proper usage of translation keys and prevents hardcoded strings.
+    *   **RTL Support:** Automatic right-to-left layout for Arabic language.
+
 *   **Backend/Database Integration:**
-    *   **Supabase (`@supabase/supabase-js`):** Integrated for backend services, potentially including database, authentication, and storage. AI agents should be aware of the Supabase client usage.
+    *   **Supabase (`@supabase/supabase-js`):** Primary backend service for:
+        *   Storing quiz sessions in `quiz_sessions` table
+        *   Logging analytics events in `analytics_events` table
+        *   Managing user data and interactions
+    *   **Offline Data Catalog:** JSON-based program data generated from CSV files
 
 *   **Other Key Libraries & Tools:**
     *   **`class-variance-authority` (CVA) & `clsx`:** For creating and managing utility variants with Tailwind CSS.
@@ -53,97 +71,171 @@ This project leverages a range of modern technologies and tools to ensure an eff
     *   **`recharts`:** For creating charts and visualizations.
     *   **`date-fns`:** Modern JavaScript date utility library.
     *   **`zod`:** TypeScript-first schema declaration and validation library.
+    *   **`canvas`:** For server-side image generation (OG images).
+    *   **`csvtojson`:** For converting CSV data to JSON format.
+    *   **`puppeteer`:** For pre-rendering pages for SEO.
 
-*   **Deployment:**
-    *   _(To be defined based on the chosen hosting platform, e.g., Vercel, Netlify, AWS Amplify, or custom Docker setup). AI agents should look for specific deployment scripts or documentation once available._
+*   **Code Quality & Development Tools:**
+    *   **Husky:** Git hooks for enforcing code quality checks before commits.
+    *   **ESLint:** With custom configuration including i18n rules.
+    *   **TypeScript:** Strict typing for better code quality.
+    *   **Jest & React Testing Library:** For unit and integration testing.
+
+*   **Deployment & SEO:**
+    *   **Vite Build:** Optimized production builds.
+    *   **Sitemap Generation:** Automated via `scripts/gen-sitemap.mjs`.
+    *   **Pre-rendering:** SSG-like pre-rendering for better SEO using Puppeteer.
+    *   **Dynamic OG Images:** Custom API endpoint for social media previews.
 
 ## Project Structure
 
 Understanding the project's directory structure is crucial for navigation and for placing new files correctly. This project follows a feature-oriented and domain-driven approach where feasible. The `@` alias is configured to point to the `src/` directory.
 
 ```
-vite_react_shadcn_ts/
-├── .github/                # GitHub specific files (e.g., workflows for CI/CD) - (Placeholder, if used)
-├── .vscode/                # VSCode editor specific settings - (Placeholder, if used)
-├── backend/                # Contains any backend-specific code (e.g., serverless functions, if not using a separate BaaS like Supabase extensively)
-├── dist/                   # Output directory for production builds (generated by `npm run build`)
-├── docs/                   # Project documentation (besides this AGENTS.md) - (Placeholder, if used)
-├── public/                 # Static assets accessible from the web root
+qobouli-explore-guide/
+├── .github/                # GitHub specific files (workflows for CI/CD if needed)
+├── .husky/                 # Husky git hooks configuration
+├── .Jules/                 # Internal AI agent workspace (not for production)
+├── api/                    # Backend API endpoints
+│   ├── fonts/              # Font files for OG image generation (Amiri-Regular.ttf)
+│   ├── og-image.ts         # Dynamic Open Graph image generator
+│   └── server.ts           # Express server for API endpoints
+├── dist/                   # Output directory for production builds (generated)
+├── docs/                   # Additional project documentation
+│   └── AI_RECOMMENDATION_EXPLANATION.md
+├── migrations/             # Database migration SQL files
+│   └── 001_add_index_and_grant_select.sql
+├── public/                 # Static assets accessible from web root
 │   ├── favicon.ico         # Application favicon
-│   ├── lovable-uploads/    # Example directory for uploads
-│   └── ...                 # Other static files like images, manifest.json
-├── src/                    # Main source code for the frontend application
-│   ├── App.css             # Minimal global CSS, primarily for base styles if not covered by Tailwind's preflight
-│   ├── App.tsx             # Root React component, sets up routing and global layout
-│   ├── main.tsx            # Application entry point, renders App.tsx
-│   ├── index.css           # Main CSS entry point, imports Tailwind CSS
-│   ├── vite-env.d.ts       # TypeScript definitions for Vite environment variables
+│   ├── lovable-uploads/    # User uploads directory
+│   └── sitemap.xml         # Generated sitemap (by gen-sitemap.mjs)
+├── scripts/                # Build and utility scripts
+│   ├── gen-programs-json.cjs   # Converts CSV to JSON for program catalog
+│   ├── gen-sitemap.mjs         # Generates sitemap.xml
+│   └── prerender.mjs           # Pre-renders pages for SEO
+├── src/                    # Main source code
+│   ├── components/         # React components
+│   │   ├── ui/             # shadcn/ui components
+│   │   ├── AIMajorRecommender.tsx  # Main quiz component
+│   │   ├── QuizContent.tsx         # Quiz logic and state management
+│   │   ├── QuestionRenderer.tsx    # Question display logic
+│   │   ├── UserInfoForm.tsx        # User information collection
+│   │   ├── FAQSection.tsx          # FAQ component
+│   │   ├── ResourceToolbox.tsx     # Resources component
+│   │   ├── Roadmap.tsx             # Educational roadmap
+│   │   ├── LanguageSwitch.tsx      # Language switcher
+│   │   ├── WhatsAppButton.tsx      # WhatsApp contact button
+│   │   └── ...                     # Other components
 │   │
-│   ├── assets/             # Static assets imported into components (e.g. images, fonts) - (Suggest if needed)
-│   ├── components/         # Shared, reusable React components
-│   │   ├── common/         # General-purpose components (e.g., Button, Modal) - (Suggest if `ui/` isn't sufficient)
-│   │   └── ui/             # Components from shadcn/ui library (customized or re-exported)
-│   │   └── (feature-specific components like AIMajorRecommender.tsx can reside here or in a dedicated feature folder)
+│   ├── configs/            # Configuration files
+│   │   ├── BadgeMap.ts             # Major badge definitions and metadata
+│   │   ├── questions.json          # Legacy question configuration
+│   │   └── scorer_questions.json   # v3.0 scoring configuration (25 questions)
 │   │
-│   ├── contexts/           # React Context API providers for global/shared state
-│   │   └── LanguageContext.tsx # Example context
+│   ├── contexts/           # React Context providers
+│   │   ├── LanguageContext.tsx # Language and translation context
+│   │   └── SessionContext.tsx  # Quiz session context
 │   │
-│   ├── hooks/              # Custom React Hooks (e.g., `use-mobile.tsx`)
+│   ├── data/               # Static data files
+│   │   ├── programs_names.csv  # Source program data
+│   │   ├── programs.json       # Generated program catalog
+│   │   └── announcements.ts    # Site announcements
 │   │
-│   ├── lib/                # Utility functions, helpers, and library configurations
-│   │   └── utils.ts        # General utility functions (e.g., `cn` from shadcn/ui)
+│   ├── hooks/              # Custom React Hooks
+│   │   ├── useMajorScorer.ts       # v3.0 scoring algorithm
+│   │   ├── useMajorScorer.test.ts  # Scorer unit tests
+│   │   ├── use-mobile.tsx          # Mobile detection hook
+│   │   ├── use-toast.ts            # Toast notifications
+│   │   └── ...                     # Other hooks
 │   │
-│   ├── pages/              # Page-level components, typically mapped to routes
-│   │   ├── Index.tsx       # Main landing page component
-│   │   └── NotFound.tsx    # 404 Not Found page
+│   ├── lib/                # Utility libraries
+│   │   ├── programCatalog.ts   # Program catalog search/filter logic
+│   │   ├── supabaseClient.ts   # Supabase client initialization
+│   │   └── utils.ts            # General utilities (cn, etc.)
 │   │
-│   ├── services/           # Modules for interacting with external APIs or backend services
-│   │   └── googleSheets.ts # Example service (Supabase client initialization might also be here)
+│   ├── locales/            # Internationalization files
+│   │   ├── en.json         # English translations (~995 lines)
+│   │   └── ar.json         # Arabic translations (~1010 lines)
 │   │
-│   ├── styles/             # Global styles, theme configurations, or specific CSS modules if not using Tailwind utility-first for everything - (Suggest if needed)
+│   ├── pages/              # Page-level components
+│   │   ├── Index.tsx       # Home/landing page
+│   │   └── NotFound.tsx    # 404 page
 │   │
-│   ├── templates/          # Code templates or larger static code snippets
-│   │   └── googleAppsScript.js # Example template
+│   ├── utils/              # Utility functions
+│   │   └── explanationPhrases.ts  # Localized reason phrases for recommendations
 │   │
-│   └── types/              # Shared TypeScript type definitions and interfaces - (Suggest if needed, or keep types co-located with features)
+│   ├── App.tsx             # Root component with routing
+│   ├── main.tsx            # Application entry point
+│   ├── i18n.ts             # i18next configuration
+│   ├── index.css           # Global CSS with Tailwind imports
+│   └── setupTests.ts       # Jest test configuration
 │
-├── tests/                  # Test files (Jest, React Testing Library). Structure may mirror `src/` or group by type.
-│                           # Currently, tests like `Announcement.test.tsx` are co-located in `src/components/`
-│
-├── .env.example            # Example environment variables file - (Suggest creating this)
-├── .eslint.config.js       # ESLint configuration
-├── .gitignore              # Specifies intentionally untracked files that Git should ignore
-├── bun.lockb               # Bun lockfile (if Bun is used as package manager)
-├── components.json         # shadcn/ui configuration for adding new components
-├── index.html              # Main HTML file, entry point for Vite
-├── jest.config.json        # Jest test runner configuration
-├── package-lock.json       # npm lockfile (if npm is used)
-├── package.json            # Project metadata, dependencies, and scripts
-├── postcss.config.js       # PostCSS configuration (used by Tailwind CSS)
-├── README.md               # General project information and setup guide
+├── supabase/               # Supabase configuration (if using local dev)
+├── .env                    # Environment variables (gitignored)
+├── .env.example            # Example environment variables template
+├── .gitignore              # Git ignore rules
+├── AGENTS.md               # This file - AI agent documentation
+├── README.md               # User-facing project documentation
+├── CHANGELOG.md            # Version history
+├── components.json         # shadcn/ui configuration
+├── eslint.config.js        # ESLint configuration with i18n rules
+├── index.html              # Main HTML entry point
+├── jest.config.json        # Jest testing configuration
+├── package.json            # Dependencies and npm scripts
+├── postcss.config.js       # PostCSS configuration
 ├── tailwind.config.ts      # Tailwind CSS configuration
-├── tsconfig.app.json       # TypeScript configuration for the application code (src)
-├── tsconfig.json           # Root TypeScript configuration, references other tsconfig files
-├── tsconfig.node.json      # TypeScript configuration for Node.js specific files (e.g., vite.config.ts)
-└── vite.config.ts          # Vite build tool configuration
+├── tsconfig.json           # Root TypeScript configuration
+├── tsconfig.app.json       # App-specific TypeScript config
+├── tsconfig.api.json       # API-specific TypeScript config
+├── tsconfig.node.json      # Node scripts TypeScript config
+└── vite.config.ts          # Vite build configuration
 ```
 
 **Key Directory Guidance for AI Agents:**
 
-*   **`src/components/`**: This is where most of the UI development will happen.
-    *   `src/components/ui/`: Contains components added via shadcn/ui. AI agents should generally not modify these directly unless customizing their appearance or behavior significantly. New custom components that are general-purpose should go into `src/components/` or a subdirectory like `src/components/common/`.
-    *   Feature-specific components (e.g., `AIMajorRecommender.tsx`) can be placed directly in `src/components/` or organized into feature-specific subdirectories within `src/components/` (e.g., `src/components/ai-major-recommender/`).
-*   **`src/pages/`**: For top-level components that represent application routes.
-*   **`src/lib/utils.ts`**: Contains utility functions like `cn` for merging Tailwind classes. Add other general-purpose helper functions here.
-*   **`src/services/`**: For code related to fetching data or interacting with APIs (e.g., Supabase client setup, specific API call functions).
-*   **`src/hooks/`**: For custom React hooks that encapsulate reusable logic.
-*   **`src/contexts/`**: For React Context providers that manage global or widely shared state.
-*   **Adding New shadcn/ui Components:** Use the `bunx shadcn-ui@latest add [component-name]` or `npx shadcn-ui@latest add [component-name]` command. The CLI will handle placing the component files into `src/components/ui/`.
-*   **Tests:** While some tests are currently co-located (e.g., `src/components/Announcement.test.tsx`), a dedicated `/tests` directory is also present. For new tests, co-location with the component or function being tested is often preferred for easier navigation, or they can be placed in the `/tests` directory mirroring the `src` structure. AI agents should follow the established pattern or ask for clarification.
-*   **Static Assets:**
-    *   Files in `public/` are served directly from the root. Use this for assets like `favicon.ico`, `robots.txt`, or images that are not processed by Vite.
-    *   Assets that are imported into components (e.g., images used in an `<img src={...} />` tag) should ideally be placed in `src/assets/` (create this directory if it doesn't exist) and imported into your JavaScript/TypeScript files. Vite will process these assets and include them in the build.
-*   **`scripts/gen-sitemap.mjs`**: This script generates the `sitemap.xml` file. Every time you add a new landing page, add its path to the `routes` array in this file so it lands in the sitemap.
+*   **`src/components/`**: UI components, both general and feature-specific.
+    *   `src/components/ui/`: shadcn/ui components. Modify only when customizing.
+    *   Feature components like `AIMajorRecommender.tsx`, `QuizContent.tsx` are in the root components directory.
+    
+*   **`src/configs/`**: Critical configuration files:
+    *   `BadgeMap.ts`: Maps major slugs to badge metadata (emoji, labels in multiple languages).
+    *   `scorer_questions.json`: The 25-question quiz configuration with scoring weights (v3.0).
+    
+*   **`src/data/`**: Static and generated data:
+    *   `programs_names.csv`: Source data for programs (manually maintained).
+    *   `programs.json`: Auto-generated from CSV via `scripts/gen-programs-json.cjs`.
+    
+*   **`src/locales/`**: Translation files for i18n:
+    *   **CRITICAL:** All UI strings MUST be added here, not hardcoded. ESLint will enforce this.
+    *   `en.json` and `ar.json` must be kept in sync.
+    
+*   **`src/hooks/useMajorScorer.ts`**: The core algorithm for quiz scoring (v3.0):
+    *   Processes 25 questions with various types (rank, single, scale).
+    *   Applies grade band rules.
+    *   Generates personalized explanations.
+    *   Returns top major slug, confidence, and reasons.
+    
+*   **`src/lib/programCatalog.ts`**: Program search and filtering logic.
+    
+*   **`api/`**: Backend API endpoints:
+    *   `og-image.ts`: Dynamic OG image generation using Canvas.
+    *   `server.ts`: Express server for local development.
+    
+*   **`scripts/`**: Build automation:
+    *   `gen-programs-json.cjs`: Run during build to convert CSV → JSON.
+    *   `gen-sitemap.mjs`: Generates `sitemap.xml` for SEO.
+    *   `prerender.mjs`: Pre-renders pages using Puppeteer.
+    
+*   **Adding New Routes/Pages:**
+    1. Create page component in `src/pages/`.
+    2. Add route in `src/App.tsx`.
+    3. Add path to `scripts/gen-sitemap.mjs` routes array.
+    4. Add translations for page content in `src/locales/en.json` and `ar.json`.
+    
+*   **Testing:**
+    *   Tests are co-located with components (e.g., `useMajorScorer.test.ts`).
+    *   Use Jest and React Testing Library.
+    *   Run with `npm test`.
 
 ## Development Guidelines & Coding Conventions
 
@@ -245,6 +337,128 @@ To maintain code consistency, readability, and quality, all contributors (includ
 *   Organize imports at the top of the file.
 *   Group imports: React imports, external library imports, internal absolute imports (`@/`), relative imports.
 *   Avoid default exports for utility functions and constants to encourage named imports, which are better for tree-shaking and refactoring. Default exports are fine for page components or main component exports from a file.
+
+## Internationalization (i18n) - CRITICAL RULES
+
+This project has **strict internationalization requirements** that are automatically enforced by ESLint and pre-commit hooks.
+
+### Core Rules
+
+1.  **NO HARDCODED STRINGS:** All user-facing strings MUST use translation keys from `src/locales/en.json` and `src/locales/ar.json`.
+2.  **ESLint Enforcement:** The `eslint-plugin-i18next` plugin will flag any hardcoded strings in:
+    *   React components (`.tsx`, `.jsx`)
+    *   TypeScript/JavaScript files (`.ts`, `.js`)
+    *   Exception: Config files and scripts are exempt (see `eslint.config.js`).
+3.  **Pre-commit Hook:** Husky will run `npm run lint` before every commit. Commits with i18n violations will be **blocked**.
+
+### Adding New UI Strings - Required Process
+
+```typescript
+// ❌ WRONG - This will fail ESLint
+const Welcome = () => <h1>Welcome to Qobouli</h1>;
+
+// ✅ CORRECT - Use translation keys
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const Welcome = () => {
+  const { t } = useLanguage();
+  return <h1>{t('welcome.title')}</h1>;
+};
+```
+
+**Step-by-Step Process:**
+
+1.  **Add to English locale** (`src/locales/en.json`):
+    ```json
+    {
+      "welcome": {
+        "title": "Welcome to Qobouli",
+        "subtitle": "Find Your Perfect Major"
+      }
+    }
+    ```
+
+2.  **Add to Arabic locale** (`src/locales/ar.json`):
+    ```json
+    {
+      "welcome": {
+        "title": "مرحباً بك في قبولي",
+        "subtitle": "اكتشف تخصصك المثالي"
+      }
+    }
+    ```
+
+3.  **Use in component**:
+    ```tsx
+    import { useLanguage } from '@/contexts/LanguageContext';
+    
+    const MyComponent = () => {
+      const { t } = useLanguage();
+      return (
+        <div>
+          <h1>{t('welcome.title')}</h1>
+          <p>{t('welcome.subtitle')}</p>
+        </div>
+      );
+    };
+    ```
+
+4.  **Verify with linter**:
+    ```bash
+    npm run lint
+    ```
+
+### Special Cases
+
+*   **Dynamic content with interpolation**:
+    ```json
+    {
+      "quiz": {
+        "progress": "Question {{current}} of {{total}}"
+      }
+    }
+    ```
+    ```tsx
+    {t('quiz.progress', { current: 5, total: 25 })}
+    ```
+
+*   **Pluralization**:
+    ```json
+    {
+      "results": {
+        "program_one": "{{count}} program found",
+        "program_other": "{{count}} programs found"
+      }
+    }
+    ```
+    ```tsx
+    {t('results.program', { count: programCount })}
+    ```
+
+*   **Numbers, dates, technical terms**: While generally should be translated, some technical terms or numbers might not need translation. If absolutely necessary to use a literal, add an ESLint disable comment with justification:
+    ```tsx
+    {/* eslint-disable-next-line i18next/no-literal-string */}
+    <div>HTTP 404</div>
+    ```
+
+### RTL (Right-to-Left) Support
+
+*   The app automatically switches to RTL layout when Arabic is selected.
+*   Tailwind CSS handles most RTL transformations automatically.
+*   Use logical properties where needed: `ms-` (margin-start) instead of `ml-` (margin-left).
+*   Test all UI changes in both English and Arabic.
+
+### Configuration Files Exception
+
+Files in these locations are exempt from i18n rules (see `eslint.config.js`):
+*   `tailwind.config.ts`
+*   `postcss.config.js`
+*   `vite.config.ts`
+*   `scripts/`
+*   Test files (`*.test.ts`, `*.test.tsx`)
+
+These files contain configuration, not user-facing content.
+
 ```
 
 ## Git Workflow
@@ -270,19 +484,31 @@ A consistent Git workflow is essential for collaboration and maintaining a clean
 
 ### Commit Messages
 
-*   **Conventional Commits:** It is highly recommended to follow the [Conventional Commits specification](https://www.conventionalcommits.org/). This format makes it easier to understand changes and automate changelog generation.
+*   **Conventional Commits:** Follow the [Conventional Commits specification](https://www.conventionalcommits.org/).
     *   Format: `<type>[optional scope]: <description>`
-    *   Example types: `feat` (new feature), `fix` (bug fix), `chore` (build changes, admin tasks), `docs` (documentation), `style` (code style changes), `refactor`, `test`, `perf`.
+    *   Common types for this project:
+        *   `feat`: New feature (e.g., `feat(quiz): add new question type`)
+        *   `fix`: Bug fix (e.g., `fix(scorer): correct grade band calculation`)
+        *   `docs`: Documentation (e.g., `docs: update AGENTS.md with i18n rules`)
+        *   `i18n`: Translation updates (e.g., `i18n: add Arabic translations for new feature`)
+        *   `style`: Code style, formatting (e.g., `style: fix ESLint violations`)
+        *   `refactor`: Code refactoring (e.g., `refactor(quiz): extract answer logic`)
+        *   `test`: Adding or updating tests (e.g., `test(scorer): add test for tie-breaking`)
+        *   `chore`: Build, dependencies, scripts (e.g., `chore: update dependencies`)
+        *   `perf`: Performance improvements
     *   Example:
         ```
-        feat: add user profile page
+        feat(quiz): add confidence warning for close results
 
-        - Implemented the basic layout for the user profile page.
-        - Added components for displaying user information and activity.
-        - Connected to the user service to fetch data.
+        - Display alert when top 2 majors have <15% gap
+        - Add translations for warning message
+        - Update useMajorScorer to calculate confidence
+
+        Closes #42
         ```
-*   **Clarity:** Write clear and concise commit messages. The subject line should summarize the change, and the body (if needed) should provide more context.
-*   **Atomic Commits:** Aim for small, atomic commits that represent a single logical change. This makes code reviews easier and helps in pinpointing issues.
+*   **Clarity:** Subject line ≤50 chars, body wraps at 72 chars.
+*   **i18n Changes:** If adding/modifying translations, mention it in commit message.
+*   **Pre-commit Check:** Remember Husky will run `npm run lint` automatically.
 
 ### Pull Requests (PRs) / Merge Requests (MRs)
 
@@ -321,228 +547,549 @@ This section guides developers and AI agents on how to set up the development en
 
 ### Development Requirements
 
-*   **Node.js:** Version `18.x` or higher is recommended. (e.g., latest LTS version). You can check your Node.js version using `node -v`.
-*   **Package Manager:** This project can use either `npm` (Node Package Manager) or `bun`.
-    *   **npm:** Comes bundled with Node.js. Version `8.x` or higher recommended. Check with `npm -v`.
-    *   **Bun:** An all-in-one JavaScript runtime & toolkit. If you choose to use Bun, ensure it's installed (see [Bun's official installation guide](https://bun.sh/docs/installation)). Check with `bun --version`.
-    *   The project contains both `package-lock.json` (for npm) and `bun.lockb` (for Bun). It's recommended to stick to one package manager within the team to ensure consistency in dependency resolution.
+*   **Node.js:** Version `18.x` or higher recommended (LTS). Check with `node -v`.
+*   **Package Manager:** **npm** is the standard for this project.
+    *   Version `8.x` or higher recommended. Check with `npm -v`.
+    *   Both `package-lock.json` and `bun.lockb` exist, but **npm is preferred** for consistency.
 
 ### Installation Steps
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [your-repository-url]
-    cd vite_react_shadcn_ts
-    # (Replace vite_react_shadcn_ts if your local project folder name is different)
+    git clone https://github.com/mohamed-arabi16/qobouli-explore-guide.git
+    cd qobouli-explore-guide
     ```
 
 2.  **Install Dependencies:**
-    Choose **one** of the following package managers:
-
-    *   **Using npm:**
-        ```bash
-        npm install
-        ```
-    *   **Using Bun:**
-        ```bash
-        bun install
-        ```
+    ```bash
+    npm install
+    ```
 
 3.  **Set Up Environment Variables:**
-    *   This project uses Vite, which handles environment variables through `.env` files. See [Vite's documentation on Env Variables and Modes](https://vitejs.dev/guide/env-and-mode.html).
-    *   Environment variables prefixed with `VITE_` are exposed to the client-side code.
-    *   Create a `.env.local` file in the root of the project by copying `.env.example` (if it exists). **It's highly recommended to create an `.env.example` file in the repository root to list all required and optional environment variables with placeholder or default values.**
-    *   **Example `.env.example` (AI agents should help create this if it doesn't exist):**
-        ```env
-        # General API URL (if not using Supabase exclusively)
-        VITE_API_URL=http://localhost:3000/api
-
-        # Supabase Project Details (if applicable)
-        VITE_SUPABASE_URL=your-supabase-project-url
-        VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-
-        # Other application-specific variables
-        VITE_APP_TITLE=My Awesome App
-        VITE_ENABLE_FEATURE_X=true
-        ```
-    *   Populate `.env.local` with your actual development keys and settings. **Do not commit `.env.local` to Git.** The `.gitignore` file should already include `*.local`.
+    
+    Create a `.env` file in the project root (copy from `.env.example` if it exists):
+    
+    ```env
+    # Supabase Configuration (REQUIRED)
+    VITE_SUPABASE_URL=https://your-project.supabase.co
+    VITE_SUPABASE_ANON_KEY=your-anon-key-here
+    
+    # Optional: WhatsApp contact number
+    VITE_WHATSAPP_NUMBER=+20xxxxxxxxxx
+    
+    # Optional: Analytics or other services
+    VITE_GA_TRACKING_ID=UA-XXXXXXXXX-X
+    ```
+    
+    **CRITICAL:** 
+    *   `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are **required** for the app to function.
+    *   Get these from your Supabase project settings.
+    *   **Never commit `.env` to Git.** It's in `.gitignore`.
 
 4.  **Start the Development Server:**
-    *   **Using npm:**
-        ```bash
-        npm run dev
-        ```
-    *   **Using Bun:**
-        ```bash
-        bun run dev
-        ```
-    This will typically start the development server on `http://localhost:8080` (as configured in `vite.config.ts`).
+    ```bash
+    npm run dev
+    ```
+    Opens at `http://127.0.0.1:5173` (or port shown in terminal).
+
+5.  **(Optional) Start API Server for OG Images:**
+    ```bash
+    npm run dev:api
+    ```
+    Runs on `http://localhost:3001/api/og-image`.
 
 ### Running Linters and Type Checkers
 
-*   **Linting (ESLint):**
+*   **Linting (ESLint with i18n rules):**
     ```bash
     npm run lint
-    # or
-    bun run lint
     ```
-*   **Type Checking (TypeScript):**
-    Vite performs type checking as part of its development server and build process. For a dedicated type check, you can add a script to `package.json` if needed:
-    `"type-check": "tsc --noEmit"`
-    Then run:
+    **Must pass before commits** due to Husky pre-commit hook.
+
+*   **Type Checking:**
     ```bash
-    npm run type-check
-    # or
-    bun run type-check
+    npx tsc --noEmit
     ```
+    Vite also does type checking during build.
+
+### Build Commands
+
+*   **Development Build:**
+    ```bash
+    npm run build:dev
+    ```
+
+*   **Production Build:**
+    ```bash
+    npm run build
+    ```
+    This automatically:
+    1. Runs `build:programs` (CSV → JSON conversion)
+    2. Compiles TypeScript
+    3. Optimizes assets
+    4. Outputs to `dist/`
+
+*   **Full Deployment Build:**
+    ```bash
+    npm run deploy
+    ```
+    This runs:
+    1. `npm run build`
+    2. `scripts/gen-sitemap.mjs` (generates sitemap.xml)
+    3. `scripts/prerender.mjs` (pre-renders pages with Puppeteer)
+
+### Testing
+
+*   **Run all tests:**
+    ```bash
+    npm test
+    ```
+    Uses Jest with React Testing Library.
+
+*   **Run specific test file:**
+    ```bash
+    npm test -- useMajorScorer.test.ts
+    ```
+
+*   **Run tests in watch mode:**
+    ```bash
+    npm test -- --watch
+    ```
+
+*   **Generate coverage report:**
+    ```bash
+    npm test -- --coverage
+    ```
+
+### Git Hooks (Husky)
+
+*   **Pre-commit:** Automatically runs `npm run lint`.
+    *   Commits will **fail** if linting errors exist.
+    *   Ensures no hardcoded strings violate i18n rules.
+    *   Fix errors before committing:
+        ```bash
+        npm run lint  # See errors
+        # Fix issues
+        git add .
+        git commit -m "fix: resolve linting errors"
+        ```
 
 ### IDE Configuration (Recommended)
 
 *   **VSCode:**
-    *   Install recommended extensions like ESLint, Prettier, Tailwind CSS IntelliSense.
-    *   Configure format on save to use Prettier.
-*   **WebStorm/IntelliJ IDEA:**
-    *   Ensure ESLint and Prettier integrations are enabled and configured.
-    *   Set up Tailwind CSS support.
+    *   Install extensions:
+        *   ESLint
+        *   Prettier (optional but recommended)
+        *   Tailwind CSS IntelliSense
+        *   i18n Ally (for translation management)
+    *   Settings:
+        ```json
+        {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact"]
+        }
+        ```
+
+*   **WebStorm/IntelliJ:**
+    *   Enable ESLint integration.
+    *   Enable Tailwind CSS support.
+    *   Configure i18next support for translation keys.
+
 ```
 
 ## Core Feature Implementation
 
-This section should detail the implementation approach for the project's main features. AI agents can use this information to understand the existing patterns and contribute new features consistently.
-*(The project team should populate this section with specifics for each major feature module.)*
+This section details the implementation approach for Qobouli Education's main features. AI agents must understand these patterns to contribute effectively.
 
 ### General Approach
 
-*   **Component-Based Architecture:** Features are built as a composition of React components.
-*   **Service Layer:** Interactions with APIs and backend services are abstracted into a service layer (`src/services/`).
-*   **State Management:** Utilize TanStack React Query for server state and React hooks/context for client state.
-*   **Modularity:** Break down features into manageable and reusable components and functions.
+*   **Component-Based Architecture:** Features are built as composable React components.
+*   **Service Layer:** API interactions abstracted in `src/lib/` (e.g., `supabaseClient.ts`, `programCatalog.ts`).
+*   **State Management:** 
+    *   TanStack React Query for server state (if needed).
+    *   React hooks and Context API for client state.
+    *   Session storage for quiz progress persistence.
+*   **Modularity:** Complex features broken into focused, reusable components.
+*   **Offline-First Data:** Program catalog is static JSON, generated at build time from CSV.
 
-### Example: Feature Module 1 - (e.g., User Authentication)
+### Feature 1: AI Major Recommender (v3.0)
 
-*(This is a template. Replace with actual feature details.)*
+**Description:** The core feature - a 25-question quiz that recommends academic majors based on student preferences, grades, and interests.
 
-*   **Description:** Handles user sign-up, login, logout, and session management.
-*   **Key Components:**
-    *   `src/pages/LoginPage.tsx`
-    *   `src/pages/SignupPage.tsx`
-    *   `src/components/auth/LoginForm.tsx`
-    *   `src/components/auth/SignupForm.tsx`
-*   **Services Used:**
-    *   `src/services/authService.ts` (which might use Supabase Auth client or a custom API).
-*   **State Management:**
-    *   User session and profile data might be stored in a React Context (e.g., `AuthContext`) or managed via Supabase's session handling and React Query for profile data.
-*   **Key Code Examples/Patterns:**
+**Architecture:**
 
-    *   **Typical React Component Structure:**
-        ```tsx
-        // src/components/feature/MyFeatureComponent.tsx
-        import React, { useState, useEffect } from 'react';
-        import { useQuery } from '@tanstack/react-query';
-        // import { myService } from '@/services/myService'; // Example service import
-        import { Button } from '@/components/ui/button'; // shadcn/ui component
+```
+AIMajorRecommender (Container)
+├── UserInfoForm (Lead collection)
+├── QuizContent (Quiz orchestration)
+│   ├── QuestionRenderer (Display logic)
+│   │   └── Various input components (Radio, Checkbox, Slider)
+│   └── Results Display
+│       ├── Badge Hero (Major badge with emoji)
+│       ├── Confidence Alert (if low confidence)
+│       ├── Reason Chips (Personalized explanations)
+│       └── Program Cards (3 recommended programs)
+└── WhatsAppButton (CTA)
+```
 
-        interface MyFeatureComponentProps {
-          id: string;
+**Key Components:**
+
+*   **`src/components/AIMajorRecommender.tsx`**: Main container component.
+    *   Manages user info form display.
+    *   Passes user data to QuizContent.
+    *   Handles quiz reset functionality.
+
+*   **`src/components/QuizContent.tsx`**: Quiz state management.
+    *   Loads questions from `src/configs/scorer_questions.json`.
+    *   Tracks answers in component state and session storage.
+    *   Calls `useMajorScorer` hook to calculate results.
+    *   Fetches program recommendations from `programCatalog`.
+    *   Logs data to Supabase (`quiz_sessions` and `analytics_events` tables).
+
+*   **`src/components/QuestionRenderer.tsx`**: Renders questions based on type.
+    *   Supports: `rank`, `single`, `scale` question types.
+    *   Handles special input modes (love/ok/no, yes/no, slider).
+
+**Scoring Algorithm (`src/hooks/useMajorScorer.ts` - v3.0):**
+
+```typescript
+interface ScorerResult {
+  topMajorSlug: string;        // e.g., 'cs_ai', 'medicine'
+  confidence: number;          // 0-1, based on score gap
+  reasons: string[];           // Localized explanation phrases
+  sortedScores: Array<{        // All majors ranked
+    slug: string;
+    score: number;
+  }>;
+}
+```
+
+**How it works:**
+
+1.  **Question Processing**: 25 questions with weighted answers.
+    *   **rank**: Ranks 3 choices (3pts, 2pts, 1pt) × weights.
+    *   **single**: Single selection × weight or yes_weight.
+    *   **scale**: Slider value (0-100) × scale_weight.
+
+2.  **Grade Band Rules**:
+    ```typescript
+    if (gradeBand === 'lt70') {
+      medicine -= 5, dentistry -= 4, engineering -= 2
+    }
+    if (gradeBand === 'gt85') {
+      medicine +1, cs_ai +1, engineering +1
+    }
+    ```
+
+3.  **Score Flooring**: All negative scores → 0.
+
+4.  **Tie-Breaking**: Priority order: `cs_ai` > ... > `aviation` (last).
+
+5.  **Explanation Generation** (`buildExplanation()`):
+    *   Identifies "boosters" (high-impact answers, ≥2 score effect).
+    *   Maps boosters to creative phrases from `src/utils/explanationPhrases.ts`.
+    *   Returns up to 4 localized reason strings.
+
+6.  **Confidence Calculation**:
+    ```typescript
+    confidence = topScore / (topScore + secondScore)
+    ```
+    *   If `confidence < 0.55`: Show warning alert to user.
+
+**Program Selection (`src/lib/programCatalog.ts`):**
+
+```typescript
+function pickPrograms(
+  majorSlugs: string[],  // From sortedScores
+  lang: 'en' | 'ar',
+  limit: number = 3
+): ProgramItem[]
+```
+
+*   Searches `src/data/programs.json` by keywords for each major slug.
+*   Returns up to `limit` programs.
+*   Fallback: If first slug has <1 result, tries next slugs.
+
+**Data Flow:**
+
+```mermaid
+User completes quiz
+    ↓
+useMajorScorer calculates results
+    ↓
+QuizContent saves to Supabase quiz_sessions
+    ↓
+SessionContext stores sessionId
+    ↓
+pickPrograms fetches from programs.json
+    ↓
+Display results + analytics events
+    ↓
+User clicks WhatsApp/Share → log to analytics_events
+```
+
+**Supabase Integration:**
+
+Tables used:
+*   **`quiz_sessions`**: Stores completed quiz data.
+    *   Columns: `id`, `full_name`, `phone_number`, `answers` (jsonb), `grade_band`, `top_major_slug`, `badge_slug`, `created_at`.
+    
+*   **`analytics_events`**: Tracks user interactions.
+    *   Columns: `id`, `session_id` (FK), `event_type`, `event_meta` (jsonb), `created_at`.
+    *   Event types: `whatsapp_click`, `share`, `restart`.
+
+**Testing:**
+
+*   Unit tests: `src/hooks/useMajorScorer.test.ts`
+*   Integration tests should mock Supabase calls.
+
+**Code Example:**
+
+```tsx
+// In QuizContent.tsx
+import { useMajorScorer } from '@/hooks/useMajorScorer';
+import { pickPrograms } from '@/lib/programCatalog';
+
+const QuizContent = ({ userName, userPhone }) => {
+  const [answers, setAnswers] = useState({});
+  const { t, language } = useLanguage();
+  
+  // Calculate results when quiz is complete
+  const scorerResult = useMajorScorer(answers, gradeBand);
+  
+  // Fetch programs
+  useEffect(() => {
+    if (scorerResult) {
+      const slugs = scorerResult.sortedScores.map(s => s.slug);
+      const programs = pickPrograms(slugs, language, 3);
+      setRecommendedPrograms(programs);
+    }
+  }, [scorerResult, language]);
+  
+  // Save to Supabase
+  useEffect(() => {
+    if (scorerResult && userName) {
+      const saveSession = async () => {
+        const { data } = await supabase.from('quiz_sessions').insert({
+          full_name: userName,
+          phone_number: userPhone,
+          answers: answers,
+          grade_band: gradeBand,
+          top_major_slug: scorerResult.topMajorSlug,
+          badge_slug: scorerResult.topMajorSlug // Same as top major
+        }).select();
+        
+        if (data?.[0]) {
+          setSessionId(data[0].id);
         }
+      };
+      saveSession();
+    }
+  }, [scorerResult, userName, userPhone]);
+  
+  // ... rest of component
+};
+```
 
-        const MyFeatureComponent: React.FC<MyFeatureComponentProps> = ({ id }) => {
-          // const { data, isLoading, error } = useQuery({
-          //   queryKey: ['featureData', id],
-          //   queryFn: () => myService.getById(id),
-          // });
+### Feature 2: Badge System
 
-          // if (isLoading) return <p>Loading...</p>;
-          // if (error) return <p>Error loading data.</p>;
+**Description:** Visual badges for each major, displayed on quiz results and used in OG images.
 
-          return (
-            <div>
-              {/* <h1>Feature: {data?.name}</h1> */}
-              <Button>Click Me</Button>
-            </div>
-          );
-        };
+**Implementation:**
 
-        export default MyFeatureComponent;
-        ```
+*   **`src/configs/BadgeMap.ts`**: Central registry of all major badges.
+    ```typescript
+    export interface BadgeDetail {
+      emoji: string;
+      label_en: string;
+      label_ar: string;
+      slug: string;
+    }
+    
+    export function getBadgeForMajor(slug: string): BadgeDetail;
+    ```
 
-    *   **Utility Function Example:**
-        ```typescript
-        // src/lib/utils/featureUtils.ts
-        /**
-         * Processes raw data for the feature.
-         * @param rawData - The raw data to process.
-         * @returns Processed data.
-         */
-        export const processFeatureData = (rawData: any[]): any[] => {
-          // Implementation logic
-          return rawData.map(item => ({ ...item, processed: true }));
-        };
-        ```
+*   **Usage in Components:**
+    ```tsx
+    import { getBadgeForMajor } from '@/configs/BadgeMap';
+    
+    const badge = getBadgeForMajor(topMajorSlug);
+    <div>
+      <span>{badge.emoji}</span>
+      <span>{language === 'ar' ? badge.label_ar : badge.label_en}</span>
+    </div>
+    ```
 
-### Example: Feature Module 2 - (e.g., Data Display & Interaction)
+*   **Consistency Check:** `useMajorScorer.ts` logs a warning if a slug is missing from BadgeMap.
 
-*(This is a template. Replace with actual feature details.)*
+### Feature 3: Dynamic OG Image Generation
 
-*   **Description:** ...
-*   **Key Components:** ...
-*   **Services Used:** ...
+**Description:** Server-side API endpoint that generates Open Graph images for social media sharing.
+
+**Implementation:**
+
+*   **Endpoint:** `/api/og-image?slug=cs_ai&lang=en`
+*   **Location:** `api/og-image.ts`
+*   **Technology:** Node.js Canvas library + Express server.
+
+**How it works:**
+
+1.  Receives `slug` and `lang` query parameters.
+2.  Calls `getBadgeForMajor(slug)` to get badge data.
+3.  Creates 1200×630 PNG image with:
+    *   Badge emoji (large, centered)
+    *   Major label (Amiri font for Arabic support)
+    *   Branded background
+4.  Returns image as `image/png` response.
+
+**Local Development:**
+
+```bash
+npm run dev:api      # Builds and starts API server on port 3001
+npm run build:api    # Compiles TypeScript and copies fonts
+npm run start:api    # Starts compiled server
+```
+
+**Font Requirement:**
+*   Requires `api/fonts/Amiri-Regular.ttf` for Arabic text rendering.
+*   Build script copies fonts to `dist/api/fonts/`.
+
+**Usage in Share Feature:**
+
+```tsx
+const handleShare = () => {
+  const ogUrl = `${window.location.origin}/api/og-image?slug=${topMajorSlug}&lang=${language}`;
+  
+  // Log share event
+  supabase.from('analytics_events').insert({
+    session_id: sessionId,
+    event_type: 'share',
+    event_meta: { method: 'web_share', og_url: ogUrl }
+  });
+  
+  // Trigger Web Share API or clipboard copy
+};
+```
+
+### Feature 4: Internationalization (i18n)
+
+**Description:** Full bilingual support with RTL for Arabic.
+
+**Key Files:**
+
+*   `src/i18n.ts`: i18next configuration.
+*   `src/locales/en.json`: English translations (~995 lines).
+*   `src/locales/ar.json`: Arabic translations (~1010 lines).
+*   `src/contexts/LanguageContext.tsx`: Provides `t()` function and current language.
+
+**Usage Pattern:**
+
+```tsx
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const MyComponent = () => {
+  const { t, language, changeLanguage } = useLanguage();
+  
+  return (
+    <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <h1>{t('page.title')}</h1>
+      <button onClick={() => changeLanguage(language === 'ar' ? 'en' : 'ar')}>
+        {t('common.switchLanguage')}
+      </button>
+    </div>
+  );
+};
+```
+
+**ESLint Integration:**
+*   `eslint-plugin-i18next` enforces i18n usage.
+*   See "Internationalization (i18n) - CRITICAL RULES" section above.
 
 ### API Service Standards
 
-*   API interactions are centralized in the `src/services/` directory.
-*   If using Supabase, the Supabase client will be the primary interface.
+**Supabase Integration:**
+
+*   **Client Initialization:** `src/lib/supabaseClient.ts`
     ```typescript
-    // src/services/supabaseClient.ts (Example - actual setup might vary)
     import { createClient } from '@supabase/supabase-js';
 
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error("Supabase URL or Anon Key is missing. Check your .env.local file.");
+      throw new Error("Supabase URL or Anon Key is missing. Check your .env file.");
     }
 
     export const supabase = createClient(supabaseUrl, supabaseAnonKey);
     ```
-*   For other REST APIs, use `fetch` or consider a lightweight wrapper if needed. Ensure proper error handling and typing for requests and responses.
+
+*   **Usage Pattern:**
     ```typescript
-    // src/services/customApiService.ts (Example with fetch)
-    const BASE_URL = import.meta.env.VITE_API_URL;
-
-    interface ApiResponse<T> {
-      data: T;
-      error?: string;
-    }
-
-    async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-      const response = await fetch(`${BASE_URL}${endpoint}`, options);
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: response.statusText }));
-        throw new Error(errorData.message || `API request failed with status ${response.status}`);
-      }
-      return response.json();
-    }
-
-    export const customApiService = {
-      getData: async (id: string): Promise<any> => { // Replace 'any' with specific type
-        return request<any>(`/data/${id}`);
-      },
-      // other methods...
-    };
+    import { supabase } from '@/lib/supabaseClient';
+    
+    // Insert data
+    const { data, error } = await supabase
+      .from('quiz_sessions')
+      .insert({ full_name: 'Ahmed', answers: {...} })
+      .select();
+    
+    // Query data
+    const { data: programs } = await supabase
+      .from('programs_view')
+      .select('*')
+      .in('major_slug', ['cs_ai', 'medicine'])
+      .limit(3);
     ```
+
+*   **Error Handling:** Always check for `error` in Supabase responses.
+*   **Type Safety:** Define TypeScript interfaces for table schemas.
+
+**Offline Data Catalog:**
+
+*   **Program Catalog:** `src/lib/programCatalog.ts`
+    ```typescript
+    import programsData from '@/data/programs.json';
+    
+    export function pickPrograms(
+      majorSlugs: string[],
+      lang: 'en' | 'ar',
+      limit: number = 3
+    ): ProgramItem[] {
+      // Keyword-based search in programs.json
+      // Returns matching programs for given major slugs
+    }
+    ```
+
+*   **Data Source:** `src/data/programs.json` (auto-generated from `programs_names.csv`)
+*   **Build Process:** 
+    ```bash
+    npm run build:programs  # Regenerates programs.json from CSV
+    npm run build           # Automatically runs build:programs
+    ```
+
+**No External REST APIs:** All data is either in Supabase or offline JSON files.
 
 ### State Management Patterns
 
-*   **Server State (TanStack React Query):**
-    *   Use `useQuery` for fetching data.
-    *   Use `useMutation` for creating, updating, or deleting data.
-    *   Define clear query keys, often structured hierarchically.
-    *   Leverage caching, refetching, and optimistic updates as appropriate.
-*   **Client State (React Hooks & Context):**
-    *   For UI state, form state, or simple shared state, use `useState`, `useReducer`, or `useContext`.
-    *   Refer to `src/contexts/` for examples of shared state using Context API.
-    *   If global client state becomes complex, the team may decide to introduce a dedicated library like Zustand. AI agents should then follow patterns established with that library.
+*   **Server State (Supabase):**
+    *   Direct Supabase client calls (not using React Query in current implementation).
+    *   Insert operations for quiz sessions and analytics.
+    *   Select operations for program catalog (when needed).
+    
+*   **Client State:**
+    *   **Session Storage:** Quiz answers persistence across page refreshes.
+        ```typescript
+        sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+        const saved = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
+        ```
+    *   **React Context:**
+        *   `LanguageContext`: Current language, translation function `t()`.
+        *   `SessionContext`: Current quiz session ID from Supabase.
+    *   **Component State:** `useState` for local UI state, form inputs, etc.
+    
+*   **No Global State Library:** Project uses React's built-in state management. If complexity increases, consider Zustand.
+
 ```
 
 ## Testing Strategy
@@ -688,87 +1235,238 @@ A robust testing strategy is crucial for ensuring code quality, preventing regre
     The report will typically be generated in a `coverage/` directory.
 
 AI agents should ensure that any new code includes appropriate tests and that all tests pass before considering a task complete.
+
+## Data Management & Build Scripts
+
+### Program Catalog System
+
+**Source Data:** `src/data/programs_names.csv`
+
+*   CSV format with program titles in English and Arabic.
+*   Manually maintained list of Egyptian university programs.
+*   Each row represents one program.
+
+**Generated Data:** `src/data/programs.json`
+
+*   Auto-generated JSON file consumed by the application.
+*   Created by `scripts/gen-programs-json.cjs`.
+*   **NEVER edit this file manually** - always edit the CSV and regenerate.
+
+**Regeneration Process:**
+
+```bash
+# Manual regeneration
+npm run build:programs
+
+# Automatic during build
+npm run build  # Includes build:programs step
 ```
 
-## Agent Contributions Log (Jules - Major-Matcher-v2 Ticket)
+**Script Details:** `scripts/gen-programs-json.cjs`
 
-This section logs significant contributions made by the AI agent "Jules" related to the "Major-Matcher-v2" ticket.
+```javascript
+// Uses csvtojson library
+// Reads programs_names.csv
+// Converts to JSON array
+// Writes to programs.json
+```
+
+### Sitemap Generation
+
+**Purpose:** SEO optimization - tells search engines about site structure.
+
+**Output:** `public/sitemap.xml`
+
+**Script:** `scripts/gen-sitemap.mjs`
+
+```javascript
+import { SitemapStream, streamToPromise } from 'sitemap';
+
+const routes = [
+  { url: '/', changefreq: 'weekly', priority: 1.0 },
+  { url: '/ar', changefreq: 'weekly', priority: 1.0 },
+  // Add new routes here when creating new pages
+];
+```
+
+**When to Update:**
+*   Every time you add a new page/route to the application.
+*   Add both English and Arabic versions if applicable.
+*   Run `npm run deploy` to regenerate sitemap.
+
+**Regeneration:**
+
+```bash
+node scripts/gen-sitemap.mjs  # Manual
+npm run deploy                # Includes sitemap generation
+```
+
+### Pre-rendering for SEO
+
+**Purpose:** Generate static HTML snapshots for better SEO and social media previews.
+
+**Script:** `scripts/prerender.mjs`
+
+*   Uses Puppeteer to visit pages and capture rendered HTML.
+*   Creates static HTML files in `dist/`.
+*   Improves initial page load and SEO.
+
+**Process:**
+
+```bash
+npm run prerender  # Requires npm run preview to be running
+npm run deploy     # Full build + sitemap + prerender workflow
+```
+
+### Database Migrations
+
+**Location:** `migrations/`
+
+**Purpose:** Track Supabase database schema changes.
+
+**Current Migrations:**
+*   `001_add_index_and_grant_select.sql`: Indexes and permissions.
+
+**Usage:**
+*   Apply via Supabase Dashboard SQL editor.
+*   Or use Supabase CLI: `supabase db push`.
+
+**Creating New Migrations:**
+
+1. Create file: `migrations/00X_description.sql`
+2. Write SQL DDL commands
+3. Test in Supabase staging environment
+4. Document in migration file
+5. Apply to production
+6. Update AGENTS.md or README if schema changes affect code
+
+### Build Workflow Summary
+
+```bash
+# Full production deployment
+npm run deploy
+  ├─ npm run build
+  │   ├─ node scripts/gen-programs-json.cjs  # CSV → JSON
+  │   └─ vite build                          # Compile & bundle
+  ├─ node scripts/gen-sitemap.mjs            # Generate sitemap.xml
+  └─ npm run prerender                       # Pre-render pages
+
+# Development
+npm run dev              # Frontend dev server
+npm run dev:api          # API dev server (OG images)
+
+# Testing
+npm test                 # Run Jest tests
+npm run lint             # Check code quality (pre-commit)
+```
+
+```
+
+## Agent Contributions Log
+
+This section documents significant contributions made by AI agents to the Qobouli Education project. It serves as a historical record and helps future agents understand the evolution of key features.
+
+### Jules - Major-Matcher-v2 Initiative (Historical)
+
+The following contributions were made by the AI agent "Jules" during the Major-Matcher-v2 development phase:
+
+**Phase 1: Core Infrastructure (Initial Implementation)**
 
 *   **Supabase Integration for Quiz Data:**
     *   Created `src/lib/supabaseClient.ts` to initialize the Supabase client using environment variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
     *   Implemented logic in `src/components/AIMajorRecommender.tsx` to insert completed quiz session data into the `quiz_sessions` table in Supabase. This includes user details, answers, top major, confidence, and badge slug.
-    *   A new React context `src/contexts/SessionContext.tsx` was created to store and provide the `sessionId` returned from the `quiz_sessions` insert.
+    *   Created React context `src/contexts/SessionContext.tsx` to store and provide the `sessionId` returned from the `quiz_sessions` insert.
+
 *   **Analytics Event Logging:**
     *   Implemented a `logCtaEvent` function in `src/components/AIMajorRecommender.tsx` to send analytics data to the `analytics_events` table in Supabase.
     *   Logged CTA events for 'whatsapp_click', 'share' (new button), and 'restart' actions on the quiz results page, associating them with the `sessionId`.
+
 *   **Badge Hero Integration:**
     *   Integrated a "Badge Hero" section in the results view of `src/components/AIMajorRecommender.tsx`. This section displays the user's earned badge (emoji and localized label) based on their top major.
+    *   Created `src/configs/BadgeMap.ts` as the central registry for all major badges.
+
+**Phase 2: Dynamic OG Images & Sharing**
+
 *   **Dynamic OG Image Generation:**
-    *   Created a new API endpoint `api/og-image.ts` to dynamically generate Open Graph images.
-    *   This endpoint uses the `canvas` library to create a PNG image (1200x630) featuring the badge emoji and label corresponding to a major `slug` and `lang` passed as query parameters.
-    *   Set up a simple Express server (`api/server.ts`) and npm scripts (`dev:api`, `build:api`) to run this endpoint locally and prepare it for serverless deployment.
-    *   The `handleShare` function in `AIMajorRecommender.tsx` was updated to construct the `ogUrl` and log it as part of the 'share' event metadata.
+    *   Created API endpoint `api/og-image.ts` to dynamically generate Open Graph images.
+    *   Implemented image generation using the `canvas` library to create 1200×630 PNG images featuring the badge emoji and label corresponding to a major `slug` and `lang` passed as query parameters.
+    *   Set up Express server (`api/server.ts`) and npm scripts (`dev:api`, `build:api`) to run this endpoint locally and prepare it for serverless deployment.
+    *   Integrated Amiri font (`api/fonts/Amiri-Regular.ttf`) for proper Arabic text rendering.
+    *   Updated the `handleShare` function in `AIMajorRecommender.tsx` to construct the `ogUrl` and log it as part of the 'share' event metadata.
+
 *   **Share Functionality:**
     *   Added a "Share" button to the quiz results page in `AIMajorRecommender.tsx`.
-    *   This button uses the Web Share API if available, with a fallback to copying the page link to the clipboard.
+    *   Implemented Web Share API with clipboard fallback.
     *   Triggers a 'share' event log to `analytics_events` with metadata including the share method and the generated OG image URL.
-*   **Consistency Guard in Scorer:**
-    *   Added a check in `src/hooks/useMajorScorer.ts` to ensure that the `topMajorSlug` produced by the scorer is present in `src/configs/BadgeMap.ts`. A warning is logged if a slug is missing, prompting for `BadgeMap.ts` updates.
 
-*   **Major Scorer v2.2 & Explanation Enhancement (Jules):**
+**Phase 3: Scorer v2.2 Enhancement**
+
+*   **Major Scorer v2.2 & Explanation Enhancement:**
     *   Refined scoring logic in `src/hooks/useMajorScorer.ts` (v2.2) to improve major ranking accuracy, particularly for STEM vs. Media majors.
     *   Updated `src/configs/questions.json` with new weights and capped weights for art/media options to prevent them from outranking STEM fields inappropriately.
-    *   Implemented a new grade band rule:
-        *   Grade <70% (-5 to `medicine`).
+    *   Implemented grade band rules:
+        *   Grade <70% (-5 to `medicine`, -4 to `dentistry`, -2 to engineering fields).
         *   Grade >85% (+1 to `medicine`, `computer`, `engineering`).
-    *   Added a tie-breaker rule using a predefined priority list (`['computer','engineering','business','media','design']`).
+    *   Added tie-breaker rule using a predefined priority list.
     *   Revised confidence calculation to be `TopMajorScore / (TopMajorScore + SecondMajorScore)`.
-    *   Implemented `buildExplanation()` in `src/hooks/useMajorScorer.ts` to generate personalized reasons for the top major recommendation based on impactful answer contributions (score effect ≥ 2).
-    *   Expanded `src/configs/BadgeMap.ts` with new badge definitions to ensure better coverage and reduce fallback badge usage.
-    *   Updated the results UI in `src/components/AIMajorRecommender.tsx` to:
-        *   Display the badge hero (emoji and label) for the top major.
-        *   Show a confidence warning alert if the gap between the top two majors is less than 15% (confidence < 0.55).
-        *   Display personalized "reason chips" using the explanations from `buildExplanation()`.
-    *   Ensured `badge_slug` (same as `top_major_slug`) is logged to Supabase `quiz_sessions`.
-    *   Updated the 'share' event logging to include the `badge` (top major slug).
-    *   Added new unit tests for `useMajorScorer.ts` covering the new logic (tech favoring, medicine penalty, tie-breaking).
+    *   Implemented `buildExplanation()` to generate personalized reasons for the top major recommendation based on impactful answer contributions (score effect ≥ 2).
+    *   Expanded `src/configs/BadgeMap.ts` with new badge definitions to ensure better coverage.
+    *   Updated results UI to show confidence warning alert if gap between top two majors is less than 15%.
+    *   Added new unit tests for `useMajorScorer.ts` covering the new logic.
 
-*   **Blank Results Page Fix (Jules - [CURRENT_DATE_PLACEHOLDER] / Commit [COMMIT_HASH_PLACEHOLDER]):**
-    *   Diagnosed and fixed a bug causing a blank page when viewing quiz results.
-    *   Root cause: A `ReferenceError` in `AIMajorRecommender.tsx` due to an undefined `majorCategories` variable used for displaying major names.
-    *   Fix: Modified the results rendering logic to use `getBadgeForMajor(slug)` from `BadgeMap.ts` to retrieve localized major names, removing the dependency on the undefined variable.
-    *   Added diagnostic `console.log` to the results view to aid in debugging similar issues.
-    *   Corrected a misconfiguration in `AIMajorRecommender.tsx` where the UI option ID for "Computer & Technology" subject (`"computer"`) did not match the ID expected by `questions.json` (`"it"`), ensuring correct score calculation for this subject.
-    *   Updated the `useEffect` hook responsible for Supabase submission in `AIMajorRecommender.tsx` to include all necessary dependencies in its dependency array, preventing potential stale closure issues.
-    *   Updated `README.md` with a new section: "Debugging a blank results page".
+**Phase 4: Bug Fixes & Refinements**
 
-*   **Follow-Up Debug & Enhancement (Jules - [CURRENT_DATE_PLACEHOLDER] / Commit [COMMIT_HASH_PLACEHOLDER]):**
-    *   **Supabase Schema Error Fix:** Resolved `Could not find the 'language' column of 'quiz_sessions'` error by removing the orphaned `language` property from the insert payload in `AIMajorRecommender.tsx` -> `saveSession()` effect. The `quiz_sessions` table does not have a `language` column.
-    *   **Program Card Rendering:**
-        *   Added diagnostic logging to `AIMajorRecommender.tsx` in the `fetchAndSetPrograms` effect to trace how budget filters affect program list generation (Problem B).
-        *   The existing program fetching logic in `AIMajorRecommender.tsx` already considers multiple slugs from `sortedScores` (up to `SLUG_LIMIT`) in its batch DB query. The fallback logic "if a slug returns <1 row, iterate to next slug" is implicitly handled if the initial batch fetch for `topSlugs` returns programs from various slugs. The key is ensuring `topSlugs` from `sortedScores` are valid and have DB matches.
-    *   **Creative Reason Strings:**
-        *   Confirmed that `useMajorScorer.ts` -> `buildExplanation()` uses `phraseMap` (via `generateCreativeReasonString` helper) from `src/utils/explanationPhrases.ts` to generate human-readable explanations (Problem C).
-        *   Verified that `AIMajorRecommender.tsx` correctly renders these creative strings as UI chips.
-    *   **Slug Alias & DB Coverage Procedure (Documentation):**
-        *   If program cards are missing for expected majors (e.g., 'computer', 'engineering', 'media'), it might be due to missing `major_slug` entries in `programs_view` or a lack of aliases in the `major_aliases` table that feeds the view.
-        *   **To Check Coverage:**
-            ```sql
-            -- Run this query against your Supabase DB
-            SELECT DISTINCT major_slug, COUNT(*)
-            FROM public.programs_view
-            WHERE major_slug IN ('computer','engineering','media') -- Add other relevant slugs
-            GROUP BY major_slug;
-            ```
-        *   **If a slug shows count = 0:**
-            1.  **Add Aliases:** Insert necessary aliases into the `public.major_aliases` table. For example, if "Computer Science" programs should map to the `computer` slug but aren't, add an alias linking "Computer Science" (or its variants found in raw program data) to `computer`.
-            2.  **Refresh View:** Re-create the `programs_view` to include the new aliases. This usually involves:
-                ```sql
-                DROP VIEW IF EXISTS public.programs_view;
-                -- Then re-run the CREATE VIEW statement for programs_view
-                -- (ensure the CREATE VIEW statement correctly joins with major_aliases)
-                ```
-        *   This procedure is crucial for ensuring the `major_slug` in `programs_view` aligns with the slugs generated by `useMajorScorer`.
-    *   **Regression Tests:**
-        *   Added a unit test suite for `useMajorScorer` in `__tests__/useMajorScorer.test.ts` using the provided JSON fixture to validate `topMajorSlug`, `confidence`, and `reasons`.
-        *   Added an integration test for `AIMajorRecommender` in `__tests__/AIMajorRecommender.int.test.tsx`. This test simulates the full quiz flow with the fixture, mocks Supabase program fetching, and asserts that three program cards and creative reason chips are rendered.
+*   **Blank Results Page Fix:**
+    *   Diagnosed and fixed a `ReferenceError` in `AIMajorRecommender.tsx` due to an undefined `majorCategories` variable.
+    *   Fix: Modified the results rendering logic to use `getBadgeForMajor(slug)` from `BadgeMap.ts` to retrieve localized major names.
+    *   Added diagnostic logging to the results view.
+    *   Corrected UI option ID mismatch for "Computer & Technology" subject.
+    *   Updated `useEffect` dependencies in Supabase submission to prevent stale closure issues.
+
+*   **Follow-Up Debug & Enhancement:**
+    *   **Supabase Schema Error Fix:** Resolved `Could not find the 'language' column of 'quiz_sessions'` error by removing the orphaned `language` property from the insert payload.
+    *   **Program Card Rendering:** Added diagnostic logging to trace budget filter effects on program list generation.
+    *   **Creative Reason Strings:** Confirmed that `buildExplanation()` uses `phraseMap` from `src/utils/explanationPhrases.ts` to generate human-readable explanations.
+    *   **Slug Alias & DB Coverage Procedure:** Documented procedure for ensuring `major_slug` entries in `programs_view` align with scorer-generated slugs.
+
+**Phase 5: Testing Infrastructure**
+
+*   **Regression Tests:**
+    *   Added unit test suite for `useMajorScorer` in `src/hooks/useMajorScorer.test.ts` using JSON fixtures to validate `topMajorSlug`, `confidence`, and `reasons`.
+    *   Added integration tests for `AIMajorRecommender` to simulate full quiz flow, mock Supabase program fetching, and assert program card rendering.
+
+*   **Consistency Guard in Scorer:**
+    *   Added check in `src/hooks/useMajorScorer.ts` to ensure that the `topMajorSlug` produced by the scorer is present in `src/configs/BadgeMap.ts`. A warning is logged if a slug is missing.
+
+### Evolution to v3.0 (Current Version)
+
+After Jules's contributions, the project evolved to the current v3.0 architecture:
+
+*   **25-Question Quiz System:** Migrated from legacy questions to `scorer_questions.json` with 25 carefully designed questions.
+*   **Offline Program Catalog:** Replaced Supabase program queries with offline JSON catalog generated from CSV.
+*   **Simplified Scoring:** Refined algorithm with clear question types (rank, single, scale) and improved grade band rules.
+*   **Enhanced i18n:** Implemented strict ESLint rules for translation enforcement.
+*   **Build Automation:** Added comprehensive build scripts for data generation, sitemap, and pre-rendering.
+
+### Contributing as an AI Agent
+
+When making significant contributions to this project:
+
+1.  Document your changes in this log with:
+    *   Agent name/identifier
+    *   Date of contribution
+    *   Feature or issue addressed
+    *   Technical details of implementation
+    *   Files created or modified
+    *   Testing added
+
+2.  Update relevant sections of this AGENTS.md document if you introduce new patterns or change existing conventions.
+
+3.  Ensure all changes follow the coding conventions and i18n rules documented above.
+
+4.  Add tests for new functionality and ensure existing tests pass.
+
+---
+
+**Last Updated:** 2026-01-14  
+**Document Version:** 2.0 (Comprehensive Qobouli Education Documentation)
