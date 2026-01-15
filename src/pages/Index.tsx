@@ -15,7 +15,9 @@ const FAQSection = React.lazy(() => import('@/components/FAQSection'));
 const Roadmap = React.lazy(() => import('@/components/Roadmap'));
 const ResourceToolbox = React.lazy(() => import('@/components/ResourceToolbox'));
 
-const LoadingFallback = () => <div className="h-52 w-full bg-gray-200 animate-pulse rounded-md" />;
+const LoadingFallback = () => (
+  <div className="h-52 w-full bg-muted/30 animate-pulse rounded-2xl mx-auto max-w-3xl" />
+);
 
 interface TranslatedFAQItem {
   q: string;
@@ -67,49 +69,55 @@ const Index = () => {
   }
   
   return (
-    <div className="min-h-screen bg-qobouli-bg-soft" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
       <Helmet>
         <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
         {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
       </Helmet>
+      
       <Navbar />
       <Hero />
       
-      <section id="ai-tool" className="section-spacing">
+      {/* AI Major Recommender Section */}
+      <section id="ai-tool" className="section-spacing bg-gradient-to-b from-background to-muted/20">
         <AIMajorRecommender />
       </section>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <section id="announcements" className="section-spacing bg-background">
+      {/* Announcements Section */}
+      <Suspense fallback={<div className="section-spacing"><LoadingFallback /></div>}>
+        <section id="announcements" className="section-spacing bg-accent">
           <Announcement />
         </section>
       </Suspense>
       
-      {/* Logo section - can be part of a section or stand-alone with spacing */}
-      <div className="bg-white py-12 text-center section-spacing">
+      {/* Logo Section - Clean and Minimal */}
+      <div className="bg-background py-16 md:py-20 text-center">
         <img
           src="/lovable-uploads/133b63e3-34b5-426d-b599-9645db7180a9.png"
           alt={t('index.logoAlt')}
-          className="h-40 mx-auto object-fill"
+          className="h-32 md:h-40 mx-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300"
           loading="lazy"
         />
       </div>
       
-      <Suspense fallback={<LoadingFallback />}>
-        <section id="faq" className="section-spacing">
+      {/* FAQ Section */}
+      <Suspense fallback={<div className="section-spacing"><LoadingFallback /></div>}>
+        <section id="faq" className="section-spacing bg-background">
           <FAQSection />
         </section>
       </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <section id="roadmap" className="section-spacing bg-background">
+      {/* Roadmap Section */}
+      <Suspense fallback={<div className="section-spacing"><LoadingFallback /></div>}>
+        <section id="roadmap">
           <Roadmap />
         </section>
       </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
+      {/* Resource Toolbox Section */}
+      <Suspense fallback={<div className="section-spacing"><LoadingFallback /></div>}>
         <div className="bg-accent section-spacing">
           <ResourceToolbox />
         </div>
