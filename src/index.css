@@ -441,44 +441,60 @@
      CUSTOM SCROLLBAR - Minimal
      ============================================ */
 
-  ::-webkit-scrollbar {
+  /* Apply to main scrollable containers for performance */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .overflow-y-auto::-webkit-scrollbar,
+  .overflow-auto::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
 
-  ::-webkit-scrollbar-track {
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track,
+  .overflow-y-auto::-webkit-scrollbar-track,
+  .overflow-auto::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  ::-webkit-scrollbar-thumb {
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  .overflow-y-auto::-webkit-scrollbar-thumb,
+  .overflow-auto::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     border: 3px solid transparent;
     background-clip: padding-box;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover,
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover,
+  .overflow-auto::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.25);
     border: 3px solid transparent;
     background-clip: padding-box;
   }
 
-  .dark ::-webkit-scrollbar-thumb {
+  .dark html::-webkit-scrollbar-thumb,
+  .dark body::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.15);
     border: 3px solid transparent;
     background-clip: padding-box;
   }
 
-  .dark ::-webkit-scrollbar-thumb:hover {
+  .dark html::-webkit-scrollbar-thumb:hover,
+  .dark body::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.25);
   }
 
-  * {
+  html, body {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
   }
 
-  .dark * {
+  .dark html,
+  .dark body {
     scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
   }
 
@@ -490,9 +506,8 @@
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      animation: none !important;
+      transition: none !important;
       scroll-behavior: auto !important;
     }
 

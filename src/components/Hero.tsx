@@ -37,9 +37,9 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/80 via-[#0D1B2A]/60 to-[#0D1B2A]/90" />
       <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10" />
       
-      {/* Subtle animated gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-subtle opacity-40" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-pulse-subtle opacity-30" style={{ animationDelay: '1s' }} />
+      {/* Subtle animated gradient orbs - optimized for performance */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-80 md:h-80 bg-primary/15 rounded-full blur-2xl md:blur-3xl animate-pulse-subtle opacity-30" />
+      <div className="absolute bottom-1/4 right-1/4 w-56 h-56 md:w-72 md:h-72 bg-secondary/15 rounded-full blur-2xl md:blur-3xl animate-pulse-subtle opacity-25" style={{ animationDelay: '1s' }} />
       
       <div className="relative container mx-auto px-6 md:px-8 text-center text-white z-10 py-20">
         {/* Premium glass panel with refined styling */}
