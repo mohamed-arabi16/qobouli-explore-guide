@@ -5,56 +5,49 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useTranslation } from 'react-i18next'; // Changed
-import { useLanguage } from '@/contexts/LanguageContext'; // Keep for language value if needed elsewhere, or remove if i18n.language is used
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FAQSectionProps {
   id?: string;
   variant?: 'light' | 'dark';
-  faqKey?: string; // Translation key for FAQ items (e.g., 'faq.items' or 'pages.studyInTurkey.faqSection.items')
-  titleKey?: string; // Translation key for FAQ title (e.g., 'faq.title' or 'pages.studyInTurkey.faqSection.title')
+  faqKey?: string;
+  titleKey?: string;
 }
 
-// Define a type for the translated FAQ item structure we expect from i18next
 interface TranslatedFAQItem {
   q?: string;
-  a?: string[]; // Array of strings for paragraphs/list items
-  question?: string; // Alternative format used in page-specific FAQs
-  answer?: string; // Alternative format used in page-specific FAQs
+  a?: string[];
+  question?: string;
+  answer?: string;
 }
 
 const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey = 'faq.items', titleKey = 'faq.title' }) => {
   const { t, i18n } = useTranslation();
-  const { language } = useLanguage(); // Still used for Farsi fallback logic
+  const { language } = useLanguage();
 
-  // Fetch FAQ items using i18next.
-  // `returnObjects: true` allows fetching the array of objects.
-  // Need to cast the result as it's `unknown` by default.
   const items = t(faqKey, { returnObjects: true }) as
     | TranslatedFAQItem[]
     | string;
 
   if (!Array.isArray(items)) {
-    // Optionally log an error or handle the string case if it's valid under some circumstances
     console.error("FAQ items are not an array:", items);
-    return null; // Safeguard
+    return null;
   }
-  const faqs = items; // Now we know items is TranslatedFAQItem[]
+  const faqs = items;
 
-  // TODO: Extract Farsi FAQs to fa.json when Farsi is fully supported.
   /* eslint-disable i18next/no-literal-string */
   const farsiFaqsStatic: { question: string; answer: React.ReactNode }[] = [
     {
-      question: 'چرا دانشجویان فکر می‌کنند دانشگاه باید مستقیماً با آنها تماس بگیرد، اما وقتی پاسخ نمی‌دهند شوکه می‌شوند؟', // Literal Farsi
+      question: 'چرا دانشجویان فکر می‌کنند دانشگاه باید مستقیماً با آنها تماس بگیرد، اما وقتی پاسخ نمی‌دهند شوکه می‌شوند؟',
       answer: (
         <div>
-          <p>دانشگاه‌های خصوصی ترکیه هرگز مستقیماً با دانشجویان ارتباط برقرار نمی‌کنند مگر اینکه از طریق یک دفتر مجاز درخواست دهید. اگر ایمیل ارسال کنید یا در وب‌سایت رسمی سؤال کنید، معمولاً کسی پاسخ نمی‌دهد.</p> {/* Literal Farsi */}
-          <p className="mt-2">چرا؟ زیرا دانشگاه‌ها نمایندگانی دارند که مسئول درخواست‌ها و هماهنگی هستند.</p> {/* Literal Farsi */}
-          <p className="mt-2">به همین دلیل، بسیاری از دانشجویان فرصت‌ها را از دست می‌دهند فقط به این دلیل که منتظر پاسخی هستند که هرگز نخواهد آمد.</p> {/* Literal Farsi */}
+          <p>دانشگاه‌های خصوصی ترکیه هرگز مستقیماً با دانشجویان ارتباط برقرار نمی‌کنند مگر اینکه از طریق یک دفتر مجاز درخواست دهید. اگر ایمیل ارسال کنید یا در وب‌سایت رسمی سؤال کنید، معمولاً کسی پاسخ نمی‌دهد.</p>
+          <p className="mt-3">چرا؟ زیرا دانشگاه‌ها نمایندگانی دارند که مسئول درخواست‌ها و هماهنگی هستند.</p>
+          <p className="mt-3">به همین دلیل، بسیاری از دانشجویان فرصت‌ها را از دست می‌دهند فقط به این دلیل که منتظر پاسخی هستند که هرگز نخواهد آمد.</p>
         </div>
       )
     },
-    // ... other Farsi FAQs from the original file should also be wrapped or have their container disabled
   ];
   /* eslint-enable i18next/no-literal-string */
 
@@ -62,19 +55,16 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey =
   const currentFaqsToDisplay = (language as string) === 'fa' && farsiFaqsStatic.length > 0
     ? farsiFaqsStatic
     : faqs.map(faq => {
-        // Support both formats: { q, a } and { question, answer }
         const questionText = faq.question || faq.q || '';
         const answerData = faq.answer || faq.a;
 
         return {
           question: questionText,
           answer: (() => {
-            // If answer is a string, just return it as a paragraph
             if (typeof answerData === 'string') {
               return <p>{answerData}</p>;
             }
 
-            // If answer is an array, process it
             if (Array.isArray(answerData)) {
               const elements: React.ReactNode[] = [];
               let currentList: string[] = [];
@@ -82,7 +72,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey =
               const flushList = (key: string | number) => {
                 if (currentList.length > 0) {
                   elements.push(
-                    <ul key={`ul-${key}`} className="list-disc ml-6 mt-2 space-y-1">
+                    <ul key={`ul-${key}`} className="list-disc ml-6 mt-3 space-y-2">
                       {currentList.map((item, index) => (
                         <li key={index}>{item}</li>
                       ))}
@@ -98,7 +88,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey =
                   currentList.push(listItemText);
                 } else {
                   flushList(idx);
-                  elements.push(<p key={`p-${idx}`} className={elements.length > 0 ? "mt-2" : ""}>{text}</p>);
+                  elements.push(<p key={`p-${idx}`} className={elements.length > 0 ? "mt-3" : ""}>{text}</p>);
                 }
               });
 
@@ -116,37 +106,38 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id, variant = 'light', faqKey =
 
   return (
     <div id={id} dir={language === 'ar' || (language as string) === 'fa' ? 'rtl' : 'ltr'}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
-          <h2 className={`text-2xl md:text-3xl font-bold mb-8 text-center leading-relaxed md:leading-normal ${
-            isDark ? 'bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent' : 'text-qobouli-text'
+          {/* Section Header */}
+          <h2 className={`text-2xl md:text-3xl lg:text-4xl font-semibold mb-10 md:mb-12 text-center leading-tight ${
+            isDark ? 'gradient-text' : 'text-foreground'
           }`}>
             {t(titleKey)}
           </h2>
 
-          <Accordion type="multiple" className="space-y-4">
+          <Accordion type="multiple" className="space-y-3">
             {currentFaqsToDisplay.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className={`border rounded-lg overflow-hidden ${
+                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
                   isDark
-                    ? 'border-white/20 bg-white/5 backdrop-blur-sm'
-                    : 'border-qobouli-accent bg-white'
+                    ? 'border-white/10 bg-white/[0.04] backdrop-blur-xl hover:bg-white/[0.06]'
+                    : 'border-border/50 bg-card hover:border-border hover:shadow-soft'
                 }`}
               >
-                <AccordionTrigger className={`px-4 py-4 hover:no-underline ${
+                <AccordionTrigger className={`px-5 py-5 hover:no-underline transition-all duration-300 ${
                   isDark
-                    ? 'hover:bg-white/10 focus:bg-white/10'
-                    : 'hover:bg-qobouli-bg-soft focus:bg-qobouli-bg-soft'
+                    ? 'hover:bg-white/[0.03]'
+                    : 'hover:bg-muted/30'
                 }`}>
-                  {/* The question is now directly from the translated object */}
-                  <span className={`font-bold text-right ${isDark ? 'text-white' : 'text-qobouli-text'}`}>{faq.question}</span>
+                  <span className={`font-semibold text-left text-[15px] leading-relaxed ${isDark ? 'text-white/95' : 'text-foreground'}`}>
+                    {faq.question}
+                  </span>
                 </AccordionTrigger>
-                <AccordionContent className={`px-4 py-4 ${
-                  isDark ? 'text-white/90 bg-white/5' : 'text-qobouli-text bg-white'
+                <AccordionContent className={`px-5 pb-5 text-[15px] leading-relaxed ${
+                  isDark ? 'text-white/80' : 'text-muted-foreground'
                 }`}>
-                  {/* The answer is now constructed from the array of strings */}
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

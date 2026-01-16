@@ -1,56 +1,59 @@
+@import './styles/page-content.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import './styles/page-content.css';
+/* ============================================
+   APPLE-INSPIRED PREMIUM DESIGN SYSTEM
+   Calm, Minimalist, Refined
+   ============================================ */
 
 @layer base {
   :root {
-    /* Light Mode Palette from PRD */
-    --background: 220 13% 97%; /* #F5F7F9 */
-    --foreground: 224 64% 13%; /* #0C1439 */
+    /* Premium Light Mode Palette */
+    --background: 0 0% 99%; /* Near white - #FCFCFC */
+    --foreground: 210 24% 16%; /* Deep charcoal - #1A2332 */
 
-    --card: 220 13% 97%;
-    --card-foreground: 224 64% 13%;
+    --card: 0 0% 100%; /* Pure white */
+    --card-foreground: 210 24% 16%;
 
-    --popover: 220 13% 97%;
-    --popover-foreground: 224 64% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
 
-    /* primary, secondary, accent are defined in tailwind.config.ts */
+    --muted: 210 20% 96%; /* Soft gray */
+    --muted-foreground: 215 14% 46%; /* Muted text */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%; /* Soft grey text */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 91%; /* Subtle border */
+    --input: 220 13% 91%;
+    --ring: 187 82% 29%; /* Primary focus ring */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    /* Dark Mode Palette from PRD */
-    --background: 240 6% 6%; /* #0F0F0F */
-    --foreground: 210 40% 98%;
+    /* Premium Dark Mode Palette */
+    --background: 222 47% 8%; /* Deep navy - #0B1120 */
+    --foreground: 210 20% 96%;
 
-    --card: 240 6% 6%;
-    --card-foreground: 210 40% 98%;
+    --card: 222 47% 10%;
+    --card-foreground: 210 20% 96%;
 
-    --popover: 240 6% 6%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 20% 96%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%; /* Soft grey text */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 187 60% 50%;
   }
 }
 
@@ -59,118 +62,321 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-background text-muted-foreground;
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    @apply bg-background text-foreground;
+    font-family: "SF Pro Text", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    line-height: 1.65;
+    letter-spacing: -0.011em;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply text-foreground font-display;
+    letter-spacing: -0.022em;
+    font-weight: 600;
   }
 
-  html {
-    scroll-behavior: smooth;
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+
+  p {
+    @apply text-muted-foreground;
+    line-height: 1.7;
   }
 
+  /* RTL Support */
   html[dir="rtl"] body {
-    font-family: 'arabic', 'Inter', sans-serif;
+    font-family: "HSI-Shraq", "SF Arabic", system-ui, sans-serif;
     text-align: right;
+  }
+
+  /* Premium focus states */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
+    transition: box-shadow 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: rgba(10, 123, 138, 0.15);
+    color: inherit;
   }
 }
 
 @layer utilities {
-  /* Glass Panel Component Style */
+  /* ============================================
+     PREMIUM GLASS MORPHISM
+     ============================================ */
+  
   .glass-panel {
-    @apply bg-black/30 backdrop-blur-xl rounded-glass border border-white/25 shadow-lg;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    box-shadow: 
+      0 4px 24px -1px rgba(0, 0, 0, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   .dark .glass-panel {
-    @apply bg-black/20 border-white/10;
+    background: rgba(13, 27, 42, 0.72);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
-  /* Enhanced Hero Glass Panel */
+  /* Hero Glass Panel - Refined */
   .hero-glass-panel {
-    background: rgba(233, 244, 244, 0.08);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-                0 0 1px rgba(255, 255, 255, 0.3) inset;
-    animation: fadeInScale 0.6s ease-out forwards;
+    background: rgba(13, 27, 42, 0.65);
+    backdrop-filter: blur(32px) saturate(150%);
+    -webkit-backdrop-filter: blur(32px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    box-shadow: 
+      0 8px 40px -8px rgba(0, 0, 0, 0.25),
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    animation: heroReveal 0.9s cubic-bezier(0.32, 0.72, 0, 1) forwards;
     opacity: 0;
+    transform: translateY(24px) scale(0.98);
   }
 
-  /* Reduce blur on mobile for performance */
-  @media (max-width: 640px) {
-    .hero-glass-panel {
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+  @keyframes heroReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 
-  /* Section Spacing */
-  .section-spacing {
-    @apply py-10 md:py-20;
+  /* Mobile optimization */
+  @media (max-width: 640px) {
+    .hero-glass-panel,
+    .glass-panel {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
   }
 
-  /* Enhanced Roadmap Animations */
+  /* ============================================
+     SECTION LAYOUTS
+     ============================================ */
+
+  .section-spacing {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-tight {
+    @apply py-12 md:py-16;
+  }
+
+  /* ============================================
+     PREMIUM ANIMATIONS - Apple-Inspired
+     ============================================ */
+
+  /* Staggered Hero Entrance */
+  .hero-title-fade {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation-delay: 0.15s;
+    opacity: 0;
+  }
+
+  .hero-subtitle-fade {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+
+  .hero-ctas-fade {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation-delay: 0.45s;
+    opacity: 0;
+  }
+
+  .hero-promo-fade {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+  }
+
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============================================
+     CARD SYSTEM - Minimalist
+     ============================================ */
+
+  .quiz-card {
+    @apply bg-card border border-border/50 rounded-3xl;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 4px 16px -2px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .quiz-card:hover {
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 16px 40px -8px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* ============================================
+     BUTTON SYSTEM - Premium
+     ============================================ */
+
+  .hero-cta-primary {
+    @apply font-semibold py-4 px-8 rounded-2xl text-white;
+    background: linear-gradient(135deg, #0A7B8A 0%, #087F8C 100%);
+    box-shadow: 
+      0 2px 4px rgba(10, 123, 138, 0.2),
+      0 8px 24px -4px rgba(10, 123, 138, 0.3);
+    transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .hero-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 8px rgba(10, 123, 138, 0.25),
+      0 16px 40px -8px rgba(10, 123, 138, 0.4);
+  }
+
+  .hero-cta-primary:hover::before {
+    opacity: 1;
+  }
+
+  .hero-cta-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .hero-cta-secondary {
+    @apply font-semibold py-4 px-8 rounded-2xl text-white;
+    background: rgba(13, 27, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .hero-cta-secondary:hover {
+    background: rgba(13, 27, 42, 0.95);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .hero-cta-secondary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .btn-primary-glow {
+    @apply bg-primary text-white;
+    box-shadow: 
+      0 2px 4px rgba(10, 123, 138, 0.2),
+      0 8px 20px -4px rgba(10, 123, 138, 0.25);
+    transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .btn-primary-glow:hover {
+    @apply bg-primary/90;
+    box-shadow: 
+      0 4px 8px rgba(10, 123, 138, 0.25),
+      0 12px 28px -6px rgba(10, 123, 138, 0.35);
+    transform: translateY(-2px);
+  }
+
+  /* ============================================
+     ROADMAP ANIMATIONS - Refined
+     ============================================ */
+
   .roadmap-item {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(24px);
+    transition: 
+      opacity 0.6s cubic-bezier(0.32, 0.72, 0, 1),
+      transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
   }
 
   .roadmap-item.in-view {
     opacity: 1 !important;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 
   .roadmap-item.active {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 
-  /* Desktop: Animated SVG line */
+  /* Desktop Progress Line */
   @media (min-width: 768px) {
     .roadmap-progress-line-desktop {
-      animation: drawLineDesktop 2.5s ease-out forwards;
+      animation: drawLine 2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
       animation-delay: 0.3s;
     }
     
     .roadmap-progress-line-desktop-rtl {
-      animation: drawLineDesktopRTL 2.5s ease-out forwards;
+      animation: drawLineRTL 2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
       animation-delay: 0.3s;
     }
     
-    @keyframes drawLineDesktop {
+    @keyframes drawLine {
       to { stroke-dashoffset: 0; }
     }
     
-    @keyframes drawLineDesktopRTL {
+    @keyframes drawLineRTL {
       from { stroke-dashoffset: 1000; }
       to { stroke-dashoffset: -1000; }
     }
     
-    /* Traveling dot animation */
     .roadmap-traveling-dot {
       position: absolute;
       top: 80px;
       left: 0;
-      width: 12px;
-      height: 12px;
-      background: linear-gradient(135deg, #009DB0, #00ABAB);
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(135deg, #0A7B8A, #087F8C);
       border-radius: 50%;
-      box-shadow: 0 0 20px rgba(0, 157, 176, 0.8);
-      animation: travelDot 3s ease-in-out infinite;
+      box-shadow: 0 0 16px rgba(10, 123, 138, 0.6);
+      animation: travelDot 4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
       animation-delay: 0.5s;
     }
     
     .roadmap-traveling-dot.rtl {
       left: auto;
       right: 0;
-      animation: travelDotRTL 3s ease-in-out infinite;
+      animation: travelDotRTL 4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
       animation-delay: 0.5s;
     }
     
@@ -191,164 +397,39 @@
     }
   }
 
-  /* Mobile: Curved SVG path animation */
+  /* Mobile Progress Line */
   @media (max-width: 767px) {
     .roadmap-progress-line-mobile {
-      animation: drawLineMobile 2.5s ease-out forwards;
+      animation: drawLineMobile 2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
       animation-delay: 0.3s;
     }
     
     @keyframes drawLineMobile {
       to { stroke-dashoffset: 0; }
     }
-  }
 
-  /* Hero Staggered Entrance Animations */
-
-  .hero-title-fade {
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
-  }
-
-  .hero-subtitle-fade {
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0.35s;
-    opacity: 0;
-  }
-
-  .hero-ctas-fade {
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0.5s;
-    opacity: 0;
-  }
-
-  .hero-promo-fade {
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0.65s;
-    opacity: 0;
-  }
-
-  @keyframes fadeInScale {
-    from {
-      opacity: 0;
-      transform: scale(0.95) translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Support for reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .hero-glass-panel,
-    .hero-title-fade,
-    .hero-subtitle-fade,
-    .hero-ctas-fade,
-    .hero-promo-fade,
-    .roadmap-item,
     .roadmap-progress-line {
-      animation: none !important;
-      transition: none !important;
-      opacity: 1 !important;
-      transform: none !important;
+      left: 2rem;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, #0A7B8A, #087F8C);
+      opacity: 0.8;
     }
   }
 
-.roadmap-item {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
+  /* ============================================
+     SCROLL INDICATORS - Subtle
+     ============================================ */
 
-.roadmap-item.in-view {
-  opacity: 1 !important;
-  transform: translateY(0);
-}
-
-.roadmap-item.active {
-  transform: scale(1.05) translateY(0);
-}
-
-@media (max-width: 767px) {
-  .roadmap-progress-line {
-    left: 2rem;
-    width: 3px;
-    height: 100%;
-    background: linear-gradient(to bottom, #00A7B0, #00B8B0);
-    opacity: 0.9;
-  }
-}
-
-.scroll-hint {
-  z-index: 5;
-}
-
-/* Quiz card enhancements */
-  .quiz-card {
-    @apply bg-card border border-border shadow-xl rounded-2xl;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .quiz-card:hover {
-    @apply shadow-2xl;
-    transform: translateY(-2px);
-  }
-
-  /* Hero CTA Button Styles */
-  .hero-cta-primary {
-    @apply font-bold py-3 px-8 rounded-xl text-white;
-    background-color: #009DB0;
-    box-shadow: 0 4px 20px rgba(0, 157, 176, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .hero-cta-primary:hover {
-    background-color: #00ABAB;
-    box-shadow: 0 6px 30px rgba(0, 157, 176, 0.5);
-    transform: translateY(-2px) scale(1.05);
-  }
-
-  .hero-cta-secondary {
-    @apply font-bold py-3 px-8 rounded-xl text-white;
-    background-color: #0C1439;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .hero-cta-secondary:hover {
-    background-color: rgba(12, 20, 57, 0.9);
-    box-shadow: 0 4px 20px rgba(12, 20, 57, 0.4);
-    transform: translateY(-2px) scale(1.05);
-  }
-
-  /* Button enhancements (legacy) */
-  .btn-primary-glow {
-    @apply bg-primary hover:bg-primary/90;
-    box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.39);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .btn-primary-glow:hover {
-    box-shadow: 0 6px 20px 0 hsl(var(--primary) / 0.5);
-    transform: translateY(-2px);
-  }
-
-  /* Scroll hint fade */
   .scroll-hint {
-    animation: bounce 2s infinite;
-    transition: opacity 0.3s ease-out;
+    z-index: 5;
+    animation: gentleBounce 2.5s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+    transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  @keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
   }
 
   .scroll-hint.hidden {
@@ -356,28 +437,131 @@
     pointer-events: none;
   }
 
-  /* Custom Scrollbar Styles */
-  /* For Webkit browsers (Chrome, Safari) */
-  ::-webkit-scrollbar {
-    width: 12px;
+  /* ============================================
+     CUSTOM SCROLLBAR - Minimal
+     ============================================ */
+
+  /* Apply to main scrollable containers for performance */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .overflow-y-auto::-webkit-scrollbar,
+  .overflow-auto::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
   }
 
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track,
+  .overflow-y-auto::-webkit-scrollbar-track,
+  .overflow-auto::-webkit-scrollbar-track {
+    background: transparent;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 6px;
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  .overflow-y-auto::-webkit-scrollbar-thumb,
+  .overflow-auto::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover,
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover,
+  .overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+    border: 3px solid transparent;
+    background-clip: padding-box;
   }
 
-  /* For Firefox */
-  * {
+  .dark html::-webkit-scrollbar-thumb,
+  .dark body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .dark html::-webkit-scrollbar-thumb:hover,
+  .dark body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  html, body {
     scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  }
+
+  .dark html,
+  .dark body {
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
+
+  /* ============================================
+     REDUCED MOTION SUPPORT
+     ============================================ */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+
+    .hero-glass-panel,
+    .hero-title-fade,
+    .hero-subtitle-fade,
+    .hero-ctas-fade,
+    .hero-promo-fade,
+    .roadmap-item,
+    .scroll-hint {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* ============================================
+     UTILITY HELPERS
+     ============================================ */
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .transition-apple {
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  /* Subtle shine effect for premium elements */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .shine:hover::after {
+    transform: translateX(100%);
   }
 }

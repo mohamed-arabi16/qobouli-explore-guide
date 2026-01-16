@@ -247,60 +247,70 @@ const ResourceToolbox = () => {
 
   return (
     <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center text-white">
+          {/* Section Header */}
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-12 md:mb-16 text-center text-white/95">
             {t('resources.title')}
           </h2>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* Resource Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {resources.map((resource, index) => (
               <Card
                 key={index}
-                className="glass-panel text-white flex flex-col cursor-pointer transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="group cursor-pointer transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col border-white/10 bg-white/[0.06] backdrop-blur-xl hover:bg-white/[0.09] hover:border-primary/30 hover:-translate-y-1 hover:shadow-glass-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                 onClick={() => handleOpenResource(resource)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenResource(resource); }}
                 tabIndex={0}
               >
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-bold text-white">{resource.title[language as keyof typeof resource.title] || resource.title.en}</CardTitle>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-semibold text-white/95 group-hover:text-white transition-colors duration-300">
+                    {resource.title[language as keyof typeof resource.title] || resource.title.en}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
-                  <CardDescription className="text-sm mb-4 line-clamp-4 text-white/80">{resource.description[language as keyof typeof resource.description] || resource.description.en}</CardDescription>
-                  <div className="mt-auto flex justify-center items-center text-secondary">
+                  <CardDescription className="text-sm mb-5 line-clamp-4 text-white/70 leading-relaxed">
+                    {resource.description[language as keyof typeof resource.description] || resource.description.en}
+                  </CardDescription>
+                  <div className="mt-auto flex items-center text-primary group-hover:text-secondary transition-colors duration-300">
                     <FileUp className="h-4 w-4 mr-2" />
-                    <span>{t('resources.readMore')}</span>
+                    <span className="text-sm font-medium">{t('resources.readMore')}</span>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
           
-          <div className="text-center mt-12">
-            <p className="text-lg mb-6 text-white/90">
+          {/* CTA Section */}
+          <div className="text-center mt-14 md:mt-16">
+            <p className="text-base md:text-lg mb-6 text-white/80 leading-relaxed max-w-lg mx-auto">
               {t('resources.contactHelp')}
             </p>
-            <WhatsAppLink className="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-primary/50 transform hover:scale-105 inline-block">
+            <WhatsAppLink className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 shadow-glow-primary hover:shadow-glow-primary-lg hover:-translate-y-0.5 active:scale-[0.98]">
               {t('resources.contactButton')}
             </WhatsAppLink>
           </div>
         </div>
       </div>
 
+      {/* Resource Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="max-w-3xl max-h-[80vh] overflow-y-auto"
+          className="max-w-3xl max-h-[80vh] overflow-y-auto rounded-2xl"
           aria-describedby={selectedResource ? `res-desc-${selectedResource.title.en.replace(/\s+/g, '-')}` : undefined}
         >
           {selectedResource && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-xl font-bold">{selectedResource.title[language as keyof typeof selectedResource.title] || selectedResource.title.en}</DialogTitle>
-                <DialogDescription id={`res-desc-${selectedResource.title.en.replace(/\s+/g, '-')}`} className="text-sm text-muted-foreground mt-2">
+                <DialogTitle className="text-xl font-semibold text-foreground">
+                  {selectedResource.title[language as keyof typeof selectedResource.title] || selectedResource.title.en}
+                </DialogTitle>
+                <DialogDescription id={`res-desc-${selectedResource.title.en.replace(/\s+/g, '-')}`} className="text-sm text-muted-foreground mt-2 leading-relaxed">
                   {selectedResource.description[language as keyof typeof selectedResource.description] || selectedResource.description.en}
                 </DialogDescription>
               </DialogHeader>
-              <div className="mt-4 whitespace-pre-wrap relative">
+              <div className="mt-5 whitespace-pre-wrap relative text-[15px] leading-relaxed text-foreground/90">
                 {selectedResource.isChecklist && (
                   <Button
                     variant="outline"

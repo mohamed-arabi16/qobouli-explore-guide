@@ -25,48 +25,66 @@ const Hero = () => {
 
   return (
     <div
-      className="relative h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url('/hero/students-istanbul.jpg')" }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Darker overlay for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0C1439]/80" />
+      {/* Background Image with Premium Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero/students-istanbul.jpg')" }}
+      />
       
-      <div className="relative container mx-auto px-4 md:px-6 text-center text-white z-10 pb-20">
-        {/* Enhanced glass panel with max-width 700px */}
-        <div className="hero-glass-panel max-w-[700px] mx-auto p-10 md:p-12 w-full">
-          <h1 className="hero-title-fade text-[clamp(2rem,5vw,3rem)] md:text-5xl font-bold text-white tracking-tight leading-tight font-display">
+      {/* Premium multi-layer gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/80 via-[#0D1B2A]/60 to-[#0D1B2A]/90" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10" />
+      
+      {/* Subtle animated gradient orbs - optimized for performance */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-80 md:h-80 bg-primary/15 rounded-full blur-2xl md:blur-3xl animate-pulse-subtle opacity-30" />
+      <div className="absolute bottom-1/4 right-1/4 w-56 h-56 md:w-72 md:h-72 bg-secondary/15 rounded-full blur-2xl md:blur-3xl animate-pulse-subtle opacity-25" style={{ animationDelay: '1s' }} />
+      
+      <div className="relative container mx-auto px-6 md:px-8 text-center text-white z-10 py-20">
+        {/* Premium glass panel with refined styling */}
+        <div className="hero-glass-panel max-w-[720px] mx-auto p-8 md:p-12 lg:p-14 w-full">
+          {/* Title with refined typography */}
+          <h1 className="hero-title-fade text-[clamp(1.875rem,5vw,3.25rem)] md:text-5xl lg:text-[3.5rem] font-semibold text-white tracking-tight leading-[1.15] font-display">
             {t('hero.title')}
           </h1>
-          <p className="hero-subtitle-fade text-base md:text-lg mt-6 mb-8 max-w-xl mx-auto text-white/85 leading-relaxed">
+          
+          {/* Subtitle with improved readability */}
+          <p className="hero-subtitle-fade text-base md:text-lg lg:text-xl mt-6 mb-10 max-w-lg mx-auto text-white/80 leading-relaxed font-light">
             {t('hero.subtitle')}
           </p>
+          
+          {/* CTA buttons with premium styling */}
           <div className="hero-ctas-fade flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={scrollToAITool}
-              className="hero-cta-primary w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
+              className="hero-cta-primary w-full sm:w-auto min-w-[200px] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-transparent"
             >
               {t('hero.button.recommend')}
             </button>
             <WhatsAppLink 
               data-cta="whatsapp-button" 
-              className="hero-cta-secondary w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
+              className="hero-cta-secondary w-full sm:w-auto min-w-[200px] focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent"
             >
               {t('hero.button.contact')}
             </WhatsAppLink>
           </div>
-          <p className="hero-promo-fade text-yellow-300/90 text-sm mt-6 max-w-md mx-auto font-medium">
+          
+          {/* Promo text with subtle styling */}
+          <p className="hero-promo-fade text-amber-300/90 text-sm mt-8 max-w-md mx-auto font-medium tracking-wide">
             {t('hero.promoText')}
           </p>
         </div>
 
-        <div className={`fixed bottom-8 md:bottom-12 left-0 right-0 flex justify-center z-20 transition-opacity duration-300 ${!showScrollHint ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        {/* Refined scroll indicator */}
+        <div className={`fixed bottom-10 md:bottom-14 left-0 right-0 flex justify-center z-20 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${!showScrollHint ? 'opacity-0 pointer-events-none translate-y-4' : 'opacity-100'}`}>
           <button
             onClick={scrollToAITool}
             aria-label={t('index.scrollHint')}
-            className="scroll-hint flex flex-col items-center text-white p-3 bg-black/20 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white/50"
+            className="scroll-hint flex flex-col items-center text-white/90 p-4 bg-white/5 backdrop-blur-md rounded-full border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/30"
           >
-            <span className="text-sm mb-1 drop-shadow-lg font-medium">{t('index.scrollHint')}</span>
-            <ChevronDown size={24} className="drop-shadow-lg animate-bounce" />
+            <span className="text-sm mb-2 font-medium tracking-wide">{t('index.scrollHint')}</span>
+            <ChevronDown size={22} className="animate-bounce-gentle" />
           </button>
         </div>
       </div>

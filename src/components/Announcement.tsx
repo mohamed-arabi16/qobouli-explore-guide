@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // Removed CardDescription
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useLanguage } from '@/contexts/LanguageContext'; // Assuming you have a language context for localization
-import { announcementsData, AnnouncementItem } from '@/data/announcements'; // Import from new data file
+import { useLanguage } from '@/contexts/LanguageContext';
+import { announcementsData, AnnouncementItem } from '@/data/announcements';
 
 const formatText = (text: string) => text.replace(/•\s*/g, '\n• ').trim();
 
@@ -40,26 +40,31 @@ const Announcement: React.FC = () => {
 
   return (
     <div id="announcements">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-qobouli-text">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center mb-12 md:mb-14 text-white/95">
           {t('ui.announcement.title')}
         </h2>
+        
         {announcements.length === 0 ? (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-white/60">
             {t('ui.announcement.noAnnouncements')}
           </p>
         ) : (
           <div className="relative flex items-center overflow-hidden">
+            {/* Navigation Button - Left */}
             <button
               onClick={language === 'ar' ? goNext : goPrev}
-              className="absolute left-0 z-10 p-2 bg-white rounded-full shadow -translate-y-1/2 top-1/2 transition-transform active:scale-90 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="absolute left-0 z-10 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/10 -translate-y-1/2 top-1/2 transition-all duration-300 hover:bg-white/20 hover:border-white/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-4 w-4 text-white" />
               <span className="sr-only">{t('ui.announcement.previous')}</span>
             </button>
+            
+            {/* Carousel Container */}
             <div
               ref={containerRef}
-              className="flex w-full justify-start overflow-hidden px-8 sm:px-12"
+              className="flex w-full justify-start overflow-hidden px-10 sm:px-14"
             >
               {announcements.map((announcement, index) => {
                 const isActive = index === activeIndex;
@@ -71,50 +76,53 @@ const Announcement: React.FC = () => {
                     role="group"
                     aria-hidden={!isActive}
                     data-active={isActive}
-                      className={cn(
-                        "transition-all duration-300 ease-in-out mx-2 basis-4/5 sm:basis-3/4 md:basis-3/5 lg:basis-1/2 shrink-0",
-                        isActive ?
-                          'opacity-100 scale-100 z-10' :
-                          'opacity-50 scale-95 sm:scale-[0.85]'
-                      )}
+                    className={cn(
+                      "transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] mx-2 basis-4/5 sm:basis-3/4 md:basis-3/5 lg:basis-1/2 shrink-0",
+                      isActive 
+                        ? 'opacity-100 scale-100 z-10' 
+                        : 'opacity-40 scale-[0.92] sm:scale-[0.88]'
+                    )}
                   >
                     <Dialog>
                       <DialogTrigger asChild disabled={!isActive}>
                         <Card
-                          className="glass-panel cursor-pointer transition-shadow duration-300 flex flex-col h-full text-right"
+                          className={cn(
+                            "cursor-pointer transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col h-full border-white/10 bg-white/[0.06] backdrop-blur-xl",
+                            isActive && "hover:bg-white/[0.09] hover:border-primary/30"
+                          )}
                           tabIndex={isActive ? 0 : -1}
                         >
                           <CardHeader>
-                            <CardTitle className="text-white leading-tight text-lg md:text-xl">
+                            <CardTitle className="text-white/95 leading-tight text-lg md:text-xl font-semibold">
                               {announcement.title[language as 'ar' | 'en']}
                             </CardTitle>
                           </CardHeader>
                           <CardContent className="flex-grow">
-                            <p className="text-white/90 whitespace-pre-line text-sm md:text-base">
+                            <p className="text-white/75 whitespace-pre-line text-sm md:text-[15px] leading-relaxed">
                               {formatText(announcement.preview[language as 'ar' | 'en'])}
                             </p>
                           </CardContent>
                           <div className="p-6 pt-0 mt-auto">
-                            <span className="text-sm text-white hover:underline">
+                            <span className="text-sm text-primary hover:text-secondary transition-colors duration-300 font-medium">
                               {t('ui.announcement.readMore')}
                             </span>
                           </div>
                         </Card>
                       </DialogTrigger>
+                      
                       <DialogContent
-                        className="sm:max-w-[600px] text-right max-h-[80vh] overflow-y-auto"
+                        className="sm:max-w-[600px] text-right max-h-[80vh] overflow-y-auto rounded-2xl"
                         aria-describedby={`ann-desc-${announcement.id}`}
                       >
                         <DialogHeader>
-                          <DialogTitle className="text-qobouli-primary leading-tight text-xl md:text-2xl">
+                          <DialogTitle className="text-primary leading-tight text-xl md:text-2xl font-semibold">
                             {announcement.title[language as 'ar' | 'en']}
                           </DialogTitle>
                           <DialogDescription id={`ann-desc-${announcement.id}`} className="sr-only">
-                            {/* Short description for accessibility, can be visually hidden if needed */}
                             {t('ui.announcement.shortContext', 'Details about the announcement.')}
                           </DialogDescription>
                         </DialogHeader>
-                        <div className="py-4 text-gray-700 whitespace-pre-line text-sm md:text-base">
+                        <div className="py-5 text-foreground/90 whitespace-pre-line text-sm md:text-[15px] leading-relaxed">
                           {formatText(announcement.fullText[language as 'ar' | 'en'])}
                         </div>
                       </DialogContent>
@@ -123,11 +131,13 @@ const Announcement: React.FC = () => {
                 );
               })}
             </div>
+            
+            {/* Navigation Button - Right */}
             <button
               onClick={language === 'ar' ? goPrev : goNext}
-              className="absolute right-0 z-10 p-2 bg-white rounded-full shadow -translate-y-1/2 top-1/2 transition-transform active:scale-90 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="absolute right-0 z-10 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/10 -translate-y-1/2 top-1/2 transition-all duration-300 hover:bg-white/20 hover:border-white/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 text-white" />
               <span className="sr-only">{t('ui.announcement.next')}</span>
             </button>
           </div>
